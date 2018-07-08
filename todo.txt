@@ -1,0 +1,6 @@
+- Socio ABM
+- Manejo Afiliacion
+- Asistencia
+- Pagos
+- Planes de venta?
+https://codepen.io/sevilayha/pen/AmFLE?editors=1000#0
