@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/css/common.css">
+	  <link rel="stylesheet" href="/css/common.css">
 
     <!-- Iconos -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
@@ -23,9 +23,30 @@
 			<h1 class="h3 mb-3 font-weight-normal">Asistencia</h1>
 			<label for="inputUser" class="sr-only">Documento</label>
 			<input type="text" id="inputUser" class="form-control" placeholder="Documento" ng-model="Documento" required autofocus>
-			<button class="btn btn-lg btn-primary btn-block" type="submit" id="submit" value="Submit" data-toggle="modal" data-target="#miModal">Insertar pago</button>
+			<!-- <button class="btn btn-lg btn-primary btn-block" type="submit" id="submit" value="Submit" data-toggle="modal" data-target="#miModal">Insertar pago</button> -->
 			<!-- Button trigger modal -->
 			<!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#miModal" type="submit" id="submit" value="Submit">Abrir modal</button> -->
+
+      <h1 class="text-xs-center">componente:Modal</h1>>
+      <button class="btn btn-lg btn-primary btn-block" type="submit" id="submit" value="Submit" data-toggle="modal" data-target="#miModal">INGRESAR </button>
+
+      <div class="modal fade"  id=modalControlAsistencia> 
+       
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <boton type="button" class="close" data-dismiss="modal" aria-label="close">
+                &times;
+              </boton>
+              <h5 class="modal-titel">model control asistencia</h5>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+
 		</form>
 	</div>
 	
