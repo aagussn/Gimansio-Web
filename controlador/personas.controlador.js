@@ -28,9 +28,60 @@ exports.create = (req, res) => {
  
 // FETCH all Persona
 exports.findAll = (req, res) => {
-	Persona.findAll().then(persona => {
-	  // Send all usuarios to Client
-	  res.send(persona);
+	var condition =
+	{
+		where:
+			{
+
+			}
+	}
+	if (req.query.nombre) {
+		condition.where.nombre = req.query.nombre
+	}
+	if (req.query.apellido) {
+		condition.where.apellido = req.query.apellido
+	}
+	if (req.query.fechaN) {
+		condition.where.fechaN = req.query.fechaN
+	}
+	if (req.query.telefono) {
+		condition.where.telefono = req.query.telefono
+	}
+	if (req.query.email) {
+		condition.where.email = req.query.email
+	}
+	if (req.query.sexo) {
+		condition.where.sexo = req.query.sexo
+	}
+	if (req.query.emergencia) {
+		condition.where.emergencia = req.query.emergencia
+	}
+	if (req.query.direccion) {
+		condition.where.direccion = req.query.direccion
+	}
+	if (req.query.contactofamilia) {
+		condition.where.contactofamilia = req.query.contactofamilia
+	}
+	if (req.query.nombrecontacto) {
+		condition.where.nombrecontacto = req.query.nombrecontacto
+	}
+	if (req.query.idprofesion) {
+		condition.where.idprofesion = req.query.idprofesion
+	}
+	if (req.query.createdAt) {
+		condition.where.createdAt = req.query.createdAt
+	}
+	if (req.query.updatedAt) {
+		condition.where.updatedAt = req.query.updatedAt
+	}
+	if (req.query.afiliacionId) {
+		condition.where.afiliacionId = req.query.afiliacionId
+	}
+
+	
+	Persona.findAll(condition)
+	.then(persona => {
+	   res.send(persona);
 	});
 };
  

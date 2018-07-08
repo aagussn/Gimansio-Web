@@ -14,10 +14,31 @@ exports.create = (req, res) => {
  
 // FETCH all Usuarios
 exports.findAll = (req, res) => {
-	Asistencia.findAll().then(asistencia => {
-	  // Send all usuarios to Client
-	  res.send(asistencia);
-	});
+	var condition =
+		{
+			where:
+				{
+
+				}
+		}
+	
+		if (req.query.documento) {
+			condition.where.documento = req.query.documento
+		}
+		if (req.query.createdAt) {
+			condition.where.createdAt = req.query.createdAt
+		}
+		if (req.query.updatedAt) {
+			condition.where.updatedAt = req.query.updatedAt
+		}
+
+	
+		Asistencia.findAll(condition)
+			.then(asistencia => {
+			// Send all usuarios to Client
+			//console.log(req.query.user);
+	  		res.send(asistencia);
+		});	
 };
  
 // Find a Usuario by Id
@@ -26,16 +47,6 @@ exports.findById = (req, res) => {
 		res.send(asistencia);
 	})
 };
-// encontrar por documento
-exports.findPorDocumento  = (req, res) => {// como le paso el documento
-	Asistencia.findAll({where:{documento:req.body.documento} }).then(asistencia => {
-	  // Send all usuarios to Client
-	  res.send(asistencia);
-	});
-};
-
-
-
  
 // Update a Asistencia
 exports.update = (req, res) => {

@@ -10,7 +10,7 @@ module.exports = function(app) {
     app.get('/api/asistencia', asistencia.findAll);
  
     // Retrieve a single asistencia by Id
-    app.get('/api/asistencia/:documento', asistencia.findById);
+    app.get('/api/asistencia/:id', asistencia.findById);
  
     // Update a asistencia with Id
     app.put('/api/asistencia/:documento', asistencia.update);

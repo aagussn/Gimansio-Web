@@ -9,11 +9,11 @@ module.exports = function(app) {
     app.get('/api/afiliacions', afiliacions.findAll);
  
     // Retrieve a single afiliacion by Id
-    app.get('/api/afiliacions/:idafi', afiliacions.findById);
+    app.get('/api/afiliacions/:id', afiliacions.findById);
  
     // Update a afiliacion with Id
-    app.put('/api/afiliacions/:idafi', afiliacions.update);
+    app.put('/api/afiliacions/:id', afiliacions.update);
  
     // Delete a afiliacion with Id
-    app.delete('/api/afiliacions/:idafi', afiliacions.delete);
+    app.delete('/api/afiliacions/:id', afiliacions.delete);
 }

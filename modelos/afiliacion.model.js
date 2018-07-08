@@ -6,7 +6,7 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
       },
       estado: {
-      type: Sequelize.INTEGER
+        type: Sequelize.INTEGER
       },
       
 	});

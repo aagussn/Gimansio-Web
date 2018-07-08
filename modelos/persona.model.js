@@ -30,10 +30,7 @@ module.exports = (sequelize, Sequelize) => {
       sexo: {
       type: Sequelize.STRING(20)
       }, 
-      sexo: {
-      type: Sequelize.STRING(20)
-      },
-      emergencia: {
+            emergencia: {
       type: Sequelize.STRING(20)
       },
       direccion: {
@@ -48,10 +45,7 @@ module.exports = (sequelize, Sequelize) => {
       idprofesion: {
       type: Sequelize.INTEGER
       },
-      intereses: {
-      type: Sequelize.STRING(20)
-      },
-	});
+     	});
 	Persona.belongsTo(afi);
 
 	return Persona;

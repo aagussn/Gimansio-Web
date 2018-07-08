@@ -32,6 +32,29 @@ exports.findAll = (req, res) => {
 	if (req.query.documento) {
 		condition.where.documento = req.query.documento
 	}
+	if (req.query.importe) {
+			condition.where.importe = req.query.importe
+	}
+	if (req.query.anio) {
+			condition.where.anio = req.query.anio
+	}
+	if (req.query.mes) {
+			condition.where.mes = req.query.mes
+	}
+	if (req.query.tipomovimiento) {
+			condition.where.tipomovimiento = req.query.tipomovimiento
+	}
+	if (req.query.tipopago) {
+			condition.where.tipopago = req.query.tipopago
+	}		
+	if (req.query.createdAt) {
+		condition.where.createdAt = req.query.createdAt
+	}
+	if (req.query.updatedAt) {
+		condition.where.updatedAt = req.query.updatedAt
+	}
+
+
 	
 	Pago.findAll(condition).then(pago => {
 	  // Send all pagos to Client

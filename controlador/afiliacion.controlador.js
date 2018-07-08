@@ -17,17 +17,43 @@ exports.create = (req, res) => {
  
 // FETCH all Afiliacion
 exports.findAll = (req, res) => {
-	Afiliacion.findAll().then(afiliacion => {
-	  // Send all usuarios to Client
-	  res.send(afiliacion);
-	});
+	var condition =
+		{
+			where:
+				{
+
+				}
+		}
+	
+		if (req.query.documento) {
+			condition.where.documento = req.query.documento
+		}
+		if (req.query.estado) {
+			condition.where.estado = req.query.estado
+		}
+		if (req.query.createdAt) {
+			condition.where.createdAt = req.query.createdAt
+		}
+		if (req.query.updatedAt) {
+			condition.where.updatedAt = req.query.updatedAt
+		}
+
+	
+		Afiliacion.findAll(condition)
+			.then(afiliacion => {
+			// Send all usuarios to Client
+			//console.log(req.query.user);
+	  		res.send(afiliacion);
+		});	
+
+
 };
  
 // Find a Afiliacion by Id
 exports.findById = (req, res) => {	
-	Afiliacion.findById(req.params.idafi).then(afiliacion => {
-		res.send(afiliacion);
-	})
+	Afiliacion.findById(req.params.id).then(afiliacion => {
+	res.send(afiliacion);
+	})	
 };
  
 // Update a Usuario
