@@ -7,14 +7,17 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/css/common.css">
+	  <link rel="stylesheet" href="/css/common.css">
 
 	<!-- Iconos -->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" >
     <title>Personas</title>
   </head>
-  <body>
-  <div class="container "  ng-controller="myController">
+  <body ng-controller="myController">
+  
+  <div ng-include="'barra'"> </div>    
+  <div class="container"><br><br><br></div>
+  <div class="container">
     <div class="container form-row" >
       <input class="col-md-4" type="text" ng-model="search.documento" placeholder="Documento">
       <input class="col-md-4" type="text" ng-model="search.nombre" placeholder="Nombre">

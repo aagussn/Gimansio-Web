@@ -20,6 +20,6 @@ app.controller('myController', function($scope, $http, $cookies) {
 
     $scope.setCookie = function (cookie) {
         $cookies.put('Pagocookie', cookie);
-        window.location.href = "http://localhost:3000/html/pagos.html";
+        window.location.href = "http://localhost:3000/pagos";
     }
 });

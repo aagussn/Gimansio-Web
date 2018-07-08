@@ -11,9 +11,9 @@ sequelize
   });
 
 // Forzado: true dropea las tablas si existen
-/*sequelize.sync({force: true}).then(() => {
-  console.log('Drop and Resync with { force: true }');
-});*/  
+//sequelize.sync({force: true}).then(() => {
+//  console.log('Drop and Resync with { force: true }');
+//});  
 //Models/tables
 const db = {};
  

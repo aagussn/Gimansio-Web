@@ -1,6 +1,13 @@
-var app = angular.module('Login',[]);
+var app = angular.module('Login',['ngCookies']);
 
-app.controller('LoginControl',  function($scope, $http) {
+app.controller('LoginControl',  function($scope, $http, $cookies) {
+	// Controlo login
+	// Si ya esta logeado lo mando a la pagina principal
+	var chkLogin = $cookies.get('login');
+	if (chkLogin) {
+		window.location.href = "http://localhost:3000/";
+	}
+
 	$scope.list = '';
 
 	$scope.submit = function() {
@@ -11,9 +18,13 @@ app.controller('LoginControl',  function($scope, $http) {
 
 		request.success(function(data) {
 	        $scope.data = data;
-
 	        if (data.length >=1 ) {
-	        	 window.location.href = "http://localhost:3000/html/personas.html";
+	        	var now = new Date();
+	        	var exp = new Date(now);
+	        	exp.setMinutes(now.getMinutes()+60)
+	        	$cookies.put('login', 1, {'expires': exp});
+	        	window.location.href = "http://localhost:3000/";
+	        	console.log("Boh");
 	        }
 			// console.log(data.length);
 	    });

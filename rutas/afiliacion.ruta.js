@@ -1,11 +1,6 @@
 module.exports = function(app) {
- 
 
   const afiliacions = require('../controlador/afiliacion.controlador.js');
-  
-
-
-  ///para nuevas consultas tengo que agregar aca la ruta
   
     // Create a new afiliacion
     app.post('/api/afiliacions', afiliacions.create);

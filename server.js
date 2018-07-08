@@ -1,5 +1,6 @@
 var app = require('./cfg/app');
 var db = require('./cfg/db');
+var path = require('path');
 var port = process.env.PORT || 3000;
  
 require('./rutas/afiliacion.ruta.js')(app);
@@ -15,6 +16,41 @@ require('./rutas/personas.ruta.js')(app);
 require('./rutas/personas_hist.ruta.js')(app);
 require('./rutas/profesion.ruta.js')(app);
 require('./rutas/usuario.ruta.js')(app);
+
+// Ruta principal
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname + '/public/html/index.html'));
+});
+
+// En algunos casos poner href="/" no anda y por eso hice esto
+app.get('/index', function (req, res) {
+  res.redirect('/');
+});
+
+// Ruta barra principal
+app.get('/barra', function (req, res) {
+  res.sendFile(path.join(__dirname + '/public/html/barra.html'));
+});
+
+// Ruta login
+app.get('/login', function (req, res) {
+  res.sendFile(path.join(__dirname + '/public/html/login.html'));
+});
+
+// Ruta personas
+app.get('/personas', function (req, res) {
+  res.sendFile(path.join(__dirname + '/public/html/personas.html'));
+});
+
+// Ruta asistencia
+app.get('/asistencia', function (req, res) {
+  res.sendFile(path.join(__dirname + '/public/html/asistencia.html'));
+});
+
+// Ruta pago
+app.get('/pagos', function (req, res) {
+  res.sendFile(path.join(__dirname + '/public/html/pagos.html'));
+});
 
 var server = app.listen(port, function() {
   console.log('Aplicacion ejecutandose en puerto: ' + port);

@@ -25,7 +25,7 @@ exports.findAll = (req, res) => {
  
 // Find a Afiliacion by Id
 exports.findById = (req, res) => {	
-	Afiliacion.findById(req.params.id).then(afiliacion => {
+	Afiliacion.findById(req.params.idafi).then(afiliacion => {
 		res.send(afiliacion);
 	})
 };
