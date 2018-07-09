@@ -1,4 +1,4 @@
-var app = angular.module('Asistencia',[]);
+var app = angular.module('asistencia',[]);
 
 var app = angular.module('test', []);
 /* http://embed.plnkr.co/AI4qn8/
@@ -67,7 +67,7 @@ app.controller('AsistenciaControl',  function($scope, $http) {
 	       	console.log('persona.afiliacionId: ' + $scope.persona.afiliacionId);
 	   		
 	   		// Si tiene afiliacion
-	   		if ($scope.persona.afiliacionIdafi) {
+	   		if ($scope.persona.afiliacionId) {
 		   		var laAfiliacion = $http.get('http://localhost:3000/api/afiliacions/'+ data.afiliacionId );
 			 	// Voy a buscar el estado de la afiliacion
 			 	laAfiliacion.success(function(data2) {
@@ -76,8 +76,9 @@ app.controller('AsistenciaControl',  function($scope, $http) {
 					if (data2) {
 						// Si la afiliacion esta activo
 			        	if(data2.estado==1){
-			        		var elPago=$http.get('http://localhost:3000/api/afiliacions/'+ data.afiliacionId );
-			        		// Voy a buscar que se encuentre paga
+			        		var elPago=$http.get('http://localhost:3000/api/pago/?documento='+ data.documento);
+			        		// Voy a buscar ultimo pago
+
 			        	}
 			        	else{
 			        		console.log("no esta activo");

@@ -11,6 +11,9 @@ module.exports = function(app) {
  
     // Retrieve a single pago by Id
     app.get('/api/pago/:id', pago.findById);
+
+    // ultimopago
+    app.get('/api/pago/ultimopago/:documento', pago.findUltimoPago);
  
     // Update a pago with Id
     app.put('/api/pago/:id', pago.update);
@@ -18,3 +21,6 @@ module.exports = function(app) {
     // Delete a pago with Id
     app.delete('/api/pago/:id', pago.delete);
 }
+
+
+
