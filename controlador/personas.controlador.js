@@ -7,7 +7,7 @@ exports.create = (req, res) => {
 	// creo una persona
 	Persona.create({  
 	  documento : req.body.documento,
-	  idafi: req.body.idafi,
+	  afiliacionId: req.body.afiliacionId,
 	  nombre:req.body.nombre,
 	  apellido:req.body.apellido,
 	  telefono:req.body.telefono,
@@ -94,9 +94,8 @@ exports.findById = (req, res) => {
  
 // Update a persona
 exports.update = (req, res) => {
-	const id = req.params.id;
-	Persona.update( { 	documento: req.body.documento,
-					  	idafi: req.body.idafi,
+	const id = req.params.documento;
+	Persona.update( { 	afiliacionId: req.body.afiliacionId,
 					  	nombre:req.body.nombre,
 	 				  	apellido:req.body.apellido,
 	  					telefono:req.body.telefono,
@@ -109,7 +108,7 @@ exports.update = (req, res) => {
 	  					nombrecontacto:req.body.nombrecontacto,
 	  					idprofesion:req.body.idprofesion
 					   }, 
-					 { where: {documento: req.body.documento} }
+					 { where: {documento: req.params.documento} }
 				   ).then(() => {
 					 res.status(200).send("updated successfully a usuario with id = " + id);
 				   });
