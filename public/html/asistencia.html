@@ -1,46 +1,70 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="Asistencia">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-	  <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
 
-    <!-- Iconos -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-    
-    <title>Asistencia</title>
+  <!-- Iconos -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" >
+    <title>Asistencias</title>
   </head>
-  <body class="text-center" ng-app="Asistencia"  >
-  	<div ng-include="'barra'"> </div>    
-  	<div class="container"><br><br><br></div>
-	<!-- Form Login -->
-	<div class="container">
-		<form class="form-signin" ng-submit="submit()" ng-controller="AsistenciaControl">
-			<h1 class="h3 mb-3 font-weight-normal">Bienvenido a Arenas del Pinar </h1>
-			<label for="inputUser" class="sr-only">Documento</label>
-			<input type="text" id="inputUser" class="form-control" placeholder="Documento" ng-model="Documento" required autofocus>
-			<!-- <button class="btn btn-lg btn-primary btn-block" type="submit" id="submit" value="Submit" data-toggle="modal" data-target="#miModal">Insertar pago</button> -->
-			<!-- Button trigger modal -->
-			<!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#miModal" type="submit" id="submit" value="Submit">Abrir modal</button> -->
-
-      <button class="btn btn-lg btn-primary btn-block" type="submit" id="submit" value="Submit">INGRESAR </button>
-
-  
-    <!-- Optional JavaScript 
-	   <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script> -->
-	   <script src="../js/asistencia.js"></script>
-<div class="alert alert-primary" role="alert">
-  A simple primary alert—check it out!
-</div>
+  <body ng-controller="AsistenciaControl" class="text-center">
+  <h2>Asistencias</h2>
+  <div ng-include="'barra'"> </div>    
+  <div class="container"><br><br><br></div>
+  <div class="container content-wrapper">
+    <div class="container-fluid">
+      <div class="container form-row"  class="text-center">
+        <input class="col-md-3" type="text" ng-model="search.documento" placeholder="Documento" >
+        <input class="col-md-3" type="text" ng-model="search.nombre" placeholder="Nombre">
+        <input class="col-md-3" type="text" ng-model="search.apellido" placeholder="Apellido">
+        <input class="col-md-3" type="text" ng-model="search.anio" placeholder="Año">
+        <input class="col-md-3" type="text" ng-model="search.mes" placeholder="Mes">
+        <input class="col-md-3" type="text" ng-model="search.fecha" placeholder="Fecha">
 
 
+
+       
+      </div>
+      <div class="container form-row">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col" > <a href="#" ng-click="sortType = 'documento'"> Documento </a></th>
+              <th scope="col"> <a href="#" ng-click="sortType = 'nombre'"> Nombre</a></th>
+              <th scope="col"><a href="#" ng-click="sortType = 'apellido'">Apellido</a></th>
+              <th scope="col"><a href="#" ng-click="sortType = 'mes'">mes</a></th>
+              <th scope="col"><a href="#" ng-click="sortType = 'anio'">año</a></th>
+              <th scope="col"><a href="#" ng-click="sortType = 'fecha'">año</a></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in data | filter:search:strict | orderBy:sortType:false | limitTo: 10 ">
+              <th scope="row">{{item.documento}}</th>
+              <td>{{item.nombre}}</td>
+              <td>{{item.apellido}}</td>
+              <td>{{item.mes}}</td>
+              <td>{{item.anio}}</td>
+              <td>{{item.fecha}}</td>
+            </tr>
+          </tbody>
+        </table>  
+      </div>
+    </div>
+  </div>
+    <!-- Optional JavaScript -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
+    <script src="/js/asistencia.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="../js/jquery-3.3.1.min.js"></script>
-    <script src="../js/popper.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
+    <script src="/js/jquery-3.3.1.min.js" ></script>
+    <script src="/js/popper.min.js" ></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/common.js"></script>
   </body>
 </html>
