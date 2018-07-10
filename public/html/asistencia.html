@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+	  <link rel="stylesheet" href="../css/common.css">
+
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    
+    <title>Asistencia</title>
+  </head>
+  <body class="text-center" ng-app="Asistencia"  >
+  	<div ng-include="'barra'"> </div>    
+  	<div class="container"><br><br><br></div>
+	<!-- Form Login -->
+	<div class="container">
+		<form class="form-signin" ng-submit="submit()" ng-controller="AsistenciaControl">
+			<h1 class="h3 mb-3 font-weight-normal">Bienvenido a Arenas del Pinar </h1>
+			<label for="inputUser" class="sr-only">Documento</label>
+			<input type="text" id="inputUser" class="form-control" placeholder="Documento" ng-model="Documento" required autofocus>
+			<!-- <button class="btn btn-lg btn-primary btn-block" type="submit" id="submit" value="Submit" data-toggle="modal" data-target="#miModal">Insertar pago</button> -->
+			<!-- Button trigger modal -->
+			<!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#miModal" type="submit" id="submit" value="Submit">Abrir modal</button> -->
+
+      <button class="btn btn-lg btn-primary btn-block" type="submit" id="submit" value="Submit">INGRESAR </button>
+
+  
+    <!-- Optional JavaScript 
+	   <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script> -->
+	   <script src="../js/asistencia.js"></script>
+<div class="alert alert-primary" role="alert">
+  A simple primary alert—check it out!
+</div>
+
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+  </body>
+</html>

@@ -1,4 +1,7 @@
-var app = angular.module('Ingreso',[]);
+
+angular.module(Ingreso,[]).controller("IngresoControl", function($scope, $http){
+
+//var app = angular.module('Ingreso',[]);
 //var app = angular.module('test', []);
 /* http://embed.plnkr.co/AI4qn8/
 	// this represents the state of the dialog: a visible flag and the person being edited
@@ -52,14 +55,14 @@ var app = angular.module('Ingreso',[]);
 		  };
 		}]);    	
 */
-app.controller('IngresoControl',  function($scope, $http) {
+//app.controller('IngresoControl',  function($scope, $http) {
     //Busco la persona	
 		$scope.submit = function() {
 		$scope.list = 'http://localhost:3000/api/personas/';
 		$scope.list +=  $scope.Documento;
 
 
-			// Voy a buscar la persona
+		// Voy a buscar la persona
 		var laPersona = $http.get($scope.list);
 
 		laPersona.success(function(data) {
@@ -76,16 +79,23 @@ app.controller('IngresoControl',  function($scope, $http) {
 					if (data2) {
 						// Si la afiliacion esta activo
 			        	if(data2.estado==1){
+			        		
+
+							// Buscar ultimo pago
 			        		var elPago=$http.get('http://localhost:3000/api/pago/?documento='+ data.documento);
-			        		// Voy a buscar ultimo pago
-			        		//varifico si es una lista o un objeto
-			        		var pPago;
+			        		var pPago=null;
+			        	
+			        		//si lo que me devuelve el get es una lista entro al if, sino voy por el else que quiere decir que el mismo es un objeto
 			        		if(elPago.length>0){
 								pPago=elPago[0];
 
 			        		}else{
-			        			pPago=elPago;
+			        			if(elPago){
+			        				pPago=elPago;
+			        			}
 			        		}
+			        		
+			        		//aca controlo que la fecha del pago  sea mayor a la fecha de afiliacion activa
 			        		if(laAfiliacion.createdAt>=pPago.createdAt){
 								$scope.pago =pPago;
 			        		}else{
@@ -96,6 +106,10 @@ app.controller('IngresoControl',  function($scope, $http) {
 			        		$scope.pasa = 'No se encuentra activo';
 			        	}
 			        }
+
+
+
+
 			    });
 			    
 			    laAfiliacion.error(function(data2){
