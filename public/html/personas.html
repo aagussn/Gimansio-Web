@@ -17,39 +17,43 @@
   
   <div ng-include="'barra'"> </div>    
   <div class="container"><br><br><br></div>
-  <div class="container">
-    <div class="container form-row" >
-      <input class="col-md-4" type="text" ng-model="search.documento" placeholder="Documento">
-      <input class="col-md-4" type="text" ng-model="search.nombre" placeholder="Nombre">
-      <input class="col-md-4" type="text" ng-model="search.apellido" placeholder="Apellido">
-    </div>
-  	<div class="container form-row">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col" > <a href="#" ng-click="sortType = 'documento'"> Documento </a></th>
-            <th scope="col"> <a href="#" ng-click="sortType = 'nombre'"> Nombre</a></th>
-            <th scope="col"><a href="#" ng-click="sortType = 'apellido'">Apellido</a></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="item in data | filter:search:strict | orderBy:sortType:false | limitTo: 10 ">
-            <th scope="row">{{item.documento}}</th>
-            <td>{{item.nombre}}</td>
-            <td>{{item.apellido}}</td>
-            <td><a href="#" ng-click="setCookie(item.documento)"><button type="button" class="btn btn-default btn-sm"><i class="fas fa-dollar-sign"></i></button></a></td>
-          </tr>
-        </tbody>
-      </table>  
+  <div class="container content-wrapper">
+    <div class="container-fluid">
+      <div class="container form-row" >
+        <input class="col-md-3" type="text" ng-model="search.documento" placeholder="Documento">
+        <input class="col-md-4" type="text" ng-model="search.nombre" placeholder="Nombre">
+        <input class="col-md-4" type="text" ng-model="search.apellido" placeholder="Apellido">
+        <a href="/afiliacion"><button class="btn btn-sm btn-success" id="addPersona"><i class="fas fa-plus-square"></i></button></a>
+      </div>
+    	<div class="container form-row">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col" > <a href="#" ng-click="sortType = 'documento'"> Documento </a></th>
+              <th scope="col"> <a href="#" ng-click="sortType = 'nombre'"> Nombre</a></th>
+              <th scope="col"><a href="#" ng-click="sortType = 'apellido'">Apellido</a></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in data | filter:search:strict | orderBy:sortType:false | limitTo: 10 ">
+              <th scope="row">{{item.documento}}</th>
+              <td>{{item.nombre}}</td>
+              <td>{{item.apellido}}</td>
+              <td><a href="#" ng-click="setCookie(item.documento)"><button type="button" class="btn btn-default btn-sm"><i class="fas fa-dollar-sign"></i></button></a></td>
+            </tr>
+          </tbody>
+        </table>  
+      </div>
     </div>
   </div>
     <!-- Optional JavaScript -->
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
-	<script src="/js/personas.js"></script>
+  	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
+  	<script src="/js/personas.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="/js/jquery-3.3.1.min.js" ></script>
     <script src="/js/popper.min.js" ></script>
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/common.js"></script>
   </body>
 </html>

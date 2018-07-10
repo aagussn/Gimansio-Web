@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="afiliacion">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -7,30 +7,34 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/css/common.css">
+	  <link rel="stylesheet" href="/css/common.css">
 
+	<!-- Iconos -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" >
     <title>Afiliacion</title>
   </head>
-  <body>
-	<div class="container">
+  <body ng-controller="myController">
+  	<div ng-include="'barra'"> </div>    
+  	<div class="container"><br><br><br></div>  	
+	<div class="container content-wrapper">
 		<!-- Form -->
-		<form>
+		<form ng-submit="submit()">
 			<!-- Renglon -->
 			<div class="form-row">
 				<!-- Nombre -->
 				<div class="form-group col-md-5">
 				  <label for="inputNombre">Nombre</label>
-				  <input type="text" class="form-control" id="inputNombre" placeholder="Nombre">
+				  <input type="text" class="form-control" id="inputNombre" placeholder="Nombre" ng-model="nombre" required>
 				</div>
 				<!-- Apellido -->
 				<div class="form-group col-md-5">
 				  <label for="inputApellido">Apellido</label>
-				  <input type="text" class="form-control" id="inputApellido" placeholder="Apellido">
+				  <input type="text" class="form-control" id="inputApellido" placeholder="Apellido" ng-model="apellido" required>
 				</div>
 				<!-- Sexo -->
 				<div class="form-group col-md-2">
 					<label for="inputSexo">Sexo</label>
-					<select id="inputSexo" class="form-control">
+					<select id="inputSexo" class="form-control" ng-model="sexo">
 						<option selected>Seleccionar</option>
 						<option value="Masculino">Masculino</option>
 						<option value="Femenino">Femenino</option>
@@ -42,17 +46,17 @@
 				<!-- Email -->
 				<div class="form-group col-md-4">
 					<label for="inputAddress">Email</label>
-					<input type="email" class="form-control" id="inputEmail" placeholder="Email">
+					<input type="email" class="form-control" id="inputEmail" placeholder="Email" ng-model="email">
 				</div>
 				<!-- Telefono -->
 				<div class="form-group col-md-4">
 					<label for="inputTelefono">Telefono</label>
-					<input type="tel" class="form-control" id="inputTelefono" placeholder="Telefono">
+					<input type="tel" class="form-control" id="inputTelefono" placeholder="Telefono" ng-model="telefono">
 				</div>
 				<!-- Emergencia -->
 				<div class="form-group col-md-4">
 					<label for="inputEmergencia">Emergencia</label>
-					<input type="tel" class="form-control" id="inputEmergencia" placeholder="Emergencia">
+					<input type="tel" class="form-control" id="inputEmergencia" placeholder="Emergencia" ng-model="emergencia">
 				</div>
 			</div>
 			<!-- Renglon -->
@@ -60,12 +64,12 @@
 				<!-- Fecha de Nacimiento -->
 				<div class="form-group col-md-4">
 					<label for="inputFNac">Fecha de Nacimiento</label>
-					<input type="date" class="form-control" id="inputFNac">
+					<input type="date" class="form-control" id="inputFNac" ng-model="fechan" required>
 				</div>
 				<!-- Cedula -->
 				<div class="form-group col-md-4">
 					<label for="inputCedula">Cedula</label>
-					<input type="number" class="form-control" id="inputCedula">
+					<input type="number" class="form-control" id="inputCedula" ng-model="documento" required>
 				</div>
 				<!-- Profesion -->
 				<div class="form-group col-md-4">
@@ -83,7 +87,7 @@
 				<!-- Direccion -->
 				<div class="form-group col-md-12">
 					<label for="inputDir">Direccion</label>
-					<input type="text" class="form-control" id="inputDir" placeholder="Direccion">	
+					<input type="text" class="form-control" id="inputDir" placeholder="Direccion" ng-model="direccion">	
 				</div>
 			</div>
 			<!-- Renglon -->
@@ -95,12 +99,12 @@
 				<!-- Nombre -->
 				<div class="form-group col-md-6">
 					<label for="inputNomC">Nombre</label>
-					<input type="text" class="form-control" id="inputNomC" placeholder="Nombre Contacto">	
+					<input type="text" class="form-control" id="inputNomC" placeholder="Nombre Contacto" ng-model="nomcontacto">	
 				</div>
 				<!-- Telefono -->
 				<div class="form-group col-md-6">
 					<label for="inputTelC">Telefono</label>
-					<input type="tel" class="form-control" id="inputTelC" placeholder="Telefono Contacto">	
+					<input type="tel" class="form-control" id="inputTelC" placeholder="Telefono Contacto" ng-model="telcontacto">	
 				</div>
 			</div>
 			<!-- Send -->
@@ -108,9 +112,13 @@
 		</form>
 	</div>
     <!-- Optional JavaScript -->
+  	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
+  	<script src="/js/afiliacion.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="/js/jquery-3.3.1.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="/js/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="/js/jquery-3.3.1.min.js" ></script>
+    <script src="/js/popper.min.js" ></script>
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/common.js"></script>
   </body>
 </html>

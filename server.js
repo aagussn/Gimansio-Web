@@ -42,6 +42,11 @@ app.get('/personas', function (req, res) {
   res.sendFile(path.join(__dirname + '/public/html/personas.html'));
 });
 
+// Ruta afiliacion
+app.get('/afiliacion', function (req, res) {
+  res.sendFile(path.join(__dirname + '/public/html/afiliacion.html'));
+});
+
 // Ruta asistencia
 app.get('/asistencia', function (req, res) {
   res.sendFile(path.join(__dirname + '/public/html/asistencia.html'));
