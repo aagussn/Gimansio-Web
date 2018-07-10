@@ -1,115 +1,37 @@
-var app = angular.module('Asistencia',[]);
-//var app = angular.module('test', []);
-/* http://embed.plnkr.co/AI4qn8/
-	// this represents the state of the dialog: a visible flag and the person being edited
-	var EditPersonDialogModel = function () {
-		  this.visible = false;
-		};
-		EditPersonDialogModel.prototype.open = function(person) {
-		  this.person = person;
-		  this.visible = true;
-		};
-		EditPersonDialogModel.prototype.close = function() {
-		  this.visible = false;
-		};
+var app = angular.module('asistencia', ['ngCookies']);
 
-		app.controller('ctrl', ['$scope', function ($scope) {
-		  $scope.editDialog = new EditPersonDialogModel();
-		  
-		  $scope.persons = [{name: 'John'}, {name: 'Barbara'}];
-		  
-		  $scope.add = function() {
-		    $scope.persons.push({name: 'New Person'});
-		  };
-		}]);
-
-		app.directive('editPersonDialog', [function() {
-		  return {
-		    restrict: 'E',
-		    scope: {
-		      model: '=',
-		    },
-		    link: function(scope, element, attributes) {
-		      scope.$watch('model.visible', function(newValue) {
-		        var modalElement = element.find('.modal');
-		        modalElement.modal(newValue ? 'show' : 'hide');
-		      });
-		      
-		      element.on('shown.bs.modal', function() {
-		        scope.$apply(function() {
-		          scope.model.visible = true;
-		        });
-		      });
-
-		      element.on('hidden.bs.modal', function() {
-		        scope.$apply(function() {
-		          scope.model.visible = false;
-		        });
-		      });
-		      
-		    },
-		    templateUrl: 'edit-person-dialog.html',
-		  };
-		}]);    	
-*/
-app.controller('AsistenciaControl',  function($scope, $http) {
-    //Busco la persona	
-		$scope.submit = function() {
-		$scope.list = 'http://localhost:3000/api/personas/';
-		$scope.list +=  $scope.Documento;
+app.controller('myController', function($scope, $http, $cookies) {
+    $scope.data = [];
+    
+    var requestPersona = $http.get('/api/personas');  
+    var requestAsistencia = $http.get('/api/asistencia');
+    
+    requestPersona.success(function(data) {
+        $scope.data = data;            //Ver de crear un array con los datos de personas y asistencias(un join de ambas)
+        console.log('Data personas.js');
+    });
+    
+    requestPersona.error(function(data){
+        console.log('Error: ' + data); 
+    });
+    requestAsistencia.success(function(data2) {
+        $scope.data2 = data2;
+        console.log('Data asistencia.js');
+    });
+    
+    requestAsistencia.error(function(data2){
+        console.log('Error: ' + data2);
+    });
 
 
-			// Voy a buscar la persona
-		var laPersona = $http.get($scope.list);
 
-		laPersona.success(function(data) {
-	       	$scope.persona = data;
-	       	console.log('persona.afiliacionId: ' + $scope.persona.afiliacionId);
-	   		
-	   		// Si tiene afiliacion
-	   		if ($scope.persona.afiliacionId) {
-		   		var laAfiliacion = $http.get('http://localhost:3000/api/afiliacions/'+ data.afiliacionId );
-			 	// Voy a buscar el estado de la afiliacion
-			 	laAfiliacion.success(function(data2) {
-			    	$scope.afiliacion = data2;
-			    	console.log($scope.afiliacion); 	
-					if (data2) {
-						// Si la afiliacion esta activo
-			        	if(data2.estado==1){
-			        		var elPago=$http.get('http://localhost:3000/api/pago/?documento='+ data.documento);
-			        		// Voy a buscar ultimo pago
-			        		//varifico si es una lista o un objeto
-			        		var pPago;
-			        		if(elPago.length>0){
-								pPago=elPago[0];
 
-			        		}else{
-			        			pPago=elPago;
-			        		}
-			        		if(laAfiliacion.createdAt>=pPago.createdAt){
-								$scope.pago =pPago;
-			        		}else{
-			        			$scope.pago =null;
-			        		}
-			        	}else{
-			        		console.log("no esta activo");
-			        		$scope.pasa = 'No se encuentra activo';
-			        	}
-			        }
-			    });
-			    
-			    laAfiliacion.error(function(data2){
-			   		console.log('Error: ' + data2);
-				}); 				
-			}
-			else {
-				console.log('No tiene afiliacion');
-				$scope.pasa = 'No tiene afiliacion';
-			}
-			EditPersonDialogModel();
-	   	});
-	   	laPersona.error(function(data){
-	     	console.log('Error: ' + data);
-		}); 
-	}		
+    // Orden de la tabla
+    $scope.sortType     = 'documento'; // set the default sort type
+    $scope.sortReverse  = false;  // set the default sort order
+
+    $scope.setCookie = function (cookie) {
+        $cookies.put('Pagocookie', cookie);
+        window.location.href = "http://localhost:3000/pagos";
+    }
 });
