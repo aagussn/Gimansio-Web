@@ -58,6 +58,9 @@ exports.findAll = (req, res) => {
 	
 	Pago.findAll(condition).then(pago => {
 	  // Send all pagos to Client
+	  if(pago.length>0){
+	  	pago.reverse();
+	  }
 	  res.send(pago);
 	});
 };
@@ -68,50 +71,6 @@ exports.findById = (req, res) => {
 		res.send(pago);
 	})
 };
-// ultimopago
-/*exports.findUltimoPago = (req, res) => {	
-	Pago.query("select * from  pagos where documento="+req.params.documento+" and id=(select max(id) from pagos where documento="+req.params.documento: DOMString).then(pago => {
-		res.send(pago);
-	})
-};*/
-// ultimopago
-exports.findUltimoPago = (req, res) => {	
-	var condition =
-	{
-		where:
-			{
-				documento:req.params.documento
-			}
-	}
-	
-	
-	Pago.findAll(condition).then(pago => {
-		var max=0;
-		var a=0;
-		var elPago=null;
-		if(pago){
-			do{
-				if(max>0){
-					a+=1;
-					elPago=pago[a];
-					if(elPago.id>max){
-						max=elPago.id;
-					}	
-				}else {
-					elPago=pago[a];
-					max=elPago.id;
-				}
-				
-			}
-			while(a < pago.length);
-			
-		}
-
-	  res.send(elPago);
-	});
-};
-
-
  
 // Update a pago
 exports.update = (req, res) => {

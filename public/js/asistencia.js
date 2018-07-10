@@ -1,6 +1,5 @@
-var app = angular.module('asistencia',[]);
-
-var app = angular.module('test', []);
+var app = angular.module('Asistencia',[]);
+//var app = angular.module('test', []);
 /* http://embed.plnkr.co/AI4qn8/
 	// this represents the state of the dialog: a visible flag and the person being edited
 	var EditPersonDialogModel = function () {
@@ -55,11 +54,12 @@ var app = angular.module('test', []);
 */
 app.controller('AsistenciaControl',  function($scope, $http) {
     //Busco la persona	
-	$scope.submit = function() {
+		$scope.submit = function() {
 		$scope.list = 'http://localhost:3000/api/personas/';
 		$scope.list +=  $scope.Documento;
-		
-		// Voy a buscar la persona
+
+
+			// Voy a buscar la persona
 		var laPersona = $http.get($scope.list);
 
 		laPersona.success(function(data) {
@@ -78,9 +78,20 @@ app.controller('AsistenciaControl',  function($scope, $http) {
 			        	if(data2.estado==1){
 			        		var elPago=$http.get('http://localhost:3000/api/pago/?documento='+ data.documento);
 			        		// Voy a buscar ultimo pago
+			        		//varifico si es una lista o un objeto
+			        		var pPago;
+			        		if(elPago.length>0){
+								pPago=elPago[0];
 
-			        	}
-			        	else{
+			        		}else{
+			        			pPago=elPago;
+			        		}
+			        		if(laAfiliacion.createdAt>=pPago.createdAt){
+								$scope.pago =pPago;
+			        		}else{
+			        			$scope.pago =null;
+			        		}
+			        	}else{
 			        		console.log("no esta activo");
 			        		$scope.pasa = 'No se encuentra activo';
 			        	}
