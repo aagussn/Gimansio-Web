@@ -1,62 +1,31 @@
 <!doctype html>
-<html lang="en" ng-app="Ingreso">
+<html lang="en" ng-app="ingreso">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!--<meta http-equiv="" =""></meta>-->
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href=/css/bootstrap.min.css>
-	  <link rel="stylesheet" href=/css/common.css>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
 
-    <!-- Iconos -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-    
-
-    <title>Ingreso</title>
-     <style>
-      .animated{
-        opacity:1;
-        max-height:auto;
-        overflow: hidden; 
-      }
-      .animated.ng-hide{
-        opacity:0;
-        max-height: 0px !important;
-        display: block !important;
-      }
-    </style>
-
+  <!-- Iconos -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" >
+    <title>Personas</title>
   </head>
-  <body class="text-center">
-  	<div ng-include="'barra'"> </div>    
-  	<div class="container"><br><br><br></div>
-
-
-	<!-- Form ingresar -->
-	<div class="container">
-		<form class="form-signin" ng-submit="submit()" ng-controller="IngresoControl">
-			<h1 class="h3 mb-3 font-weight-normal">Bienvenido a Arenas del Pinar <br><br><br> </h1>
-			<label for="inputUser" class="sr-only">Documento</label>
-			<input type="text" id="inputUser" class="form-control" placeholder="Documento" ng-model="Documento" required autofocus>
-	    <button class="btn btn-lg btn-primary btn-block" type="submit" id="submit" value="Submit" alert=true >INGRESAR</button>
-
-    <ul ng-hide= "listaAsistencia.length < 0 " class='animated'>
-      <li>
-          <div class="alert alert-primary" role="alert">
-            A simple primary alert—check it out!
-          </div>
-      </li>
-    </ul>
-
-
-    <script src="/js/ingreso.js"></script>
-
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="/js/jquery-3.3.1.min.js"></script>
+  <body ng-controller="myController">
+  
+  <div ng-include="'/barra'"> </div>    
+  <div class="container"><br><br><br></div>
+  <div class="container content-wrapper">
+  </div>
+    <!-- Optional JavaScript -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
-    <script src="/js/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
+    <script src="/js/ingreso.js"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="/js/jquery-3.3.1.min.js" ></script>
+    <script src="/js/popper.min.js" ></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/common.js"></script>
   </body>
