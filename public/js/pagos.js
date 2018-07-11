@@ -2,6 +2,11 @@ var app = angular.module('Pagos', ['ngCookies']);
 
 app.controller('myController', function($scope, $http, $cookies) {
     $scope.documento = $cookies.get('Pagocookie');
+
+    if (!$scope.documento) {
+        window.location.href = "http://localhost:3000/";
+    }
+
     console.log($scope.documento);
     
     $scope.list = 'http://localhost:3000/api/personas/';

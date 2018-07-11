@@ -18,8 +18,20 @@ app.controller('myController', function($scope, $http, $cookies) {
     $scope.sortType     = 'documento'; // set the default sort type
     $scope.sortReverse  = false;  // set the default sort order
 
+    $scope.updPersona = function (cookie) {
+        var now = new Date();
+        var exp = new Date(now);
+        exp.setMinutes(now.getMinutes()+1)
+        $cookies.put('updPersona', cookie, {'expires': exp});
+        window.location.href = "http://localhost:3000/afiliacion";
+    }
+
     $scope.setCookie = function (cookie) {
-        $cookies.put('Pagocookie', cookie);
+        var now = new Date();
+        var exp = new Date(now);
+        exp.setMinutes(now.getMinutes()+1)
+        $cookies.put('Pagocookie', cookie, {'expires': exp});
         window.location.href = "http://localhost:3000/pagos";
     }
+
 });

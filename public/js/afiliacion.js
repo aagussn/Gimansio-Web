@@ -1,6 +1,36 @@
 var app = angular.module('afiliacion', ['ngCookies']);
 
 app.controller('myController', function($scope, $http, $cookies) {
+    // Si tiene cargada una persona es porque hace el upd entonces voy a buscar los datos y lo dejo todo para modificar
+    var documento = $cookies.get('updPersona');
+    if (documento) {
+        $scope.list = 'http://localhost:3000/api/personas/'+ documento;        
+        var request = $http.get($scope.list);
+        request.success(function (persona) {
+            $scope.documento    = persona.documento;     
+            $scope.nombre       = persona.nombre;        
+            $scope.apellido     = persona.apellido;      
+            $scope.telefono     = persona.telefono;      
+            $scope.sexo         = persona.sexo;          
+            $scope.email        = persona.email;         
+            $scope.fechan       = new Date(persona.fechaN);        
+            $scope.emergencia   = persona.emergencia;    
+            $scope.direccion    = persona.direccion;     
+            $scope.telcontacto  = persona.contactofamilia;
+            $scope.nomcontacto  = persona.nombrecontacto; 
+            $scope.idobjetivos  = persona.idobjetivos;   
+            $scope.idhorario    = persona.idhorario;     
+            $scope.idlogro      = persona.idlogro;       
+            $scope.idinteres    = persona.idinteres;     
+            $scope.identerado   = persona.identerado;    
+            $scope.idaviso      = persona.idaviso;       
+            $scope.idprofesion  = persona.idprofesion;
+
+            console.log('documento existe');
+            console.log(persona);
+
+        });    
+    }
     $scope.submit = function() {
         console.log('submit afilacion');
 
@@ -17,9 +47,18 @@ app.controller('myController', function($scope, $http, $cookies) {
             emergencia: $scope.emergencia,
             direccion: $scope.direccion,
             contactofamilia: $scope.telcontacto,
-            nombrecontacto: $scope.nomcontacto
+            nombrecontacto: $scope.nomcontacto,
+            idobjetivos:$scope.idobjetivos,
+            idhorario: $scope.idhorario,
+            idlogro: $scope.idlogro,
+            idinteres: $scope.idinteres,
+            identerado: $scope.identerado,
+            idaviso: $scope.idaviso,
+            idprofesion: $scope.idprofesion
         });
         
+        console.log(parameter);
+
         var request = $http.post($scope.list, parameter);
 
         request.success(function (data) {

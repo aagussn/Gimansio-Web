@@ -18,7 +18,13 @@ exports.create = (req, res) => {
 	  direccion:req.body.direccion,
 	  contactofamilia:req.body.contactofamilia,
 	  nombrecontacto:req.body.nombrecontacto,
-	  idprofesion:req.body.idprofesion
+	  idprofesion:req.body.idprofesion,
+	  idobjetivos:req.body.idobjetivos,
+	  idhorario: req.body.idhorario,
+	  idlogro: req.body.idlogro,
+	  idinteres: req.body.idinteres,
+	  identerado: req.body.identerado,
+  	  idaviso: req.body.idaviso
 
 	}).then(persona => {		
 		// Send created usuario to client
@@ -106,7 +112,13 @@ exports.update = (req, res) => {
 	  					direccion:req.body.direccion,
 	  					contactofamilia:req.body.contactofamilia,
 	  					nombrecontacto:req.body.nombrecontacto,
-	  					idprofesion:req.body.idprofesion
+	  					idprofesion:req.body.idprofesion,
+	  					idobjetivos:req.body.idobjetivos,
+					  	idhorario: req.body.idhorario,
+						idlogro: req.body.idlogro,
+						idinteres: req.body.idinteres,
+						identerado: req.body.identerado,
+					  	idaviso: req.body.idaviso
 					   }, 
 					 { where: {documento: req.params.documento} }
 				   ).then(() => {
