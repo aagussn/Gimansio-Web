@@ -19,7 +19,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING(20)
       },      
       fechaN: {
-      type: Sequelize.DATE
+      type: Sequelize.DATEONLY
       },
       telefono: {
       type: Sequelize.INTEGER
@@ -43,6 +43,24 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING(20)
       },           
       idprofesion: {
+      type: Sequelize.INTEGER
+      },
+      idobjetivos: {
+      type: Sequelize.INTEGER
+      },
+      idhorario: {
+      type: Sequelize.INTEGER
+      },
+      idlogro: {
+      type: Sequelize.INTEGER
+      },
+      idinteres: {
+      type: Sequelize.INTEGER
+      },
+      identerado: {
+      type: Sequelize.INTEGER
+      },
+      idaviso: {
       type: Sequelize.INTEGER
       },
      	});

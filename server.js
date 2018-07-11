@@ -49,7 +49,7 @@ app.get('/afiliacion', function (req, res) {
 
 // Ruta asistencia
 app.get('/asistencia', function (req, res) {
-  res.sendFile(path.join(__dirname + '/public/html/asistencia.html'));
+  res.sendFile(path.join(__dirname + '/public/html/ingreso.html'));
 });
 
 // Ruta pago
