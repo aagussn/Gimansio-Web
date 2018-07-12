@@ -14,11 +14,11 @@
     <title>ingreso</title>
   </head>
   <body ng-controller="myController">
-    <form class="form-signin" ng-submit="submit()" >
+    <form class="form-signin" ng-submit="submit()">
       <div ng-include="'/barra'"> </div>    
       <div class="container"><br><br><br></div>
-      <div class="container content-wrapper">
-        <img class="mb-4" src="/img/mancuerna.svg" alt="" width="90" height="90">
+      <div class="container content-wrapper" align="center">
+        <img class="mb-4" src="/img/mancuerna.svg" alt="" width="90" height="90" align="center">
         <h1 class="h3 mb-3 font-weight-normal">Bienvenido a Arenas del Pinar <br><br><br> </h1>
         <label for="inputUser" class="sr-only">Documento</label>
         <input type="text" id="inputUser" class="form-control" placeholder="Documento" ng-model="Documento" required autofocus>
@@ -26,20 +26,53 @@
 
 
             <!-- <h2>{{pago}}</h2> comentario prueba-->
-              
+             {{pago}}
+             {{bandera}}
 
-              <ul ng-show= "pago!=null " class='animated'>
-                <li>
-                 <div class="alert alert-danger role="alert">Bienvenido {{persona.nombre}}  {{persona.apelido}} ultima cuota paga {{pago.mes}}/{{pago.anio}} </div>
-                </li>
+
+
+<hr>
+          <div ng-switch on={{bandera}}>
+              
+              <div ng-switch-when=>
+                <ul ng-show= "pago!=null " class='animated'>
+                  <li>
+                    <div class="alert alert-danger role="alert">Bienvenido {{persona.nombre}}   {{persona.apelido}} ultima cuota paga {{pago.mes}}/{{pago.anio}} </div>
+                  </li>
                </ul>
-
+             </div>
               
+              <div ng-switch-when="2">
+                 <ul ng-show= "pago!=null " class='animated'>
+                  <li>
+                    <div class="alert alert-success" role="alert">Bienvenido {{persona.nombre}}   {{persona.apelido}} ultima cuota paga {{pago.mes}}/{{pago.anio}} </div>
+                  </li>
+               </ul>
+             </div>
+              <div ng-switch-when="3">
+                 <ul ng-show= "pago!=null " class='animated'>
+                  <li>
+                    <div class="alert alert-warning" role="alert">Bienvenido {{persona.nombre}}   {{persona.apelido}} ultima cuota paga {{pago.mes}}/{{pago.anio}} </div>
+                  </li>
+               </ul>
+             </div>
+             <div ng-switch-when="4">
+                 <ul ng-show= "pago!=null " class='animated'>
+                  <li>
+                    <div class="alert alert-warning" role="alert">Verifique el documento el afiliado no existe</div>
+                  </li>
+               </ul>
+             </div>
 
+             <div ng-switch-default>
+                 <p>Ingresa tu documento</p>
+                </div>
+              </div>
+          </div>
+<hr>
 
-
-    </div>
-  </form>
+      </div>
+    </form>
 
     <!-- Optional JavaScript -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>

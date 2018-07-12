@@ -10,7 +10,7 @@ sequelize
     console.error('Error: no se pudo establecer coneccion a la base de datos.', err);
   });
   //si la estructura de la base de datos no existe la crea
-	//sequelize.sync();
+sequelize.sync();
 
 // Forzado: true dropea las tablas si existen
 //sequelize.sync({force: true}).then(() => {
