@@ -95,7 +95,7 @@ exports.findAll = (req, res) => {
 exports.findById = (req, res) => {	
 	Persona.findById(req.params.documento).then(persona => {
 		res.send(persona);
-	})
+	})//.catch(falloCallback);
 };
  
 // Update a persona
