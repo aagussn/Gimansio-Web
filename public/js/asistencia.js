@@ -62,6 +62,12 @@ app.controller('AsistenciaControl', function($scope, $http, $cookies) {
                        });
                         listaResultado.push();
                         $scope.listaAsistencia=listaResultado;
+                        //Cabiar el valor de la variable $scrope. que quiero luego de los segundos que quiera
+                        setTimeuot(function(){
+                            $scope.$apply(function(){
+                                $scope.listaAsistencia=listaResultado;
+                             });
+                        },2000);
                     }
                 }
             }

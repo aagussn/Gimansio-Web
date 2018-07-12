@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-	  <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+	  <link rel="stylesheet" href="/css/common.css">
 
 	<!-- Iconos -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" >
@@ -35,12 +35,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="item in data | filter:search:strict | orderBy:sortType:false | limitTo: 10 ">
-            <th scope="row">{{item.documento}}</th>
-            <td>{{item.nombre}}</td>
-            <td>{{item.apellido}}</td>
-            <td>{{item.fecha}}</td>
-            <td><a href="#" ng-click="setCookie(item.documento)"><button type="button" class="btn btn-default btn-sm"><i class="fas fa-dollar-sign"></i></button></a></td>
+          <tr ng-repeat="listaAsistencia in data | filter:search:strict | orderBy:sortType:false | limitTo: 10 ">
+            <th scope="row">{{listaAsistencia.documento}}</th>
+            <td>{{listaAsistencia.nombre}}</td>
+            <td>{{listaAsistencia.apellido}}</td>
+            <td>{{listaAsistencia.fecha}}</td>
+            <td><a href="#" ng-click="setCookie(listaAsistencia.documento)"><button type="button" class="btn btn-default btn-sm"><i class="fas fa-dollar-sign"></i></button></a></td>
           </tr>
         </tbody>
       </table>  
