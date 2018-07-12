@@ -28,7 +28,6 @@ app.controller('myController', function($scope, $http, $cookies) {
 
             console.log('documento existe');
             console.log(persona);
-
         });    
     }
     $scope.submit = function() {
@@ -59,45 +58,56 @@ app.controller('myController', function($scope, $http, $cookies) {
         
         console.log(parameter);
 
-        var request = $http.post($scope.list, parameter);
-
-        request.success(function (data) {
-            $scope.data = data;
-            console.log('data afilacion');
-            console.log(data);
-
-            // Si esta bien creo la afiliacion
-            $scope.list = 'http://localhost:3000/api/afiliacions';
-            
-            parameter = JSON.stringify({
-                documento : $scope.documento,
-                estado : 1
-            });
-
+        // Si no hay documento es porque es nuevo entonces hago insert
+        if (!documento) {
             var request = $http.post($scope.list, parameter);
-            // Si creo bien la afiliacion tengo que actualizar la persona con el idafi
-            request.success(function (afiliacion) {
-                console.log('afilacion');
-                console.log(afiliacion);
-                
-                $scope.list = 'http://localhost:3000/api/personas/'+ $scope.documento;
+
+            request.success(function (data) {
+                $scope.data = data;
+                console.log('data afilacion');
+                console.log(data);
+
+                // Si esta bien creo la afiliacion
+                $scope.list = 'http://localhost:3000/api/afiliacions';
                 
                 parameter = JSON.stringify({
-                    afiliacionId: afiliacion.id
+                    documento : $scope.documento,
+                    estado : 1
                 });
-                console.log('parameter afilacion');
-                console.log(parameter);
 
-                var request = $http.put($scope.list, parameter);
+                var request = $http.post($scope.list, parameter);
+                // Si creo bien la afiliacion tengo que actualizar la persona con el idafi
+                request.success(function (afiliacion) {
+                    console.log('afilacion');
+                    console.log(afiliacion);
+                    
+                    $scope.list = 'http://localhost:3000/api/personas/'+ $scope.documento;
+                    
+                    parameter = JSON.stringify({
+                        afiliacionId: afiliacion.id
+                    });
+                    console.log('parameter afilacion');
+                    console.log(parameter);
 
-                // Lo redirijo a la pagina principal
+                    var request = $http.put($scope.list, parameter);
+
+                    // Lo redirijo a la pagina principal
+                    window.location.href = "http://localhost:3000/personas";
+                });
+            });
+
+            request.error(function (data) {
+                console.log('Error: ' + data);
+            });
+        } // Sino es nuevo hago el upd
+        else {
+            $scope.list += "/" + documento;
+            var request = $http.put($scope.list, parameter);
+            request.success(function (data) {
                 window.location.href = "http://localhost:3000/personas";
             });
-        });
-
-        request.error(function (data) {
-            console.log('Error: ' + data);
-        });
-
+            // Borro la cookie
+            $cookies.remove('updPersona');
+        }
     };
 });

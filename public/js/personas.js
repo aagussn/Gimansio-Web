@@ -6,8 +6,26 @@ app.controller('myController', function($scope, $http, $cookies) {
     var request = $http.get('/api/personas');    
     
     request.success(function(data) {
-        $scope.data = data;
-        console.log('Data personas.js');
+        
+        console.log(data);
+
+        // voy a buscar la ultima afiliacion
+        for (var i = 0; i<data.length; i++) {
+            var id = data[i].afiliacionId;
+            var doc = data[i].documento;
+            var nom = data[i].nombre;
+            var ape = data[i].apellido;
+            console.log(id);
+            var request = $http.get('http://localhost:3000/api/afiliacions/' + id );
+            request.success(function(Afiliacion) {
+                console.log(Afiliacion);
+                var todo = {documento:doc, 
+                            nombre:nom, 
+                            apellido:ape, 
+                            estadoafi:Afiliacion.estado};
+                $scope.data.push(todo);
+            });
+        }
     });
     
     request.error(function(data){
@@ -34,4 +52,11 @@ app.controller('myController', function($scope, $http, $cookies) {
         window.location.href = "http://localhost:3000/pagos";
     }
 
+    $scope.darBaja = function (documento) {
+        console.log('darBaja');
+    }
+    
+    $scope.darAlta = function (documento) {
+        console.log('darAlta');   
+    }
 });

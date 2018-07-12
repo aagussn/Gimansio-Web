@@ -43,25 +43,25 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING(20)
       },           
       idprofesion: {
-      type: Sequelize.INTEGER
+      type: Sequelize.STRING(20)
       },
       idobjetivos: {
-      type: Sequelize.INTEGER
+      type: Sequelize.STRING(20)
       },
       idhorario: {
-      type: Sequelize.INTEGER
+      type: Sequelize.STRING(20)
       },
       idlogro: {
-      type: Sequelize.INTEGER
+      type: Sequelize.STRING(20)
       },
       idinteres: {
-      type: Sequelize.INTEGER
+      type: Sequelize.STRING(20)
       },
       identerado: {
-      type: Sequelize.INTEGER
+      type: Sequelize.STRING(20)
       },
       idaviso: {
-      type: Sequelize.INTEGER
+      type: Sequelize.STRING(20)
       },
      	});
 	Persona.belongsTo(afi);
