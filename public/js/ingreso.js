@@ -4,13 +4,12 @@ app.controller('myController', function($scope, $http){
 //variables globales
 var f = new Date();
 var fecha=f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();
-var año=f.getMonth() +1;
-var mes=f.getFullYear();
+var mes=f.getMonth() +1;
+var anio=f.getFullYear();
 
-console.log(fecha);
-console.log(año);
-console.log(mes);
-console.log(mesanio);
+//console.log(fecha);
+//console.log(año);
+//console.log(mes);
 
 $scope.bandera=0;
 console.log('valor de la bandera: ' + $scope.bandera);
@@ -38,18 +37,29 @@ console.log('valor de la bandera: ' + $scope.bandera);
 					    			// Si la afiliacion esta activo
 			        				if($scope.afiliacion.estado==1){
 			        					// Buscar ultimo pago
-			        					console.log("por que entres");
 			        					var losPagos=$http.get('http://localhost:3000/api/pago?documento='+ $scope.afiliacion.documento);
 	       				       			losPagos.success(function(data3) {
 	       									if(data3){	
-	       										$scope.pago = data3;
-			        							var elPago=data3[0];
+	       										console.log("por que entres "+data3[0].documento);
+												var idmax;
+												for(var a=0;a<data3.length;a++){
+													var Paga=data[a];
+													for(var b=0;b<data3.length;b++){
+														var Page=data[b];	
+														if(Paga.anio>=Page.anio){
+															if(Paga.mes>=Page.mes){
+																idmax=a;
+															}
+														}
+													}											
+												}			
+			        							var elPago=data3[idmax];
 			     								console.log('resultado Pago ' + data3.length);
 			      								//console.log(" elPago "+ elPago+ ""  +elPago.documento+ " "+elPago.mes+elPago.anio);
 			        							//aca controlo que la fecha del pago  sea mayor a la fecha de afiliacion activa
 			        							if($scope.afiliacion.updatedAt<=elPago.createdAt){
 													$scope.pago=elPago;
-													console.log('resultado previo final ' + $scope.pago);
+													console.log('resultado previo final ' + $scope.pago.mes +" "+$scope.pago.anio);
 													$scope.bandera=1;
 												  	mesPago=elPago.mes;
 												  	anioPago=elPago.anio;
@@ -64,7 +74,7 @@ console.log('valor de la bandera: ' + $scope.bandera);
 												  		}
 										  			}else{
 										  				if(anioPago<anio){
-															$scope.bandera=5;
+															$scope.bandera=3;
 										  				}
 										  			}
      
