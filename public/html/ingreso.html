@@ -27,56 +27,27 @@
 
 
          
-             {{pago}}             {{bandera}}
+           <!--  {{pago}}             {{bandera}}-->
        
-        <hr> 
+      
           <div ng-switch on="bandera">
-              
-              <div ng-switch-when="1">
-                <ul ng-show= "pago!=null " class='animated'>
-                  <li>
-                    <div class="alert alert-danger alert-dismissible role="alert">Bienvenido {{persona.nombre}}   {{persona.apelido}} ultima cuota paga {{pago.mes}}/{{pago.anio}} </div>
-                  </li>
-               </ul>
+             <div ng-switch-when="1">
+                <div class="alert alert-success alert-dismissible role="alert">Bienvenido {{persona.nombre}}   {{persona.apelido}} ultima cuota paga {{pago.mes}}/{{pago.anio}} </div>
              </div>
               
              <div ng-switch-when="2">
-              <ul ng-show= "pago!=null " class='animated'>
-                <li>
-                  <div class="alert alert-success alert-dismissible fade in">
-                   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                      <strong>Success!</strong> This alert box could indicate a successful or positive action.
-                  </div>
-                </li>
-              </ul>
-            
-
+                <div class="alert alert-danger alert-dismissible role="alert">Bienvenido {{persona.nombre}}   {{persona.apelido}} ultima cuota paga {{pago.mes}}/{{pago.anio}} </div>
              </div>
-              <div ng-switch-when="3">
-                <ul ng-show= "pago!=null " class='animated'>
-                 <!-- <ul ng-show= "1==1 " class='animated'>-->
-                 <li>
-                   <div class="alert alert-warning" role="alert">Bienvenido {{persona.nombre}}   {{persona.apelido}} ultima cuota paga {{pago.mes}}/{{pago.anio}} </div>
-                 </li>
-                </ul>
-              </div>
              
-
              <div ng-switch-when="4">
-                 
-                    <div class="alert alert-success alert-dismissible">
-                      <a href="#" class="close" data-dismiss="alert" aria-label="close" ng-click="reloadRoute()" class="navbar-brand" title="home"  data-translate> &times;</a>
-                       <strong>Ups!!! </strong>El documento ingressado no pertenec a un socio
-                    </div>
-                
+               <div class="alert alert-info alert-dismissible role="alert">Bienvenido, el documento que ingresaste no pertenese a un socio</div>
              </div>
 
-             <div ng-switch-default>
-                 <p>Ingresa tu documento</p>
-                </div>
+              <div ng-switch-default>
+                  <div class="alert alert-info alert-dismissible role="alert">Bienvenido, {{persona.nombre}}   {{persona.apelido}}  de momento no tienen nungun pago</div>
               </div>
           </div>
-        <hr>
+        
       </div>
     </form>
 

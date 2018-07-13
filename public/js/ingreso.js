@@ -1,5 +1,16 @@
 var app = angular.module('ingreso', []);
-app.controller('myController', function($scope, $http) {
+app.controller('myController', function($scope, $http){
+
+//variables globales
+var f = new Date();
+var fecha=f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();
+var año=f.getMonth() +1;
+var mes=f.getFullYear();
+
+console.log(fecha);
+console.log(año);
+console.log(mes);
+console.log(mesanio);
 
 $scope.bandera=0;
 console.log('valor de la bandera: ' + $scope.bandera);
@@ -39,7 +50,24 @@ console.log('valor de la bandera: ' + $scope.bandera);
 			        							if($scope.afiliacion.updatedAt<=elPago.createdAt){
 													$scope.pago=elPago;
 													console.log('resultado previo final ' + $scope.pago);
-													$scope.bandera=3;
+													$scope.bandera=1;
+												  	mesPago=elPago.mes;
+												  	anioPago=elPago.anio;
+
+												  	if(anioPago==anio){
+												  		if(mesPago==mes){
+												  			$scope.bandera=1;
+												  		}else{
+												  			if(mesPago<mes){
+												  				$scope.bandera=2;
+												  			}
+												  		}
+										  			}else{
+										  				if(anioPago<anio){
+															$scope.bandera=5;
+										  				}
+										  			}
+     
 			        							}	
 			        							else{
 			        								$scope.pago =null;
@@ -56,10 +84,10 @@ console.log('valor de la bandera: ' + $scope.bandera);
 	    });laPersona.error(function(data){console.log('Error no encontre persona: ' + data);});
 	}
 
-setTimeout(()=>{    //<<<---    using ()=> syntax
-      $scope.bandera=0;
-      $scope.$apply;
- }, 3000);
+	 	/*$scope.$apply(function(){
+      		$scope.bandera=0;
+    	});
+ 	},30);*/
 
 
 });
