@@ -26,12 +26,14 @@
         <a href="/afiliacion"><button class="btn btn-sm btn-success" id="addPersona"><i class="fas fa-plus-square"></i></button></a>
       </div>
     	<div class="container form-row">
-        <table class="table">
-          <thead>
+        <table class="table table-hover table-striped">
+          <thead >
             <tr>
               <th scope="col" > <a href="#" ng-click="sortType = 'documento'"> Documento </a></th>
               <th scope="col"> <a href="#" ng-click="sortType = 'nombre'"> Nombre</a></th>
               <th scope="col"><a href="#" ng-click="sortType = 'apellido'">Apellido</a></th>
+              <th scope="col"></th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
@@ -41,7 +43,7 @@
               <td>{{item.apellido}}</td>
               <td><a href="#" ng-click="setCookie(item.documento)"><button type="button" class="btn btn-default btn-sm"><i class="fas fa-dollar-sign"></i></button></a></td>
               <td>
-                <a href="#" ng-click="darBaja(item.documento)"><i ng-class="{'d-none': item.estadoafi=='0'}" class="fas fa-minus-circle"></i></a>
+                <a href="#" ng-click="darBaja(item.idafi)"><i ng-class="{'d-none': item.estadoafi=='0'}" class="fas fa-minus-circle"></i></a>
                 <a href="#" ng-click="darAlta(item.documento)"><i ng-class="{'d-none': item.estadoafi=='1'}" class="fas fa-plus-circle"></i></a>           
               </td>
             </tr>
