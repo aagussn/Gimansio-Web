@@ -40,20 +40,33 @@ console.log('valor de la bandera: ' + $scope.bandera);
 			        					var losPagos=$http.get('http://localhost:3000/api/pago?documento='+ $scope.afiliacion.documento);
 	       				       			losPagos.success(function(data3) {
 	       									if(data3){	
-	       										console.log("por que entres "+data3[0].documento);
-												var idmax;
-												for(var a=0;a<data3.length;a++){
-													var Paga=data[a];
-													for(var b=0;b<data3.length;b++){
-														var Page=data[b];	
-														if(Paga.anio>=Page.anio){
-															if(Paga.mes>=Page.mes){
-																idmax=a;
+	       										console.log("por que entre "+data3[0].documento);
+												var indiceUltimoPago=0;
+												var anioMax=0;
+												var mesMax=0;
+
+												//busco el año del ultimo pago
+
+												for(var a = 0 ; a<data3.length ; a++){
+													if(data3[a].anio>anioMax){
+														if(data3[a].tipomovimiento==1 && data3[a].tipopago==1){
+															anioMax=data3[a].anio;
+														}
+													}	
+												}
+													//teniendo el año del ultimo pago busco el ultimo
+													for(var a=0;a<data3.length;a++){
+														if(data3[a].anio==anioMax){
+															if(data3[a].mes>mesMax){
+																if(data3[a].tipomovimiento==1 &&  data3[a].tipopago==1){
+																	mesMax=data3[a].mes;
+																	indiceUltimoPago=a;	
+																}	
 															}
 														}
-													}											
-												}			
-			        							var elPago=data3[idmax];
+													}	
+			
+			        							var elPago=data3[indiceUltimoPago];
 			     								console.log('resultado Pago ' + data3.length);
 			      								//console.log(" elPago "+ elPago+ ""  +elPago.documento+ " "+elPago.mes+elPago.anio);
 			        							//aca controlo que la fecha del pago  sea mayor a la fecha de afiliacion activa
