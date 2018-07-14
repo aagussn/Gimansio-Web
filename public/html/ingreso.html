@@ -32,19 +32,19 @@
       
           <div ng-switch on="bandera">
              <div ng-switch-when="1">
-                <div class="alert alert-success alert-dismissible role="alert">Bienvenido {{persona.nombre}}   {{persona.apelido}} ultima cuota paga {{pago.mes}}/{{pago.anio}} </div>
+                <div class="alert alert-success alert-dismissible role="alert">Bienvenido {{persona.nombre}}   {{persona.apellido}} última cuota paga {{pago.mes}}/{{pago.anio}} </div>
              </div>
               
              <div ng-switch-when="2">
-                <div class="alert alert-danger alert-dismissible role="alert">Bienvenido {{persona.nombre}}   {{persona.apelido}} ultima cuota paga {{pago.mes}}/{{pago.anio}} </div>
+                <div class="alert alert-danger alert-dismissible role="alert">Bienvenido {{persona.nombre}}   {{persona.apellido}} última cuota paga {{pago.mes}}/{{pago.anio}} </div>
              </div>
              
              <div ng-switch-when="4">
-               <div class="alert alert-info alert-dismissible role="alert">Bienvenido, el documento que ingresaste no pertenese a un socio</div>
+               <div class="alert alert-info alert-dismissible role="alert">Bienvenido, el documento ingresado no pertenece a un socio</div>
              </div>
 
               <div ng-switch-when="3">
-                  <div class="alert alert-info alert-dismissible role="alert">Bienvenido, {{persona.nombre}}   {{persona.apelido}}  de momento no tienen nungun pago</div>
+                  <div class="alert alert-info alert-dismissible role="alert">Bienvenido, {{persona.nombre}}   {{persona.apellido}}  de momento no tienen ningún pago</div>
               </div>
           </div>
         

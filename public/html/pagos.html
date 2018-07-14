@@ -22,14 +22,14 @@
         <div class="container form-row" >
           <form class="form-signin" ng-submit="submit()">
             <input id="mes" class="col-md-4" type="text" pattern="[0-9.]+" ng-model="search.mes" ng-change="clear()" placeholder="Mes" required>
-            <input class="col-md-4" type="text" pattern="[0-9.]+" ng-model="search.anio" ng-change="clear()" placeholder="Anio" required>
+            <input class="col-md-4" type="text" pattern="[0-9.]+" ng-model="search.anio" ng-change="clear()" placeholder="Año" required>
             <select id="inputSexo" class="form-control col-md-4"  ng-model="search.tipomovimiento"" placeholder="Tipo de Movimiento" ng-change="clear()" required>            
               <option value="1">Pago</option>
-              <option value="2">Anulacion</option>
+              <option value="2">Anulación</option>
             </select>
             <select id="inputSexo" class="form-control" ng-model="search.tipopago" ng-change="clear()" required  placeholder="Tipo de Pago">            
               <option value="1">Cuota</option>
-              <option value="2">Matricula</option>
+              <option value="2">Matrícula</option>
               <option value="3">Otro</option>
             </select>
             <input class="col-md-4" type="text" pattern="[0-9.]+" ng-model="search.importe" ng-change="clear()" placeholder="Importe" required>        
@@ -54,10 +54,10 @@
                 <td>{{item.anio}}</td>
                 <td>
                   <label for="tipomovimiento" ng-class="{'d-none': item.tipomovimiento=='2'}">Pago</label>
-                  <label for="tipomovimiento" ng-class="{'d-none': item.tipomovimiento=='1'}">Anulacion</label></td>
+                  <label for="tipomovimiento" ng-class="{'d-none': item.tipomovimiento=='1'}">Anulación</label></td>
                 <td>
                   <label for="tipopago" ng-class="{'d-none': item.tipopago=='2' || item.tipopago=='3'}">Cuota</label>
-                  <label for="tipopago" ng-class="{'d-none': item.tipopago=='1' || item.tipopago=='3'}">Matricula</label>
+                  <label for="tipopago" ng-class="{'d-none': item.tipopago=='1' || item.tipopago=='3'}">Matrícula</label>
                   <label for="tipopago" ng-class="{'d-none': item.tipopago=='1' || item.tipopago=='2'}">Otro</label></td>
                 <td>{{item.importe}}</td>
               </tr>

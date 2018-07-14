@@ -110,7 +110,7 @@ console.log('valor de la bandera: ' + $scope.bandera);
 			        							else{
 			        								$scope.pago =null;
 			        							}
-			        		   				}else{console.log('Error la persona no tien pagos');$scope.bandera=4;
+			        		   				}else{console.log('Error la persona no tiene pagos');$scope.bandera=4;
 			        		   						$timeout(function callAtTimeout() {
    																$scope.bandera=0;
     															$scope.$apply;;
@@ -120,7 +120,7 @@ console.log('valor de la bandera: ' + $scope.bandera);
 
 
 
-			        				}else {console.log('el estado de la filiacion es 0(inactivo)'); $scope.bandera=4;
+			        				}else {console.log('El estado de la afiliación es 0(inactivo)'); $scope.bandera=4;
 			        						$timeout(function callAtTimeout() {
    												$scope.bandera=0;
     											$scope.$apply;;
@@ -136,13 +136,18 @@ console.log('valor de la bandera: ' + $scope.bandera);
 
 
        			
-       			}else{console.log('No existe afiliacion, puede ser una inconsistencia');$scope.bandera=4;
+       			}else{console.log('No existe afiliación, puede ser una inconsistencia');$scope.bandera=4;
        					$timeout(function callAtTimeout() {
    							$scope.bandera=0;
     						$scope.$apply;;
 						}, 2000);
        				}	
-	    	}else {console.log('Error la persona no existe');$scope.bandera=4; }
+	    	}else {console.log('Error la persona no existe');$scope.bandera=4; 
+	    			$timeout(function callAtTimeout() {
+   							$scope.bandera=0;
+    						$scope.$apply;;
+						}, 2000);
+	    		}
 	    });laPersona.error(function(data){console.log('Error no encontre persona: ' + data);});
 	}
 
