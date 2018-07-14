@@ -1,5 +1,5 @@
 var app = angular.module('ingreso', []);
-app.controller('myController', function($scope, $http){
+app.controller('myController', function($scope, $http,$timeout){
 
 //variables globales
 var f = new Date();
@@ -39,8 +39,10 @@ console.log('valor de la bandera: ' + $scope.bandera);
 			        					// Buscar ultimo pago
 			        					var losPagos=$http.get('http://localhost:3000/api/pago?documento='+ $scope.afiliacion.documento);
 	       				       			losPagos.success(function(data3) {
-	       									if(data3){	
-	       										console.log("por que entre "+data3[0].documento);
+	       									if(data3.id>0 || data3.length>0){
+	       									
+	
+	       										console.log("por que entre "+ data3.id);
 												var indiceUltimoPago=0;
 												var anioMax=0;
 												var mesMax=0;
@@ -80,14 +82,27 @@ console.log('valor de la bandera: ' + $scope.bandera);
 												  	if(anioPago==anio){
 												  		if(mesPago==mes){
 												  			$scope.bandera=1;
-												  		}else{
+												  			$scope.antes=$scope.bandera;
+												  			  $timeout(function callAtTimeout() {
+   																$scope.bandera=0;
+    															$scope.$apply;;
+																}, 2000);
+									  				    }else{
 												  			if(mesPago<mes){
 												  				$scope.bandera=2;
+												  				$timeout(function callAtTimeout() {
+   																$scope.bandera=0;
+    															$scope.$apply;;
+																}, 2000);
 												  			}
 												  		}
 										  			}else{
 										  				if(anioPago<anio){
 															$scope.bandera=3;
+															$timeout(function callAtTimeout() {
+   																$scope.bandera=0;
+    															$scope.$apply;;
+																}, 2000);
 										  				}
 										  			}
      
@@ -95,22 +110,44 @@ console.log('valor de la bandera: ' + $scope.bandera);
 			        							else{
 			        								$scope.pago =null;
 			        							}
-			        		   				}else{console.log('Error la persona no tien pagos');$scope.bandera=4;} 
+			        		   				}else{console.log('Error la persona no tien pagos');$scope.bandera=4;
+			        		   						$timeout(function callAtTimeout() {
+   																$scope.bandera=0;
+    															$scope.$apply;;
+																}, 2000);
+			        		   					} 
 			        		   			}); losPagos.error(function(data3){console.log('Erroraaaaa: ' + data3);});
 
-			        				}else {console.log('el estado de la filiacion es 0(inactivo)'); $scope.bandera=4;}    
-        	  			}else{console.log('No existe afiliacion para el documento ingresado');$scope.bandera=4;} 
+
+
+			        				}else {console.log('el estado de la filiacion es 0(inactivo)'); $scope.bandera=4;
+			        						$timeout(function callAtTimeout() {
+   												$scope.bandera=0;
+    											$scope.$apply;;
+												}, 2000);
+			        					}    
+        	  			}else{console.log('No existe afiliacion para el documento ingresado');$scope.bandera=4;
+        	  					$timeout(function callAtTimeout() {
+   									$scope.bandera=0;
+    								$scope.$apply;;
+								}, 2000);
+        	  				} 
         	  		});laAfiliacion.error(function(data2){onsole.log('Error no encontre afiliacion');});
+
+
        			
-       			}else{console.log('No existe afiliacion, puede ser una inconsistencia');$scope.bandera=4;}	
+       			}else{console.log('No existe afiliacion, puede ser una inconsistencia');$scope.bandera=4;
+       					$timeout(function callAtTimeout() {
+   							$scope.bandera=0;
+    						$scope.$apply;;
+						}, 2000);
+       				}	
 	    	}else {console.log('Error la persona no existe');$scope.bandera=4; }
 	    });laPersona.error(function(data){console.log('Error no encontre persona: ' + data);});
 	}
 
-	 	/*$scope.$apply(function(){
-      		$scope.bandera=0;
-    	});
- 	},30);*/
 
 
 });
+
+
