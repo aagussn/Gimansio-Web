@@ -106,6 +106,19 @@ console.log('valor de la bandera: ' + $scope.bandera);
 										  				}
 										  			}
      
+			        							if($scope.bandera==1 ||$scope.bandera==2 || $scope.bandera==3 ){
+			        								// Hago el insert
+        											parameter = JSON.stringify({
+                        								documento: $scope.persona.documento
+                    								});
+												  	var laAsistencia = $http.post('http://localhost:3000/api/asistencia',parameter);
+			 										// Voy a buscar el estado de la afiliacion
+			 										laAsistencia.success(function(data4) {
+           												console.log('Inserte la asisencia' + data);
+			 										});
+			 											laAsistencia.error(function(data2){onsole.log('Error no ingrese asistencia');
+			 											});	
+			        							}	
 			        							}	
 			        							else{
 			        								$scope.pago =null;

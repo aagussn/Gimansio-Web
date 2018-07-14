@@ -39,8 +39,9 @@ app.controller('AsistenciaControl', function($scope, $http, $cookies) {
 
 
 
+// Creo un array con los datos que nesecito para mostrar
 
-
+  
     //recorro la lista y armo una lista resultante.campos a tener en 
     //cuenta createdAt,updatedAt, id y documento
     //eligo una persona    

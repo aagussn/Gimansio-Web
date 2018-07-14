@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="Asistencia">
+<html lang="en" ng-app="asistencia">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -13,58 +13,47 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" >
     <title>Asistencias</title>
   </head>
-  <body ng-controller="AsistenciaControl" class="text-center">
-  <h2>Asistencias</h2>
-  <div ng-include="'barra'"> </div>    
+  <body ng-controller="myController">
+  
+  <div ng-include="'/barra'"> </div>    
   <div class="container"><br><br><br></div>
-  <div class="container content-wrapper">
-    <div class="container-fluid">
-      <div class="container form-row"  class="text-center">
-        <input class="col-md-3" type="text" ng-model="search.documento" placeholder="Documento" >
-        <input class="col-md-3" type="text" ng-model="search.nombre" placeholder="Nombre">
-        <input class="col-md-3" type="text" ng-model="search.apellido" placeholder="Apellido">
-        <input class="col-md-3" type="text" ng-model="search.anio" placeholder="Año">
-        <input class="col-md-3" type="text" ng-model="search.mes" placeholder="Mes">
-        <input class="col-md-3" type="text" ng-model="search.fecha" placeholder="Fecha">
-
-
-
-       
-      </div>
-      <div class="container form-row">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col" > <a href="#" ng-click="sortType = 'documento'"> Documento </a></th>
-              <th scope="col"> <a href="#" ng-click="sortType = 'nombre'"> Nombre</a></th>
-              <th scope="col"><a href="#" ng-click="sortType = 'apellido'">Apellido</a></th>
-              <th scope="col"><a href="#" ng-click="sortType = 'mes'">mes</a></th>
-              <th scope="col"><a href="#" ng-click="sortType = 'anio'">año</a></th>
-              <th scope="col"><a href="#" ng-click="sortType = 'fecha'">año</a></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="item in data | filter:search:strict | orderBy:sortType:false | limitTo: 10 ">
-              <th scope="row">{{item.documento}}</th>
-              <td>{{item.nombre}}</td>
-              <td>{{item.apellido}}</td>
-              <td>{{item.mes}}</td>
-              <td>{{item.anio}}</td>
-              <td>{{item.fecha}}</td>
-            </tr>
-          </tbody>
-        </table>  
-      </div>
+  <div class="container">
+    <div class="container form-row" >
+      <input class="col-sm-3" type="text" ng-model="search.documento" placeholder="Documento">
+      <input class="col-sm-3" type="text" ng-model="search.nombre" placeholder="Nombre">
+      <input class="col-sm-3" type="text" ng-model="search.apellido" placeholder="Apellido">
+      <input class="col-sm-3" type="text" ng-model="search.fecha" placeholder="Fecha">
+    </div>
+    <div class="container form-row">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" > <a href="#" ng-click="sortType = 'documento'"> Documento </a></th>
+            <th scope="col"> <a href="#" ng-click="sortType = 'nombre'"> Nombre</a></th>
+            <th scope="col"><a href="#" ng-click="sortType = 'apellido'">Apellido</a></th>
+            <th scope="col"><a href="#" ng-click="sortType = 'fecha'">Fecha</a></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="listaAsistencia in data | filter:search:strict | orderBy:sortType:false | limitTo: 10 ">
+            <th scope="row">{{listaAsistencia.documento}}</th>
+            <td>{{listaAsistencia.nombre}}</td>
+            <td>{{listaAsistencia.apellido}}</td>
+            <td>{{listaAsistencia.fecha}}</td>
+            <td><a href="#" ng-click="setCookie(listaAsistencia.documento)"><button type="button" class="btn btn-default btn-sm"><i class="fas fa-dollar-sign"></i></button></a></td>
+          </tr>
+        </tbody>
+      </table>  
     </div>
   </div>
     <!-- Optional JavaScript -->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
-    <script src="/js/asistencia.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
+  <script src="/js/asistencia.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="/js/jquery-3.3.1.min.js" ></script>
-    <script src="/js/popper.min.js" ></script>
-    <script src="/js/bootstrap.min.js"></script>
+    <script src="../js/jquery-3.3.1.min.js" ></script>
+    <script src="../js/popper.min.js" ></script>
+    <script src="../js/bootstrap.min.js"></script>
     <script src="/js/common.js"></script>
   </body>
 </html>
