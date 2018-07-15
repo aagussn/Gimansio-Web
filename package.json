@@ -1,9 +1,21 @@
 {
-  "name": "hola",
-  "description": "hola",
+  "name": "gimansio-web",
   "version": "1.0.0",
-  "private": true,
-  "requires": true,
+  "description": "soy un gim",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aagussn/Gimansio-Web.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aagussn/Gimansio-Web/issues"
+  },
+  "homepage": "https://github.com/aagussn/Gimansio-Web#readme",
   "dependencies": {
     "@compone/class": {
       "version": "1.1.1",
