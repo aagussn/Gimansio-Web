@@ -13,39 +13,48 @@ app.controller('myController', function($scope, $http, $cookies) {
     var listaResultado=null;
 
     //Lista de personas
-    function personasList(){
     requestPersona.success(function(data) {
-        auxPersona=data;            //Ver de crear un array con los datos de personas y asistencias(un join de ambas)
-        console.log('Data personas.js' + data.length);
-        
-    });}
-    requestPersona.error(function(data){
-        console.log('Error: ' + data); 
+        //verifico que la lista no este vacia
+        if(data3.length>0){
+            auxPersona=data;            //Ver de crear un array con los datos de personas y asistencias(un join de ambas)
+            //Lista de asistencias
+            requestAsistencia.success(function(data2) {
+                if(data2.length>0){
+                    auxAsistencia = data2;
+                    requestAfiliacion.success(function(data3) {
+                        
+                        auxAfiliacion=data3;            //Ver de crear un array con los datos de personas y asistencias(un join de ambas)
+       
     });
 
-    //Lista de asistencias
-      function asistenciasList(){
-     requestAsistencia.success(function(data2) {
-        auxAsistencia = data2;
-        console.log('Data asistencia.js ' + data2.length);
-        
-    });
-    requestAsistencia.error(function(data2){
-        console.log('Error: ' + data2);
-    });}
+
+                }else{
+                    console.log('Data asistencias NO EXISTE ' + data2.length);
+                }
+            });requestAsistencia.error(function(data2){
+                console.log('Error: ' + data2);
+                });
+
+
+        }else{
+            console.log('Data personas NO EXISTE ' + data.length);
+        }
+    }); requestPersona.error(function(data){
+        console.log('Error: ' + data); 
+        });
+
+
+
+
+
+    
 
     //Busco lista de afiliaciones
-     function afiliacionList(){
-    requestAfiliacion.success(function(data3) {
-        auxAfiliacion=data3;            //Ver de crear un array con los datos de personas y asistencias(un join de ambas)
-        console.log('Data afiliaciones.js' + data3.length);
-       
-    });}
+        
     requestAfiliacion.error(function(data3){
         console.log('Error: ' + data3); 
     });
 
-     console.log("las afis "+auxAfiliacion.length+"las personas "+auxPersona.length+"las asisten "+auxAsistencia.length); 
    
 
    
