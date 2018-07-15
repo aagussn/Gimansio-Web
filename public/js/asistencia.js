@@ -15,54 +15,21 @@ app.controller('myController', function($scope, $http, $cookies) {
     //Lista de personas
     requestPersona.success(function(data) {
         //verifico que la lista no este vacia
-        if(data3.length>0){
+        if(data.length>0){
             auxPersona=data;            //Ver de crear un array con los datos de personas y asistencias(un join de ambas)
             //Lista de asistencias
             requestAsistencia.success(function(data2) {
                 if(data2.length>0){
                     auxAsistencia = data2;
                     requestAfiliacion.success(function(data3) {
+                        if(data3.length>0) {   
+                            auxAfiliacion=data3;            //Ver de crear un array con los datos de personas y asistencias(un join de ambas)
                         
-                        auxAfiliacion=data3;            //Ver de crear un array con los datos de personas y asistencias(un join de ambas)
-       
-    });
 
-
-                }else{
-                    console.log('Data asistencias NO EXISTE ' + data2.length);
-                }
-            });requestAsistencia.error(function(data2){
-                console.log('Error: ' + data2);
-                });
-
-
-        }else{
-            console.log('Data personas NO EXISTE ' + data.length);
-        }
-    }); requestPersona.error(function(data){
-        console.log('Error: ' + data); 
-        });
-
-
-
-
-
-    
-
-    //Busco lista de afiliaciones
-        
-    requestAfiliacion.error(function(data3){
-        console.log('Error: ' + data3); 
-    });
-
-   
-
-   
-  
-    //recorro la lista y armo una lista resultante.campos a tener en 
+                            //recorro la lista y armo una lista resultante.campos a tener en 
     //cuenta createdAt,updatedAt, id y documento
     //eligo una persona    
-    function listadoResult(){
+ 
         for(var a=0;a<auxPersona.length;a++){
             laPersona=auxPersona[a];
             //busco si la persona tiene una afiliacion activa(estado=1)
@@ -94,14 +61,50 @@ app.controller('myController', function($scope, $http, $cookies) {
                 }
             }
         }
-    }    
+        
 
-    //PROMESAS
-     personasList().then(function(resultado){return afiliacionList(resultado);})
-                .then(function(nuevoResultado){return asistenciasList(nuevoResultado);})
-                    .then(function(nuevoResultado2){return listadoResult(nuevoResultado2);})
-                        .then(function(resultadoFinal){console.log('Obtenido el resultado final: ' + resultadoFinal);})
-                            .catch(error);
+
+
+
+
+
+
+
+
+
+                        }else{
+                            console.log('Data afiliacion NO EXISTE ' + data3.length);
+                        }
+                    });requestAfiliacion.error(function(data3){
+                        console.log('Error: ' + data3); 
+    }); 
+
+
+                }else{
+                    console.log('Data asistencias NO EXISTE ' + data2.length);
+                }
+            });requestAsistencia.error(function(data2){
+                console.log('Error: ' + data2);
+                });
+
+
+        }else{
+            console.log('Data personas NO EXISTE ' + data.length);
+        }
+    }); requestPersona.error(function(data){
+        console.log('Error: ' + data); 
+        });
+
+
+
+
+
+
+   
+
+   
+  
+    
 
     // Orden de la tabla
     $scope.sortType     = 'documento'; // set the default sort type
