@@ -5,7 +5,7 @@ app.controller('IndexControl',  function($scope, $http, $cookies) {
 	console.log(chkLogin);
 	if (!chkLogin) {
 		console.log('bla');
-		window.location.href = "http://localhost:3000/login";
+		window.location.href = "/login";
 	}
 });
 	

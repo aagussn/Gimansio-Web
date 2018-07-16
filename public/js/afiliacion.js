@@ -4,7 +4,7 @@ app.controller('myController', function($scope, $http, $cookies) {
     // Si tiene cargada una persona es porque hace el upd entonces voy a buscar los datos y lo dejo todo para modificar
     var documento = $cookies.get('updPersona');
     if (documento) {
-        $scope.list = 'http://localhost:3000/api/personas/'+ documento;        
+        $scope.list = '/api/personas/'+ documento;        
         var request = $http.get($scope.list);
         request.success(function (persona) {
             $scope.documento    = persona.documento;     
@@ -33,7 +33,7 @@ app.controller('myController', function($scope, $http, $cookies) {
     $scope.submit = function() {
         console.log('submit afilacion');
 
-        $scope.list = 'http://localhost:3000/api/personas';
+        $scope.list = '/api/personas';
         
         var parameter = JSON.stringify({
             documento : $scope.documento,
@@ -68,7 +68,7 @@ app.controller('myController', function($scope, $http, $cookies) {
                 console.log(data);
 
                 // Si esta bien creo la afiliacion
-                $scope.list = 'http://localhost:3000/api/afiliacions';
+                $scope.list = '/api/afiliacions';
                 
                 parameter = JSON.stringify({
                     documento : $scope.documento,
@@ -81,7 +81,7 @@ app.controller('myController', function($scope, $http, $cookies) {
                     console.log('afilacion');
                     console.log(afiliacion);
                     
-                    $scope.list = 'http://localhost:3000/api/personas/'+ $scope.documento;
+                    $scope.list = '/api/personas/'+ $scope.documento;
                     
                     parameter = JSON.stringify({
                         afiliacionId: afiliacion.id
@@ -92,7 +92,7 @@ app.controller('myController', function($scope, $http, $cookies) {
                     var request = $http.put($scope.list, parameter);
 
                     // Lo redirijo a la pagina principal
-                    window.location.href = "http://localhost:3000/personas";
+                    window.location.href = "/personas";
                 });
             });
 
@@ -104,7 +104,7 @@ app.controller('myController', function($scope, $http, $cookies) {
             $scope.list += "/" + documento;
             var request = $http.put($scope.list, parameter);
             request.success(function (data) {
-                window.location.href = "http://localhost:3000/personas";
+                window.location.href = "/personas";
             });
             // Borro la cookie
             $cookies.remove('updPersona');

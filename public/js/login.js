@@ -5,13 +5,13 @@ app.controller('LoginControl',  function($scope, $http, $cookies) {
 	// Si ya esta logeado lo mando a la pagina principal
 	var chkLogin = $cookies.get('login');
 	if (chkLogin) {
-		window.location.href = "http://localhost:3000/";
+		window.location.href = "/";
 	}
 
 	$scope.list = '';
 
 	$scope.submit = function() {
-		$scope.list = 'http://localhost:3000/api/usuarios/?';
+		$scope.list = '/api/usuarios/?';
 		$scope.list += 'user=' + $scope.User + '&pswd=' + $scope.Pswd;
 		
 		var request = $http.get($scope.list);
@@ -23,7 +23,7 @@ app.controller('LoginControl',  function($scope, $http, $cookies) {
 	        	var exp = new Date(now);
 	        	exp.setMinutes(now.getMinutes()+60)
 	        	$cookies.put('login', 1, {'expires': exp});
-	        	window.location.href = "http://localhost:3000/";
+	        	window.location.href = "/";
 	        	console.log("Boh");
 	        }
 			// console.log(data.length);

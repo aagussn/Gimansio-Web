@@ -15,7 +15,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
             var doc = data[i].documento;
             var nom = data[i].nombre;
             var ape = data[i].apellido;
-            var promise = $http.get('http://localhost:3000/api/afiliacions/' + id );
+            var promise = $http.get('/api/afiliacions/' + id );
             //console.log(id);
             promises.push(promise);
         };
@@ -47,7 +47,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
         var exp = new Date(now);
         exp.setMinutes(now.getMinutes()+1)
         $cookies.put('updPersona', cookie, {'expires': exp});
-        window.location.href = "http://localhost:3000/afiliacion";
+        window.location.href = "/afiliacion";
     }
 
     $scope.setCookie = function (cookie) {
@@ -55,7 +55,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
         var exp = new Date(now);
         exp.setMinutes(now.getMinutes()+1)
         $cookies.put('Pagocookie', cookie, {'expires': exp});
-        window.location.href = "http://localhost:3000/pagos";
+        window.location.href = "/pagos";
     }
 
     $scope.darBaja = function (idafi) {
@@ -64,10 +64,10 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
         parameter = JSON.stringify({
                         estado : 0
                     });
-        $scope.list = 'http://localhost:3000/api/afiliacions/' + idafi;
+        $scope.list = '/api/afiliacions/' + idafi;
         var request = $http.put($scope.list, parameter);
         request.success(function (data) {
-            window.location.href = "http://localhost:3000/personas";
+            window.location.href = "/personas";
         });        
 
     }
@@ -79,19 +79,19 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
                         estado : 1,
                         documento: documento
                     });
-        $scope.list = 'http://localhost:3000/api/afiliacions';
+        $scope.list = '/api/afiliacions';
         var request = $http.post($scope.list, parameter);
 
         request.success(function (data) {
             // Si inserto bien actualizo el dato en la tabla personas
-            $scope.list = 'http://localhost:3000/api/personas/'+ documento;
+            $scope.list = '/api/personas/'+ documento;
 
             parameter = JSON.stringify({
                 afiliacionId: data.id
             });
 
             var request = $http.put($scope.list, parameter);
-            window.location.href = "http://localhost:3000/personas";
+            window.location.href = "/personas";
         });        
 
     }

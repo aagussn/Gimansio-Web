@@ -18,7 +18,7 @@ console.log('valor de la bandera: ' + $scope.bandera);
  	//Busco la persona	
 	$scope.submit = function() {
 		
-		$scope.list = 'http://localhost:3000/api/personas/';
+		$scope.list = '/api/personas/';
 		$scope.list +=  $scope.Documento;
 		// Voy a buscar la persona
 		var laPersona = $http.get($scope.list);
@@ -28,7 +28,7 @@ console.log('valor de la bandera: ' + $scope.bandera);
 				console.log('resultado Persona ' + $scope.persona.nombre+" "+$scope.persona.documento+" "+$scope.persona.afiliacionId );
    				// Si tiene afiliacion
 	   			if ($scope.persona.afiliacionId) {
-		   			var laAfiliacion = $http.get('http://localhost:3000/api/afiliacions/'+ data.afiliacionId );
+		   			var laAfiliacion = $http.get('/api/afiliacions/'+ data.afiliacionId );
 			 		// Voy a buscar el estado de la afiliacion
 			 		laAfiliacion.success(function(data2) {
 			 			if(data2){
@@ -37,7 +37,7 @@ console.log('valor de la bandera: ' + $scope.bandera);
 					    			// Si la afiliacion esta activo
 			        				if($scope.afiliacion.estado==1){
 			        					// Buscar ultimo pago
-			        					var losPagos=$http.get('http://localhost:3000/api/pago?documento='+ $scope.afiliacion.documento);
+			        					var losPagos=$http.get('/api/pago?documento='+ $scope.afiliacion.documento);
 	       				       			losPagos.success(function(data3) {
 	       									if(data3.id>0 || data3.length>0){
 	       									
@@ -111,7 +111,7 @@ console.log('valor de la bandera: ' + $scope.bandera);
         											parameter = JSON.stringify({
                         								documento: $scope.persona.documento
                     								});
-												  	var laAsistencia = $http.post('http://localhost:3000/api/asistencia',parameter);
+												  	var laAsistencia = $http.post('/api/asistencia',parameter);
 			 										// Voy a buscar el estado de la afiliacion
 			 										laAsistencia.success(function(data4) {
            												console.log('Inserte la asisencia' + data);

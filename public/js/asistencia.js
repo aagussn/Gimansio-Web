@@ -3,9 +3,9 @@ var app = angular.module('asistencia', ['ngCookies']);
 app.controller('myController', function($scope, $http, $cookies) {
     $scope.data = [];
     
-    var requestPersona = $http.get('http://localhost:3000/api/personas');  
-    var requestAsistencia = $http.get('http://localhost:3000/api/asistencia');
-    var requestAfiliacion = $http.get('http://localhost:3000/api/afiliacions');
+    var requestPersona = $http.get('/api/personas');  
+    var requestAsistencia = $http.get('/api/asistencia');
+    var requestAfiliacion = $http.get('/api/afiliacions');
 
     var auxPersona=null;
     var auxAsistencia=null;
@@ -112,6 +112,6 @@ app.controller('myController', function($scope, $http, $cookies) {
 
     $scope.setCookie = function (cookie) {
         $cookies.put('Pagocookie', cookie);
-        window.location.href = "http://localhost:3000/pagos";
+        window.location.href = "/pagos";
     }
 });
