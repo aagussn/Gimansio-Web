@@ -4,12 +4,12 @@ app.controller('myController', function($scope, $http, $cookies) {
     $scope.documento = $cookies.get('Pagocookie');
 
     if (!$scope.documento) {
-        window.location.href = "http://localhost:3000/";
+        window.location.href = "/";
     }
 
     console.log($scope.documento);
     
-    $scope.list = 'http://localhost:3000/api/personas/';
+    $scope.list = '/api/personas/';
     $scope.list += $scope.documento;
     var request = $http.get($scope.list);
     
@@ -24,7 +24,7 @@ app.controller('myController', function($scope, $http, $cookies) {
 
     $scope.pagos = [];
     
-    $scope.list = 'http://localhost:3000/api/pago?';
+    $scope.list = '/api/pago?';
     $scope.list += 'documento=' + $scope.documento;
 
     var request = $http.get($scope.list);    
@@ -39,7 +39,7 @@ app.controller('myController', function($scope, $http, $cookies) {
     });
 
     $scope.submit = function() {
-        $scope.list = 'http://localhost:3000/api/pago';
+        $scope.list = '/api/pago';
         
         var parameter = JSON.stringify({
             documento: $scope.documento,
