@@ -17,7 +17,8 @@
   
   <div ng-include="'/barra'"> </div>    
   <div class="container"><br><br><br></div>
-  <div class="container">
+  <div class="container content-wrapper">
+  <div class="container-fluid">  
     <div class="container form-row" >
       <input class="col-sm-3" type="text" ng-model="search.documento" placeholder="Documento">
       <input class="col-sm-3" type="text" ng-model="search.nombre" placeholder="Nombre">
@@ -35,25 +36,26 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="listaAsistencia in data | filter:search:strict | orderBy:sortType:false | limitTo: 10 ">
-            <th scope="row">{{listaAsistencia.documento}}</th>
+          <tr ng-repeat="mostar in data | filter:search:strict | orderBy:sortType:false | limitTo: 20 ">
+            <th scope="row">
+                {{listaAsistencia.documento}}</th>
             <td>{{listaAsistencia.nombre}}</td>
             <td>{{listaAsistencia.apellido}}</td>
             <td>{{listaAsistencia.fecha}}</td>
-            <td><a href="#" ng-click="setCookie(listaAsistencia.documento)"><button type="button" class="btn btn-default btn-sm"><i class="fas fa-dollar-sign"></i></button></a></td>
           </tr>
         </tbody>
       </table>  
     </div>
   </div>
+</div>  
     <!-- Optional JavaScript -->
   <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
   <script src="/js/asistencia.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="../js/jquery-3.3.1.min.js" ></script>
-    <script src="../js/popper.min.js" ></script>
-    <script src="../js/bootstrap.min.js"></script>
+    <script src="/js/jquery-3.3.1.min.js" ></script>
+    <script src="/js/popper.min.js" ></script>
+    <script src="/js/bootstrap.min.js"></script>
     <script src="/js/common.js"></script>
   </body>
 </html>

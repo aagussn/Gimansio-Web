@@ -24,54 +24,48 @@ app.controller('myController', function($scope, $http, $cookies) {
                     requestAfiliacion.success(function(data3) {
                         if(data3.length>0) {   
                             auxAfiliacion=data3;            //Ver de crear un array con los datos de personas y asistencias(un join de ambas)
-                        
-
                             //recorro la lista y armo una lista resultante.campos a tener en 
-    //cuenta createdAt,updatedAt, id y documento
-    //eligo una persona    
- 
-        for(var a=0;a<auxPersona.length;a++){
-            laPersona=auxPersona[a];
-            //busco si la persona tiene una afiliacion activa(estado=1)
-            for( var b=0;b<auxAfiliacion.length;b++){
-                laAfiliacion=auxAfiliacion[b];
-                if(laAfiliacion.documento==laPersona.documento && laAfiliacion.estado==1){
-                    //busco las asistencias del afiliado activo
-                    for(var c=0;c<auxAfiliacion.length;c++){
-                        laAsistencia=auxAfiliacion[c];
-                        if(laAsistencia.documento==laPersona.documento){
-                            if(laAsistencia.updatedAt>=laAfiliacion.updatedAt){
-                                var paraMostrar = JSON.stringify({
-                                    documento: laPersona.documento,
-                                    nombre: laPersona.nombre,
-                                    apellido:laPersona.apellido,    
-                                    fecha: laAsistencia.createdAt,
-                            });
-                                listaResultado.push();
-                                $scope.listaAsistencia=listaResultado;
-                                //Cabiar el valor de la variable $scrope. que quiero luego de los segundos que quiera
-                                setTimeuot(function(){
-                                 $scope.$apply(function(){
-                                    $scope.listaAsistencia=listaResultado;
-                                    });
-                                },2000);
-                            }           
-                        }
-                    }
-                }
-            }
-        }
-        
-
-
-
-
-
-
-
-
-
-
+                            //cuenta createdAt,updatedAt, id y documento
+                            //eligo una persona    
+                            for(var a=0;a<auxPersona.length;a++){
+                                laPersona=auxPersona[a];
+                            //busco si la persona tiene una afiliacion activa(estado=1)
+                                for( var b=0;b<auxAfiliacion.length;b++){
+                                    laAfiliacion=auxAfiliacion[b];
+                                    if(laAfiliacion.documento==laPersona.documento && laAfiliacion.estado==1){
+                                        //busco las asistencias del afiliado activo
+                                        for(var c=0;c<auxAfiliacion.length;c++){
+                                            laAsistencia=auxAfiliacion[c];
+                                            if(laAsistencia.documento==laPersona.documento){
+                                                if(laAsistencia.updatedAt>=laAfiliacion.updatedAt){
+                                                    var paraMostrar = JSON.stringify(
+                                                        {
+                                                        documento: laPersona.documento,
+                                                        nombre: laPersona.nombre,
+                                                        apellido:laPersona.apellido,    
+                                                        fecha: laAsistencia.createdAt,
+                                                        }
+                                                    );
+                                                        console.log(paraMostrar);
+                                                        var listprueba=null;
+                                                        listprueba.push(paraMostrar);
+                                                        console.log(listprueba.length);
+                                                        console.log(listprueba[0]);
+                                                        $scope.mostar=paraMostrar;
+                                                        $scope.listaAsistencia=listaResultado;
+                                                        //Cabiar el valor de la variable $scrope. que quiero luego de los segundos que quiera
+                                                        setTimeuot(function(){
+                                                            $scope.$apply(function(){
+                                                            $scope.listaAsistencia=listaResultado;
+                                                            });
+                                                        },2000);
+                                                        
+                                                }           
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }else{
                             console.log('Data afiliacion NO EXISTE ' + data3.length);
                         }
@@ -94,13 +88,6 @@ app.controller('myController', function($scope, $http, $cookies) {
     }); requestPersona.error(function(data){
         console.log('Error: ' + data); 
         });
-
-
-
-
-
-
-   
 
    
   

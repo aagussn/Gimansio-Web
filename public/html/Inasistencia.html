@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="asistencia">
+<html lang="en" ng-app="inasistencia">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -7,24 +7,25 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-	  <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/common.css">
 
-	<!-- Iconos -->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" >
-    <title>Inasistencias</title>
-  </head>
+  <!-- Iconos -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" >
+    <title>Inasistencia</title>
+   </head>
   <body ng-controller="myController">
   
   <div ng-include="'/barra'"> </div>    
   <div class="container"><br><br><br></div>
-  <div class="container">
+  <div class="container content-wrapper">
+  <div class="container-fluid">  
     <div class="container form-row" >
       <input class="col-sm-3" type="text" ng-model="search.documento" placeholder="Documento">
       <input class="col-sm-3" type="text" ng-model="search.nombre" placeholder="Nombre">
       <input class="col-sm-3" type="text" ng-model="search.apellido" placeholder="Apellido">
       <input class="col-sm-3" type="text" ng-model="search.fecha" placeholder="Fecha">
     </div>
-  	<div class="container form-row">
+    <div class="container form-row">
       <table class="table">
         <thead>
           <tr>
@@ -35,21 +36,21 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="listaAsistencia in data | filter:search:strict | orderBy:sortType:false | limitTo: 10 ">
+          <tr ng-repeat="listaAsistencia in data | filter:search:strict | orderBy:sortType:false | limitTo: 20 ">
             <th scope="row">{{listaAsistencia.documento}}</th>
             <td>{{listaAsistencia.nombre}}</td>
             <td>{{listaAsistencia.apellido}}</td>
             <td>{{listaAsistencia.fecha}}</td>
-            <td><a href="#" ng-click="setCookie(listaAsistencia.documento)"><button type="button" class="btn btn-default btn-sm"><i class="fas fa-dollar-sign"></i></button></a></td>
           </tr>
         </tbody>
       </table>  
     </div>
   </div>
+</div>  
     <!-- Optional JavaScript -->
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
-	<script src="/js/asistencias.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
+  <script src="/js/inasistencia.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="../js/jquery-3.3.1.min.js" ></script>
     <script src="../js/popper.min.js" ></script>

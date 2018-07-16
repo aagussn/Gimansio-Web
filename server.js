@@ -47,9 +47,17 @@ app.get('/afiliacion', function (req, res) {
   res.sendFile(path.join(__dirname + '/public/html/afiliacion.html'));
 });
 
+// Ruta ingreso
+app.get('/ingreso', function (req, res) {
+  res.sendFile(path.join(__dirname + '/public/html/ingreso.html'));
+});
 // Ruta asistencia
 app.get('/asistencia', function (req, res) {
-  res.sendFile(path.join(__dirname + '/public/html/ingreso.html'));
+  res.sendFile(path.join(__dirname + '/public/html/asistencia.html'));
+});
+// Ruta asistencia
+app.get('/inasistencia', function (req, res) {
+  res.sendFile(path.join(__dirname + '/public/html/inasistencia.html'));
 });
 
 // Ruta pago
