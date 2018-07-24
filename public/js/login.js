@@ -1,6 +1,9 @@
 var app = angular.module('Login',['ngCookies']);
 
+
 app.controller('LoginControl',  function($scope, $http, $cookies) {
+	$scope.exito=0;
+
 	// Controlo login
 	// Si ya esta logeado lo mando a la pagina principal
 	var chkLogin = $cookies.get('login');
@@ -25,12 +28,16 @@ app.controller('LoginControl',  function($scope, $http, $cookies) {
 	        	$cookies.put('login', 1, {'expires': exp});
 	        	window.location.href = "/";
 	        	console.log("Boh");
+	        	$scope.exito=1;
+
 	        }
 			// console.log(data.length);
 	    });
 	    
 		request.error(function(data){
 	        console.log('Error: ' + data);
+	        	        	$scope.exito=2;
+
 	    });
 
 	};

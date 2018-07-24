@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="ingreso">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -12,7 +12,7 @@
 
     <title>Ingresar</title>
   </head>
-  <body class="text-center" ng-app="Login" ng-controller="LoginControl">
+  <body class="text-center" ng-controller="LoginControl">
 
 	<!-- Form Login -->
 	<div class="container-fluid">
@@ -33,17 +33,31 @@
 			
 			<button class="btn btn-lg btn-primary btn-block" type="submit" id="submit" value="Submit" >Ingresar</button>
 			<p class="mt-5 mb-3 text-muted">Nico & Agus &copy; 2018</p>
+
+			  		<!--<div ng-switch on="bandera">
+             			<div ng-switch-when="1">
+               				<div class="alert alert-success alert-dismissible role="alert">Bienvenido {{persona.nombre}}   {{persona.apellido}} última cuota paga {{pago.mes}}/{{pago.anio}} </div>
+             			</div>
+             			 
+             			<div ng-switch-when="2">
+            				<div class="alert alert-danger alert-dismissible role="alert">Bienvenido {{persona.nombre}}   {{persona.apellido}} última cuota paga {{pago.mes}}/{{pago.anio}} </div>
+             			</div>
+          			</div>-->
+
+
+
 			<!-- <pre>list={{list}}</pre> -->
 		</form>
 	</div>
 	
     <!-- Optional JavaScript -->
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
 	<script src="/js/login.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="/js/jquery-3.3.1.min.js"></script>
-    <script src="/js/popper.min.js"></script>
+    <script src="/js/popper.min.js" ></script>
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/common.js"></script>
   </body>
 </html>
