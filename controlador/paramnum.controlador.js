@@ -6,6 +6,7 @@ exports.create = (req, res) => {
 	// Save to MySQL database
 	Paramnum.create({ 
 	  id: req.body.id,
+	  id: req.body.descripcion,
 	  valor: req.body.tipoparamnum
 
 	}).then(paramnum => {		
@@ -16,7 +17,7 @@ exports.create = (req, res) => {
  
 // FETCH all paramnums
 exports.findAll = (req, res) => {
-	Paramnum.findAll().then(paramnum => {
+	paramnum.findAll().then(paramnum => {
 	  // Send all paramnums to Client
 	  res.send(paramnum);
 	});
@@ -24,7 +25,7 @@ exports.findAll = (req, res) => {
  
 // Find a paramnum by Id
 exports.findById = (req, res) => {	
-	Paramnum.findById(req.params.id).then(paramnum => {
+	paramnum.findById(req.params.id).then(paramnum => {
 		res.send(paramnum);
 	})
 };
@@ -32,7 +33,7 @@ exports.findById = (req, res) => {
 // Update a paramnum
 exports.update = (req, res) => {
 	const id = req.params.id;
-	Paramnum.update( { valor: req.body.valor},
+	paramnum.update( { valor: req.body.valor},
 					 { where: {id: req.params.id} }
 				   ).then(() => {
 					 res.status(200).send("updated successfully de la paramnum del  paramnum");
@@ -42,7 +43,7 @@ exports.update = (req, res) => {
 // Delete a paramnum by Id
 exports.delete = (req, res) => {
 	const id = req.params.id;
-	Paramnum.destroy({
+	paramnum.destroy({
 	  where: { id: id }
 	}).then(() => {
 	  res.status(200).send('deleted successfully a de la paramnum de paramnum');

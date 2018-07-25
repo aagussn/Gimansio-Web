@@ -5,8 +5,9 @@ module.exports = (sequelize, Sequelize) => {
       valor: {
       type: Sequelize.INTEGER
       },
-
-      
+      descripcion: {
+      type: Sequelize.STRING(20)
+      }, 
 	});
 	
 	return Paramnum;
