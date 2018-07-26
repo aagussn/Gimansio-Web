@@ -39,10 +39,11 @@ console.log('valor de la bandera: ' + $scope.bandera);
 			        					// Buscar ultimo pago
 			        					var losPagos=$http.get('/api/pago?documento='+ $scope.afiliacion.documento);
 	       				       			losPagos.success(function(data3) {
+	       				       				console.log("lo que voy a comprarar en if  "+ data3.length+" largo y objeto "+data3.id );
 	       									if(data3.id>0 || data3.length>0){
 	       									
 	
-	       										console.log("por que entre "+ data3.id);
+	       										console.log("entre data3 tiene un largo de "+ data3.length);
 												var indiceUltimoPago=0;
 												var anioMax=0;
 												var mesMax=0;
@@ -79,8 +80,13 @@ console.log('valor de la bandera: ' + $scope.bandera);
 												  	mesPago=elPago.mes;
 												  	anioPago=elPago.anio;
 
+													console.log("fecha del dia "+ anio+mes);
+													console.log("fecha del pago "+ anioPago+mesPago);
+
 												  	if(anioPago==anio){
-												  		if(mesPago==mes){
+												  		console.log("el año es igual");
+												  		if(mesPago==mes ||mesPago>mes ){
+												  			console.log("el mes es igual");
 												  			$scope.bandera=1;
 												  			$scope.antes=$scope.bandera;
 												  			  $timeout(function callAtTimeout() {
@@ -88,6 +94,7 @@ console.log('valor de la bandera: ' + $scope.bandera);
     															$scope.$apply;;
 																}, 2000);
 									  				    }else{
+									  				    	console.log("el mes no es igual ");
 												  			if(mesPago<mes){
 												  				$scope.bandera=2;
 												  				$timeout(function callAtTimeout() {
@@ -98,7 +105,8 @@ console.log('valor de la bandera: ' + $scope.bandera);
 												  		}
 										  			}else{
 										  				if(anioPago<anio){
-															$scope.bandera=3;
+									  				    	console.log("el anio  es menor ");
+															$scope.bandera=2;
 															$timeout(function callAtTimeout() {
    																$scope.bandera=0;
     															$scope.$apply;;
@@ -116,11 +124,16 @@ console.log('valor de la bandera: ' + $scope.bandera);
 			 										laAsistencia.success(function(data4) {
            												console.log('Inserte la asisencia' + data);
 			 										});
-			 											laAsistencia.error(function(data2){onsole.log('Error no ingrese asistencia');
+			 											laAsistencia.error(function(data2){console.log('Error no ingrese asistencia');
 			 											});	
 			        							}	
 			        							}	
 			        							else{
+			        								$scope.bandera=3;
+													$timeout(function callAtTimeout() {
+   														$scope.bandera=0;
+    													$scope.$apply;;
+													}, 2000);
 			        								$scope.pago =null;
 			        							}
 			        		   				}else{console.log('Error la persona no tiene pagos');$scope.bandera=4;
