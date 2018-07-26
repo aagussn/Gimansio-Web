@@ -4,9 +4,9 @@ const paramnum = db.paramnum;
 // Post a paramnum
 exports.create = (req, res) => {	
 	// Save to MySQL database
-	Paramnum.create({ 
+	paramnum.create({ 
 	  id: req.body.id,
-	  id: req.body.descripcion,
+	  descripcion: req.body.descripcion,
 	  valor: req.body.tipoparamnum
 
 	}).then(paramnum => {		

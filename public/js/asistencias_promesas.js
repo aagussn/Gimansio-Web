@@ -4,70 +4,103 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
 
     $scope.listaAsistencia = [];
     
-    var request = $http.get('/api/personas');    
-    var promises=[];    
+    var lstPersonas=[];
+    var lstAfiliacion=[];
+    var lstAsistencia=[];
 
-    request.success(function(data) {    
-        //console.log(data);
-        var afiliaciones = [];
-        var personas=[];
-        var asistencias=[];
-        // voy a buscar la ultima afiliacion
-        for (var i = 0; i<data.length; i++) {
-            var id = data[i].afiliacionId;
-            var doc = data[i].documento;
-            var nom = data[i].nombre;
-            var ape = data[i].apellido;
-            var promiseAfi = $http.get('/api/afiliacions/' + id );
-            var promiseAsis = $http.get('/api/asistencia$'+ doc );
-            //cargo las listas de personas
-            afiliaciones.push(promiseAfi);
-            personas.push(data[i]);
-            asistencias.push(promiseAsis);
-        };
-        promises.push(afiliaciones);//pocicion 0
-        promises.push(personas);//pocicion 1
-        promises.push(asistencias);//pocicion 2
 
-        $q.all(promises).then(function(value){
-            console.log(value);
-            var afiliacionlist;
-            var personaslist;
-            var asistenciaslist;
+        var auxAfi = $http.get('/api/afiliacions/');
+        var auxPer = $http.get('/api/personas');
+        var auxAsis = $http.get('/api/asistencia/');
 
-            for (var i = 0; i<data.length; i++) {
-                if(i==0){afiliacionlist = data[i];}
-                if(i==1){personaslist = data[i];}
-                if(i==2){asistenciaslist = data[i];}
-            }
 
-                for(var i = 0; i<afiliacionlist.length; i++) {
-                    var laAfiliacion=afiliacionlist[i];
-                    if(laAfiliacion.estado==1){
-                        for(var a = 0; a<personaslist.length; a++) {
-                            var laPersona=personaslist[a];
-                            if(laPersona.documento==laAfiliacion.documento){
-                                for(var b = 0; b<asistenciaslist.length; b++) {
-                                    var laAsistencia=asistenciaslist[b];
-                                    //ver si quiero ver la de los afiliados activos
-                                    if(laPersona.documento==laAsistencia.documento && laAsistencia.createdAt>laAfiliacion.createdAt){
-                                        var doc = laPersona.documento;
-                                        var nom = laPersona.nombre;
-                                        var ape = laPersona.apellido;
-                                        var fecha = laAsistencia.createdAt;  
+
+        auxPer.success(function(data){
+            var promesaPer=new Promise((resolve,reject)=>{
+                    
+                for (var i = 0; i<data.length; i++) {
+                    lstPersonas.push(data[i]);
+                }
+                if(lstPersonas.length>0){
+                    promesasTotal.push(promesaPer);
+                    resolve(lstPersonas);
+                }else{
+                    reject("Ocurrio un error al cargar la lista de personas ");   
+                }   
+            }); 
+        });        
+        auxAfi.success(function(data1){
+            var promesaAfi=new Promise((resolve,reject)=>{
+                for (var i = 0; i<data1.length; i++) {
+                    lstAfiliacion.push(data1[i]);
+                }
+                if(lstAfiliacion.length>0){
+                    promesasTotal.push(promesaAfi);
+                    resolve(lstAfiliacion);
+                }else{
+                    reject("Ocurrio un error al cargar la lista de afiliaciones ");   
+                }                  
+            }); 
+        });
+        auxAsis.success(function(data2){
+            var promesaAsis =new Promise((resolve,reject)=>{
+                for (var i = 0; i<data2.length; i++) {
+                    lstAsistencia.push(data2[i]);
+                }
+                if(lstAsistencia.length>0){
+                    promesasTotal.push(promesaAsis);
+                    //hasta aca tengo la lista
+                    resolve(lstAsistencia);
+                }else{
+                    reject("Ocurrio un error al cargar la lista de asistencia ");   
+                } 
+            }); 
+
+        });                                    
+
+
+            
+
+            Promise.all(promesasTotal).then(function(value){
+                console.log("entre al promise.all");
+                console.log(value);                
+
+                var listaAfi=value[0];
+                var listaPer=value[1];
+                var listaAsis=value[2];
+
+
+
+                    for(var a=0; a<listaAfi.length;a++){
+                        laAfi=listaAfi[a];
+                        for(var b=0; b<listaAsis.length;b++){
+                            laAsis=listaAsis[a];
+                            if(laAfi.documento==laAsis.documento && laAsis.createdAt>=laAfi.createdAt){
+                                var encontre=false;
+                                for(var b=0;b<listaPer.length && !encontre;b++){
+                                    laPer=[b];
+                                    if(laPer.documento==laAfi.documento){
+                                        bandera=true;
+                                        var doc = laPer.documento;
+                                        var nom = laPer.nombre;
+                                        var ape = laPer.apellido;
+                                        var fech = laAsis.createdAt;
+                                        console.log(i);
                                         var todo = {documento:doc, 
                                                     nombre:nom, 
                                                     apellido:ape, 
-                                                    fecha:estado};
-                                        $scope.listaAsistencia.push(todo); 
+                                                    fecha:fech
+                                                    };
+                                        $scope.listaAsistencia.push(todo);    
                                     }
-                                }  
-                            }       
+                                }
+                            }
                         }
-                    }        
-                }              
-        });    
-    });
+                    }
+            }); 
+       
+    
+
     // Orden de la tabla
     $scope.sortType     = 'documento'; // set the default sort type
     $scope.sortReverse  = false;  // set the default sort order
