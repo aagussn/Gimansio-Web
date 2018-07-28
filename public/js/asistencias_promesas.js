@@ -9,38 +9,32 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
     var lstAsistencia=[];
 
 
-        var auxAfi = $http.get('/api/afiliacions/');
         var auxPer = $http.get('/api/personas');
         var auxAsis = $http.get('/api/asistencia/');
 
 
 
         auxPer.success(function(data){
+            var promesas=[];
+
             var promesaPer=new Promise((resolve,reject)=>{
                     
                 for (var i = 0; i<data.length; i++) {
                     lstPersonas.push(data[i]);
                 }
                 if(lstPersonas.length>0){
-                    promesasTotal.push(promesaPer);
-                    resolve(lstPersonas);
+                    //promesasTotal.push(promesaPer);
+                    var promesaAfi = $http.get('/api/afiliacions/');
+                    promesas.push(auxAfi);
+                }
+                resolve(listaAsistencia);
                 }else{
                     reject("Ocurrio un error al cargar la lista de personas ");   
                 }   
             }); 
         });        
         auxAfi.success(function(data1){
-            var promesaAfi=new Promise((resolve,reject)=>{
-                for (var i = 0; i<data1.length; i++) {
-                    lstAfiliacion.push(data1[i]);
-                }
-                if(lstAfiliacion.length>0){
-                    promesasTotal.push(promesaAfi);
-                    resolve(lstAfiliacion);
-                }else{
-                    reject("Ocurrio un error al cargar la lista de afiliaciones ");   
-                }                  
-            }); 
+            
         });
         auxAsis.success(function(data2){
             var promesaAsis =new Promise((resolve,reject)=>{

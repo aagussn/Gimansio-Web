@@ -22,7 +22,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.DATEONLY
       },
       telefono: {
-      type: Sequelize.INTEGER
+      type: Sequelize.STRING(20)
       },
       email: {
       type: Sequelize.STRING(50)
