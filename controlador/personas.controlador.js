@@ -4,32 +4,36 @@ const Persona  = db.persona;
 // Post a Usuario
 
 exports.create = (req, res) => {	
-	// creo una persona
-	Persona.create({  
-	  documento : req.body.documento,
-	  afiliacionId: req.body.afiliacionId,
-	  nombre:req.body.nombre,
-	  apellido:req.body.apellido,
-	  telefono:req.body.telefono,
-	  sexo:req.body.sexo,
-	  email:req.body.email,
-	  fechaN:req.body.fechaN,
-	  emergencia:req.body.emergencia,
-	  direccion:req.body.direccion,
-	  contactofamilia:req.body.contactofamilia,
-	  nombrecontacto:req.body.nombrecontacto,
-	  idprofesion:req.body.idprofesion,
-	  idobjetivos:req.body.idobjetivos,
-	  idhorario: req.body.idhorario,
-	  idlogro: req.body.idlogro,
-	  idinteres: req.body.idinteres,
-	  identerado: req.body.identerado,
-  	  idaviso: req.body.idaviso
+	try
+		// creo una persona
+		Persona.create({  
+		  documento : req.body.documento,
+		  afiliacionId: req.body.afiliacionId,
+		  nombre:req.body.nombre,
+		  apellido:req.body.apellido,
+		  telefono:req.body.telefono,
+		  sexo:req.body.sexo,
+		  email:req.body.email,
+		  fechaN:req.body.fechaN,
+		  emergencia:req.body.emergencia,
+		  direccion:req.body.direccion,
+		  contactofamilia:req.body.contactofamilia,
+		  nombrecontacto:req.body.nombrecontacto,
+		  idprofesion:req.body.idprofesion,
+		  idobjetivos:req.body.idobjetivos,
+		  idhorario: req.body.idhorario,
+		  idlogro: req.body.idlogro,
+		  idinteres: req.body.idinteres,
+		  identerado: req.body.identerado,
+	  	  idaviso: req.body.idaviso
 
-	}).then(persona => {		
-		// Send created usuario to client
-		res.send(persona);
-	});
+		}).then(persona => {		
+			// Send created usuario to client
+			res.send(persona);
+		});
+	}catch(e) {
+		console.log("error en insert persona "+e);
+	}	
 };
  
 // FETCH all Persona
