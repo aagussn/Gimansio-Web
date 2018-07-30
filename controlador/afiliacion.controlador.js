@@ -5,14 +5,19 @@ const Afiliacion = db.afiliacion;
 
 exports.create = (req, res) => {	
 	// creo una afiliacion
-	Afiliacion.create({  
-	  documento: req.body.documento,
-	  estado:req.body.estado
+	try{
+		Afiliacion.create({  
+	  		//documento: req.body.documento,
+	  		estado:req.body.estado,
+	  		personaDocumento: req.body.personaDocumento
 
-	}).then(afiliacion => {		
-		// Send created usuario to client
-		res.send(afiliacion);
-	});
+		}).then(afiliacion => {		
+				// Send created usuario to client
+				res.send(afiliacion);
+			});
+	}catch(e) {
+		console.log("error en insert de afiliacion "+e);
+	}
 };
  
 // FETCH all Afiliacion
@@ -25,8 +30,8 @@ exports.findAll = (req, res) => {
 				}
 		}
 	
-		if (req.query.documento) {
-			condition.where.documento = req.query.documento
+		if (req.query.personaDocumento) {
+			condition.where.personaDocumento = req.query.personaDocumento
 		}
 		if (req.query.estado) {
 			condition.where.estado = req.query.estado
