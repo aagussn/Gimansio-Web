@@ -69,12 +69,17 @@ exports.findById = (req, res) => {
  
 // Update a Usuario
 exports.update = (req, res) => {
-	const id = req.params.id;
-	Afiliacion.update( { estado: req.body.estado }, 
-					 { where: {id: req.params.id} }
-				   ).then(() => {
-					 res.status(200).send("updated successfully a usuario with id = " + id);
-				   });
+	try{
+		const id = req.params.id;
+		Afiliacion.update( { estado: req.body.estado }, 
+			{ where: {id: req.params.id} }
+			).then(() => {
+				res.status(200).send("updated successfully a usuario with id = " + id);
+		});
+	}catch(e) {
+		console.log("error en update afi "+e);
+	}		
+};		
 };
  
 // Delete a Usuario by Id
