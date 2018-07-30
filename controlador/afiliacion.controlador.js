@@ -75,19 +75,22 @@ exports.update = (req, res) => {
 			{ where: {id: req.params.id} }
 			).then(() => {
 				res.status(200).send("updated successfully a usuario with id = " + id);
-		});
+			});
 	}catch(e) {
 		console.log("error en update afi "+e);
 	}		
-};		
 };
  
 // Delete a Usuario by Id
 exports.delete = (req, res) => {
-	const id = req.params.id;
-	Afiliacion.destroy({
-	  where: { id: id }
-	}).then(() => {
-	  res.status(200).send('deleted successfully a usuario with id = ' + id);
-	});
+	try{
+		const id = req.params.id;
+		Afiliacion.destroy({
+	  						where: { id: id }
+		}).then(() => {
+	  		res.status(200).send('deleted successfully a usuario with id = ' + id);
+		});
+	}catch(e) {
+		console.log("error en delete afi "+e);
+	}
 };
