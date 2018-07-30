@@ -22,43 +22,49 @@ exports.create = (req, res) => {
  
 // FETCH all Afiliacion
 exports.findAll = (req, res) => {
-	var condition =
-		{
-			where:
-				{
+	try{
+		var condition =
+			{
+				where:
+					{
 
-				}
-		}
-	
-		if (req.query.personaDocumento) {
-			condition.where.personaDocumento = req.query.personaDocumento
-		}
-		if (req.query.estado) {
-			condition.where.estado = req.query.estado
-		}
-		if (req.query.createdAt) {
-			condition.where.createdAt = req.query.createdAt
-		}
-		if (req.query.updatedAt) {
-			condition.where.updatedAt = req.query.updatedAt
-		}
+					}
+			}
+		
+			if (req.query.personaDocumento) {
+				condition.where.personaDocumento = req.query.personaDocumento
+			}
+			if (req.query.estado) {
+				condition.where.estado = req.query.estado
+			}
+			if (req.query.createdAt) {
+				condition.where.createdAt = req.query.createdAt
+			}
+			if (req.query.updatedAt) {
+				condition.where.updatedAt = req.query.updatedAt
+			}
 
-	
-		Afiliacion.findAll(condition)
-			.then(afiliacion => {
-			// Send all usuarios to Client
-			//console.log(req.query.user);
-	  		res.send(afiliacion);
-		});	
-
-
+		
+			Afiliacion.findAll(condition)
+				.then(afiliacion => {
+				// Send all usuarios to Client
+				//console.log(req.query.user);
+		  		res.send(afiliacion);
+			});	
+	}catch(e) {
+		console.log("error en busqueda afi en findall "+e);
+	}
 };
  
 // Find a Afiliacion by Id
 exports.findById = (req, res) => {	
-	Afiliacion.findById(req.params.id).then(afiliacion => {
-	res.send(afiliacion);
-	})	
+	try{
+		Afiliacion.findById(req.params.id).then(afiliacion => {
+		res.send(afiliacion);
+		})
+	}catch(e) {
+		console.log("error en busqueda afi en findall "+e);
+	}		
 };
  
 // Update a Usuario
