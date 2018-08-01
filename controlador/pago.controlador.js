@@ -16,7 +16,7 @@ exports.create = (req, res) => {
 	}).then(pago => {		
 		// Send created pago to client
 		res.send(pago);
-	});
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
  
 // FETCH all pagos
@@ -62,14 +62,14 @@ exports.findAll = (req, res) => {
 	  	pago.reverse();
 	  }
 	  res.send(pago);
-	});
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
 // Find a pago by Id
 exports.findById = (req, res) => {	
 	Pago.findById(req.params.id).then(pago => {
 		res.send(pago);
-	})
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
  
 // Update a pago
@@ -79,7 +79,7 @@ exports.update = (req, res) => {
 					 { where: {id: req.params.id} }
 				   ).then(() => {
 					 res.status(200).send("updated successfully de la pago del  pago");
-				   });
+				   }).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
  
 // Delete a pago by Id
@@ -89,5 +89,33 @@ exports.delete = (req, res) => {
 	  where: { id: id }
 	}).then(() => {
 	  res.status(200).send('deleted successfully a de la pago de pago');
-	});
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
+
+
+
+function handleError(res, statusCode) {
+  statusCode = statusCode || 500
+  return function(err) {
+    res.status(statusCode).send(err)
+  }
+}
+
+function responseWithResult(res, statusCode) {
+  statusCode = statusCode || 200
+  return function(entity) {
+    if (entity) {
+      res.status(statusCode).json(entity)
+    }
+  }
+}
+
+function handleEntityNotFound(res) {
+  return function(entity) {
+    if (!entity) {
+      res.status(404).end()
+      return null
+    }
+    return entity
+  }
+}

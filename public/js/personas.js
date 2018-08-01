@@ -16,7 +16,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
             var nom = data[i].nombre;
             var ape = data[i].apellido;
             var promise = $http.get('/api/afiliacions?personaDocumento=' + doc );
-                                                        console.log("la promise " +promise);
+            //console.log("la promise " +promise);
 
             //console.log(id);
             promises.push(promise);

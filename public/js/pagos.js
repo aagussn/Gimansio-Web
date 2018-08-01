@@ -42,12 +42,12 @@ app.controller('myController', function($scope, $http, $cookies) {
         $scope.list = '/api/pago';
         
         var parameter = JSON.stringify({
-            documento: $scope.documento,
             importe: $scope.search.importe,
             mes: $scope.search.mes,
             anio:$scope.search.anio,
             tipomovimiento: $scope.search.tipomovimiento,
-            tipopago: $scope.search.tipopago
+            tipopago: $scope.search.tipopago,
+            personaDocumento: $scope.documento,
         });
         
         var request = $http.post($scope.list, parameter);

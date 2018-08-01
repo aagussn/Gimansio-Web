@@ -71,8 +71,8 @@ app.controller('myController', function($scope, $http, $cookies) {
                 $scope.list = '/api/afiliacions';
                 
                 parameter = JSON.stringify({
-                    documento : $scope.documento,
                     estado : 1
+                    personaDocumento : $scope.documento,
                 });
 
                 var request = $http.post($scope.list, parameter);
@@ -81,16 +81,6 @@ app.controller('myController', function($scope, $http, $cookies) {
                     console.log('afilacion');
                     console.log(afiliacion);
                     
-                    $scope.list = '/api/personas/'+ $scope.documento;
-                    
-                    parameter = JSON.stringify({
-                        afiliacionId: afiliacion.id
-                    });
-                    console.log('parameter afilacion');
-                    console.log(parameter);
-
-                    var request = $http.put($scope.list, parameter);
-
                     // Lo redirijo a la pagina principal
                     window.location.href = "/personas";
                 });

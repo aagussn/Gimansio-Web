@@ -5,7 +5,6 @@ const Afiliacion = db.afiliacion;
 
 exports.create = (req, res) => {	
 	// creo una afiliacion
-	try{
 		Afiliacion.create({  
 	  		//documento: req.body.documento,
 	  		estado:req.body.estado,
@@ -14,15 +13,11 @@ exports.create = (req, res) => {
 		}).then(afiliacion => {		
 				// Send created usuario to client
 				res.send(afiliacion);
-			});
-	}catch(e) {
-		console.log("error en insert de afiliacion "+e);
-	}
+			}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
  
 // FETCH all Afiliacion
 exports.findAll = (req, res) => {
-	try{
 		var condition =
 			{
 				where:
@@ -50,47 +45,60 @@ exports.findAll = (req, res) => {
 				// Send all usuarios to Client
 				//console.log(req.query.user);
 		  		res.send(afiliacion);
-			});	
-	}catch(e) {
-		console.log("error en busqueda afi en findall "+e);
-	}
+			}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));	
 };
  
 // Find a Afiliacion by Id
 exports.findById = (req, res) => {	
-	try{
 		Afiliacion.findById(req.params.id).then(afiliacion => {
 		res.send(afiliacion);
-		})
-	}catch(e) {
-		console.log("error en busqueda afi en findall "+e);
-	}		
+		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
  
 // Update a Usuario
 exports.update = (req, res) => {
-	try{
 		const id = req.params.id;
 		Afiliacion.update( { estado: req.body.estado }, 
 			{ where: {id: req.params.id} }
 			).then(() => {
 				res.status(200).send("updated successfully a usuario with id = " + id);
-			});
-	}catch(e) {
-		console.log("error en update afi "+e);
-	}		
+			}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
  
 // Delete a Usuario by Id
 exports.delete = (req, res) => {
-	try{
 		const id = req.params.id;
 		Afiliacion.destroy({
 	  						where: { id: id }
 		}).then(() => {
 	  		res.status(200).send('deleted successfully a usuario with id = ' + id);
-		});
-	}catch(e) {
-		console.log("error en delete afi "+e);
-	}
+		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
+
+
+
+function handleError(res, statusCode) {
+  statusCode = statusCode || 500
+  return function(err) {
+    res.status(statusCode).send(err)
+  }
+}
+
+function responseWithResult(res, statusCode) {
+  statusCode = statusCode || 200
+  return function(entity) {
+    if (entity) {
+      res.status(statusCode).json(entity)
+    }
+  }
+}
+
+function handleEntityNotFound(res) {
+  return function(entity) {
+    if (!entity) {
+      res.status(404).end()
+      return null
+    }
+    return entity
+  }
+}
