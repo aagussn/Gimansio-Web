@@ -2,7 +2,6 @@ const db = require('../cfg/db.js');
 const Afiliacion = db.afiliacion;
  
 // Post a Usuario
-
 exports.create = (req, res) => {	
 	// creo una afiliacion
 		Afiliacion.create({  

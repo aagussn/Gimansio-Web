@@ -99,7 +99,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
         // Hago el insert
         parameter = JSON.stringify({
                         estado : 1,
-                        documento: documento
+                        personaDocumento: documento
                     });
         $scope.list = '/api/afiliacions';
         var request = $http.post($scope.list, parameter);

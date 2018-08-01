@@ -71,8 +71,8 @@ app.controller('myController', function($scope, $http, $cookies) {
                 $scope.list = '/api/afiliacions';
                 
                 parameter = JSON.stringify({
-                    estado : 1
-                    personaDocumento : $scope.documento,
+                    estado : 1,
+                    personaDocumento : $scope.documento
                 });
 
                 var request = $http.post($scope.list, parameter);
