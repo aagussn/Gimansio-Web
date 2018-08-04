@@ -17,4 +17,8 @@ module.exports = function(app) {
  
     // Delete a personas with documento
     app.delete('/api/personas/:documento', personas.delete);
+
+    // Delete a personas with documento
+    app.get('/api/lista', personas.listPerAfiPag);
+
 }

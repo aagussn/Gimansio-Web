@@ -83,7 +83,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
     $scope.darBaja = function (idafi) {
         console.log('darBaja');
         // Hago el upd
-        parameter = JSON.stringify({
+        parameter = JSON.stringify({//Parsear a string un json 
                         estado : 0
                     });
         $scope.list = '/api/afiliacions/' + idafi;

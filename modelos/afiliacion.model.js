@@ -1,7 +1,7 @@
 //tabla afiliacion
 module.exports = (sequelize, Sequelize) => {
 	
-  var persona= require('../modelos/persona.model.js')(sequelize, Sequelize);
+  //var persona= require('../modelos/persona.model.js')(sequelize, Sequelize);
 
   const Afiliacion = sequelize.define('afiliacion', {
 	 
@@ -18,7 +18,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       
 	});
-   Afiliacion.belongsTo(persona);
+  // Afiliacion.belongsTo(persona);
 
 	
 	return Afiliacion;

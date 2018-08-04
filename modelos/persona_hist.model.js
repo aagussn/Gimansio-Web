@@ -1,7 +1,7 @@
 //tabla personas-historial
 module.exports = (sequelize, Sequelize) => {
       
-      var per=  require('../modelos/persona.model.js')(sequelize, Sequelize); 
+      //var per=  require('../modelos/persona.model.js')(sequelize, Sequelize); 
 
       const HPersonas = sequelize.define('persona_hist', {
         documento: {
@@ -53,7 +53,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       });
 
-      HPersonas.belongsTo(per);
+     // HPersonas.belongsTo(per);
 
       return HPersonas;
 }

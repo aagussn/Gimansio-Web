@@ -1,7 +1,7 @@
 //tabla asistencia
 module.exports = (sequelize, Sequelize) => {
 	
-  	var persona=  require('../modelos/persona.model.js')(sequelize, Sequelize);
+  	//var persona=  require('../modelos/persona.model.js')(sequelize, Sequelize);
 
 
 	const Asistencia = sequelize.define('asistencia', {
@@ -13,7 +13,7 @@ module.exports = (sequelize, Sequelize) => {
         
 	});
 	
-	Asistencia.belongsTo(persona);
+	//Asistencia.belongsTo(persona);
 
 	return Asistencia;
 }

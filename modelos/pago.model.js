@@ -1,7 +1,7 @@
 //tabla pago
 module.exports = (sequelize, Sequelize) => {
 	
-  var persona=  require('../modelos/persona.model.js')(sequelize, Sequelize);
+  //var persona=  require('../modelos/persona.model.js')(sequelize, Sequelize);
 
   const Pago = sequelize.define('pago', {
 	 
@@ -31,7 +31,7 @@ module.exports = (sequelize, Sequelize) => {
           
   });
 	    
-  Pago.belongsTo(persona);
+  //Pago.belongsTo(persona);
 
 	return Pago;
 }

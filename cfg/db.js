@@ -1,7 +1,9 @@
 const Sequelize = require('sequelize');
 //const sequelize = new Sequelize('mysql://root:@localhost:3306/gimnasi1'); //conexion Test
 //const sequelize = new Sequelize('mysql://alcuboah_arenasdelpinar:arenas2018@localhost:3306/alcuboah_arenasdelpinar');//produccion
-const sequelize = new Sequelize('mysql://root:@localhost:3306/gim2'); //conexion Test
+//const sequelize = new Sequelize('mysql://root:@localhost:3306/gim2'); //conexion Test
+const sequelize = new Sequelize('mysql://root:@localhost:3306/basenueva'); //conexion Test
+
 
 sequelize
   .authenticate()
@@ -38,6 +40,10 @@ db.pago=require('../modelos/pago.model.js')(sequelize, Sequelize);
 db.pago_hist=require('../modelos/pago_hist.model.js')(sequelize, Sequelize);
 db.paramnum=require('../modelos/paramnum.model.js')(sequelize, Sequelize);
 db.profesion=require('../modelos/paramnum.model.js')(sequelize, Sequelize);
+
+
+
+
 
 
 module.exports = db;

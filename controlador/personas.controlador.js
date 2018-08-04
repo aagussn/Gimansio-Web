@@ -1,6 +1,10 @@
 const db = require('../cfg/db.js');
 const Persona  = db.persona;
- 
+
+
+
+//const Op = Sequelize.Op;
+
 // Post a Usuario
 
 exports.create = (req, res) => {	
@@ -137,6 +141,35 @@ exports.delete = (req, res) => {
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
+
+
+//me traigo la persona, pagos y afiliacion
+exports.listPerAfiPag = (req, res) => {	
+	console.log(req.query);
+	var condition =	{
+		//where:{
+			//documento: req.query.documento
+		
+			include: [
+			{
+        	model: db.afiliacion ,	
+        			where: { estado: 1 }
+    		},
+    		{
+        	model: db.asistencia ,	
+        	},
+        	{
+        	model: db.pago ,	
+        	},
+    		]
+
+		
+		}
+	Persona.findAll(condition)
+		.then(persona => {
+	   		res.send(persona);
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+};
 
 
 
