@@ -1,9 +1,11 @@
  //tabla personas
+//const db = require('../cfg/db.js'); 
+
+
 module.exports = (sequelize, Sequelize) => {
-	
-      var afi=  require('../modelos/afiliacion.model.js')(sequelize, Sequelize);
-      var asis=  require('../modelos/asistencia.model.js')(sequelize, Sequelize);
-      var pago=  require('../modelos/pago.model.js')(sequelize, Sequelize);
+      const afi=require('../modelos/afiliacion.model.js')(sequelize, Sequelize);
+      const asis= require('../modelos/asistencia.model.js')(sequelize, Sequelize);
+      const pg=require('../modelos/pago.model.js')(sequelize, Sequelize);     
 
 
       const Persona = sequelize.define('persona', {
@@ -66,10 +68,10 @@ module.exports = (sequelize, Sequelize) => {
                   type: Sequelize.STRING(20)
             },
       });
-      
-	Persona.hasMany(afi);
+      Persona.hasMany(pg);
+      Persona.hasMany(afi);
       Persona.hasMany(asis);
-      Persona.hasMany(pago);
+      
 
 	return Persona;
 }

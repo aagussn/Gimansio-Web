@@ -1,7 +1,6 @@
 //tabla pago
 module.exports = (sequelize, Sequelize) => {
 	
-  //var persona=  require('../modelos/persona.model.js')(sequelize, Sequelize);
 
   const Pago = sequelize.define('pago', {
 	 
@@ -10,9 +9,6 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       }, 
-      /*documento: {
-          type: Sequelize.INTEGER
-          },*/
       importe: {
         type: Sequelize.INTEGER
       },
@@ -27,11 +23,8 @@ module.exports = (sequelize, Sequelize) => {
       },
       tipopago: {
         type: Sequelize.INTEGER
-      },
-          
+      }
   });
-	    
-  //Pago.belongsTo(persona);
-
+	 
 	return Pago;
 }
