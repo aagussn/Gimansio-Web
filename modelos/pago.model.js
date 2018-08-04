@@ -1,14 +1,13 @@
 //tabla pago
 module.exports = (sequelize, Sequelize) => {
 	
-
-  const Pago = sequelize.define('pago', {
-	 
-    	id: {
+  const Pagos = sequelize.define('pago', {
+	     
+      id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-      }, 
+      },
       importe: {
         type: Sequelize.INTEGER
       },
@@ -23,8 +22,8 @@ module.exports = (sequelize, Sequelize) => {
       },
       tipopago: {
         type: Sequelize.INTEGER
-      }
+      },
   });
 	 
-	return Pago;
+	return Pagos;
 }

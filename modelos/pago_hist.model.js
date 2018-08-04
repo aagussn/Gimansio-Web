@@ -1,14 +1,13 @@
 //tabla pago-historial
 module.exports = (sequelize, Sequelize) => {
 	
-      var pagos =require('../modelos/pago.model.js')(sequelize, Sequelize);
-
-
       const HPago = sequelize.define('pago_hist', {
 	 
 	 
-      documento: {
-      type: Sequelize.INTEGER
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: false,
       },
       importe: {
       type: Sequelize.INTEGER
@@ -28,7 +27,5 @@ module.exports = (sequelize, Sequelize) => {
       
 	});
 	
-      HPago.belongsTo(pagos);
-
 	return HPago;
 }

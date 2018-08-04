@@ -1,13 +1,10 @@
  //tabla personas
-//const db = require('../cfg/db.js'); 
-
-
 module.exports = (sequelize, Sequelize) => {
+      
       const afi=require('../modelos/afiliacion.model.js')(sequelize, Sequelize);
-      const asis= require('../modelos/asistencia.model.js')(sequelize, Sequelize);
+      const asis=require('../modelos/asistencia.model.js')(sequelize, Sequelize);
       const pg=require('../modelos/pago.model.js')(sequelize, Sequelize);     
-
-
+     
       const Persona = sequelize.define('persona', {
 	 
       	documento: {
@@ -75,5 +72,6 @@ module.exports = (sequelize, Sequelize) => {
 
 	return Persona;
 }
+
 
 
