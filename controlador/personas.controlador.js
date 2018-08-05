@@ -2,11 +2,7 @@ const db = require('../cfg/db.js');
 const Persona  = db.persona;
 
 
-
-//const Op = Sequelize.Op;
-
 // Post a Usuario
-
 exports.create = (req, res) => {	
 		// creo una persona
 		Persona.create({  
@@ -147,8 +143,6 @@ exports.delete = (req, res) => {
 exports.listPerAfiPag = (req, res) => {	
 	console.log(req.query);
 	var condition =	{
-		//where:{
-			//documento: req.query.documento
 		
 			include: [
 			{
@@ -159,7 +153,10 @@ exports.listPerAfiPag = (req, res) => {
         	model: db.asistencia ,	
         	},
         	{
-        	model: db.pago ,	
+        	model: db.pago ,
+        		/*where: {
+        			tipomovimiento: 1, tipopago: 1	
+				}*/
         	},
     		]
 

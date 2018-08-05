@@ -19,8 +19,10 @@ console.log('valor de la bandera: ' + $scope.bandera);
 	$scope.submit = function() {
 		
 		$scope.list = '/api/personas/';
+		console.log($scope.list);
+		console.log($scope.Documento);
 		$scope.list +=  $scope.Documento;
-		// Voy a buscar la persona
+console.log($scope.list);		// Voy a buscar la persona
 		var laPersona = $http.get($scope.list);
 		laPersona.success(function(data) {
 	        if(data){
