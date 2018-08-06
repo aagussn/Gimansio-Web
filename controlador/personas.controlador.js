@@ -147,7 +147,7 @@ exports.listPerAfiPag = (req, res) => {
 			include: [
 			{
         	model: db.afiliacion ,	
-        			where: { estado: 1 }
+        			//where: { estado: 1 }
     		},
     		{
         	model: db.asistencia ,	
@@ -168,6 +168,35 @@ exports.listPerAfiPag = (req, res) => {
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
+//me traigo la persona, pagos y afiliacion con afi vigentes y pagos solamente
+exports.listPerAfiPagF1 = (req, res) => {	
+	console.log(req.query);
+	var condition =	{
+		
+			include: [
+		   		
+			{
+        	model: db.afiliacion ,	
+        			where: { estado: 1 }
+    		},
+    		{
+        	model: db.asistencia ,	
+        	},
+        	{
+        	model: db.pago ,
+        		where: {
+        			tipomovimiento: 1, tipopago: 1	
+				}
+        	},
+    		]
+
+		
+		}
+	Persona.findAll(condition)
+		.then(persona => {
+	   		res.send(persona);
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+};
 
 
 
