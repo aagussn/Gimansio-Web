@@ -59,9 +59,9 @@ app.controller('myController', function($scope,$http,$timeout){
 								if(anioPago>anio){
 									//si el año es mayor no controlo mes y devuelvo exito
 									console.log("el año es mayor");
-										$scope.bandera=1;
-										$scope.antes=$scope.bandera;
-										 $timeout(function callAtTimeout() {
+									$scope.bandera=1;
+									$scope.antes=$scope.bandera;
+									$timeout(function callAtTimeout() {
    											$scope.bandera=0;
     										$scope.$apply;;
 										},2000);
@@ -76,7 +76,7 @@ app.controller('myController', function($scope,$http,$timeout){
    												$scope.bandera=0;
     											$scope.$apply;;
 											},2000);	
-										//si entro aca la persona esta al dia	
+										 //si entro aca la persona esta al dia	
 									  	}else{
 									  		$scope.bandera=1;
 											$scope.antes=$scope.bandera;
@@ -85,14 +85,21 @@ app.controller('myController', function($scope,$http,$timeout){
     												$scope.$apply;;
 												},2000);		
 									  	}
-									}
+									}else {
+										console.log("el anio  es menor ");
+										$scope.bandera=2;
+										$timeout(function callAtTimeout() {
+   												$scope.bandera=0;
+    											$scope.$apply;;
+											},2000);		
+									}	
 								}	
 	        				}
 	        				// inserto la asistencia de la persona 
-							if($scope.bandera==1 ||$scope.bandera==2 || $scope.bandera==3 ){
+							if($scope.bandera==1 || $scope.bandera==2 || $scope.bandera==3 ){
 			        			// Hago el insert
         						parameter = JSON.stringify({
-                        			personaDocumento: persona.documento;
+                        			personaDocumento: persona.documento
                     			});
 								var laAsistencia = $http.post('/api/asistencia',parameter);
 			 					// Voy a buscar el estado de la afiliacion
@@ -103,28 +110,34 @@ app.controller('myController', function($scope,$http,$timeout){
 			 						console.log('Error no ingrese asistencia');
 			 					});	
 			        		}
-	        			}else{
-	        				//fin busqueda ultimo pago, la persona no tiiene pagos
-	        				console.log('Bienvenido '+persona.nombre+" "+persona.apellido+" recuarda pagar tu cuota de socio");
+	        			}else{//si la persona tiene o no pagos
+	        					console.log('Bienvenido '+persona.nombre+" "+persona.apellido+" recuarda pagar tu cuota de socio");
+	        					$scope.bandera=4;
+        	  					$timeout(function callAtTimeout() {
+   									$scope.bandera=0;
+    								$scope.$apply;;
+								},2000);
+        	  				}
+	        		}else{console.log('No existe afiliacion para el documento ingresado');//aca termino el if donde comparo el documento
 	        				$scope.bandera=4;
         	  				$timeout(function callAtTimeout() {
    								$scope.bandera=0;
     							$scope.$apply;;
 							},2000);
-        	  			}
-	        		}else{console.log('No existe afiliacion para el documento ingresado');
-	        				$scope.bandera=4;
-        	  				$timeout(function callAtTimeout() {
-   								$scope.bandera=0;
-    							$scope.$apply;;
-							},2000);
-        	  		} 
-	        	}//aca termino if deonde encontre a la persona
-	        }//fin de verificacion que el data tenga datos
-	    });
-	    lstPersonas.error(function(data){
-	    	console.log('Error no encontre persona: ' + data);
-	    });
+        	  			} 
+	        	}//aca termino for donde busco a la persona
+	        }else{
+	        	console.log('data vacio');//fin de verificacion que el data tenga datos
+	        	$scope.bandera=1;
+				$scope.antes=$scope.bandera;
+				$timeout(function callAtTimeout() {
+		   			$scope.bandera=0;
+    				$scope.$apply;;
+					},2000);	
+	        }
+	    });lstPersonas.error(function(data){
+	    		console.log('Error no encontre persona: ' + data);
+	    	});
 	}
 });
 

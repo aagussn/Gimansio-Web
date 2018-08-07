@@ -173,25 +173,23 @@ exports.listPerAfiPagF1 = (req, res) => {
 	console.log(req.query);
 	var condition =	{
 		
-			include: [
+		include: [
 		   		
 			{
         	model: db.afiliacion ,	
         			where: { estado: 1 }
     		},
+
     		{
         	model: db.asistencia ,	
         	},
         	{
         	model: db.pago ,
-        		where: {
-        			tipomovimiento: 1, tipopago: 1	
-				}
+        		where: {tipomovimiento: 1, tipopago: 1}
         	},
-    		]
+    	]
+	}
 
-		
-		}
 	Persona.findAll(condition)
 		.then(persona => {
 	   		res.send(persona);

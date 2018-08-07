@@ -4,7 +4,7 @@ module.exports = (sequelize, Sequelize) => {
       const afi=require('../modelos/afiliacion.model.js')(sequelize, Sequelize);
       const asis=require('../modelos/asistencia.model.js')(sequelize, Sequelize);
       const pg=require('../modelos/pago.model.js')(sequelize, Sequelize);     
-     
+
       const Persona = sequelize.define('persona', {
 	 
       	documento: {
@@ -65,9 +65,10 @@ module.exports = (sequelize, Sequelize) => {
                   type: Sequelize.STRING(20)
             },
       });
-      Persona.hasMany(pg);
       Persona.hasMany(afi);
       Persona.hasMany(asis);
+      Persona.hasMany(pg);
+
       
 
 	return Persona;
