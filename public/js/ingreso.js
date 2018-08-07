@@ -17,16 +17,20 @@ app.controller('myController', function($scope,$http,$timeout){
 		// lista completa de personas
 		var lstPersonas = $http.get($scope.list);
 		lstPersonas.success(function(data) {
-	        if(data.length>1){
+	        if(data.length>0){
+	        	console.log("data tiene datos");
 	        	//recorro la lista buscando el afiliado
 	        	var encontre=false;
 	        	for(var a=0;a<data.length;a++ && !encontre){
 	        		var persona=data[a];
 	        		//busco a la persona si esta no tiene afiliacion vigente no la voy a encontrar
 	        		if(persona.documento==$scope.Documento){
+	        			console.log("encontre a la persona");
+	        			$scope.persona=persona;
 	        			encontre=true;
 	        			//busco ultimo pago 
 	        			if(persona.pagos.length>0){
+	        				console.log("tiene uno o mas pagos");
 	        				var listaPagos=persona.pagos;
 	        				var indiceUltimoPago=0;
 							var anioMax=0;
@@ -35,12 +39,12 @@ app.controller('myController', function($scope,$http,$timeout){
 							for(var b=0;b<listaPagos.length;b++){
 								var elpago=listaPagos[b];
 								if(elpago.anio>anioMax){
-										anioMax=elpago.anio;
+									anioMax=elpago.anio;
 								}
 							}
 							//teniendo el año del ultimo pago busco el ultimo
 							for(var c=0;c<listaPagos.length;c++){
-								var elpago=listaPagos[b];
+								var elpago=listaPagos[c];
 								if(elpago.anio==anioMax){
 									if(elpago.mes>mesMax){
 										mesMax=elpago.mes;
@@ -49,12 +53,16 @@ app.controller('myController', function($scope,$http,$timeout){
 								}
 							}
 							//tengo id de posicion del array del ultimo pago de la persona
-							var elpago=listaPagos[indiceUltimoPago];	
-
+							var ultimoPago=listaPagos[indiceUltimoPago];
+							$scope.pago=ultimoPago;	
+							console.log("feha pago "+ ultimoPago.updatedAt);
+							console.log("feha afi "+ persona.afiliacions[0].updatedAt);
+							console.log("fecha actual "+ anio +" "+ mes);
+							console.log("la fecha max "+anioMax+" "+ mesMax)
 	        				//que ese pago sea de la filiacion activa
-	        				if(persona.afiliacion.updatedAt<elpago.updatedAt){
-	        					mesPago=elPago.mes;
-								anioPago=elPago.anio;
+	        				if(persona.afiliacions[0].updatedAt<=ultimoPago.updatedAt){
+	        					mesPago=ultimoPago.mes;
+								anioPago=ultimoPago.anio;
 								//controlo si el pago es mayor al anio en el que estoy
 								if(anioPago>anio){
 									//si el año es mayor no controlo mes y devuelvo exito
@@ -94,7 +102,13 @@ app.controller('myController', function($scope,$http,$timeout){
 											},2000);		
 									}	
 								}	
-	        				}
+	        				}else{console.log('No existe pagos para la ultima afi activa');//aca termino el if donde comparo el documento
+	        					$scope.bandera=3;
+        	  					$timeout(function callAtTimeout() {
+   									$scope.bandera=0;
+    								$scope.$apply;;
+								},2000);
+        	  				}
 	        				// inserto la asistencia de la persona 
 							if($scope.bandera==1 || $scope.bandera==2 || $scope.bandera==3 ){
 			        			// Hago el insert
@@ -128,7 +142,7 @@ app.controller('myController', function($scope,$http,$timeout){
 	        	}//aca termino for donde busco a la persona
 	        }else{
 	        	console.log('data vacio');//fin de verificacion que el data tenga datos
-	        	$scope.bandera=1;
+	        	$scope.bandera=4;
 				$scope.antes=$scope.bandera;
 				$timeout(function callAtTimeout() {
 		   			$scope.bandera=0;
