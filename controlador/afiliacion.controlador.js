@@ -7,11 +7,11 @@ exports.create = (req, res) => {
 		Afiliacion.create({  
 	  		//documento: req.body.documento,
 	  		estado:req.body.estado,
-	  		personaDocumento: req.body.personaDocumento
-
+	  		documento: req.body.personadocumento
 		}).then(afiliacion => {		
 				// Send created usuario to client
 				res.send(afiliacion);
+				console.log(req.body);
 			}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
  

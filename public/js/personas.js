@@ -4,65 +4,30 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
 
     $scope.data = [];
     
-    var request = $http.get('/api/personas');    
+    var request = $http.get('/api/lista');    
     
     request.success(function(data) {    
-        //console.log(data);
-        var promises = [];
-        // voy a buscar la ultima afiliacion
-        for (var i = 0; i<data.length; i++) {   
-            var id = data[i].afiliacionId;
-            var doc = data[i].documento;
-            var nom = data[i].nombre;
-            var ape = data[i].apellido;
-            var promise = $http.get('/api/afiliacions?personaDocumento=' + doc );
-            //console.log("la promise " +promise);
+        console.log(data);
+        
+        for (x=0;x<data.length;x++) {
+            console.log('aca')
+            console.log(data[x].afiliacions[data[x].afiliacions.length-1].estado);
 
-            //console.log(id);
-            promises.push(promise);
-        };
 
-        $q.all(promises).then( function(value){
-           /* console.log("value");//afiliacion
-            console.log(value);
-            console.log(value[0].data[0].personaDocumento)
-            console.log("data");//personas
-            console.log(data);*/
-            // recorro personas
-            for (var i = 0; i<data.length; i++) {
-                var doc = data[i].documento;
-                var nom = data[i].nombre;
-                var ape = data[i].apellido;
-                var maxAfiId=0;
-                var ultimaAfi;
-                for (var a = 0; a<value.length; a++){
-                    var auxJson=value[a].data;
-                    //console.log(auxJson[0]);
-                    for(var b=0;b<auxJson.length; b++){
-                        laAfi=auxJson[b];
-                        // BUSCO LA AFILIACION DE LA PERSONA
-                        if(laAfi.personaDocumento==doc){
-                            //busco ultima afiliacion
-                            if(laAfi.id>maxAfiId){
-                                maxAfiId=laAfi.id;
-                                ultimaAfi=laAfi;
-                            }    
-                        }
-                    }
-                } 
-                //console.log(i);
-                var todo = {documento:doc, 
-                            nombre:nom, 
-                            apellido:ape, 
-                            estadoafi:ultimaAfi.estado,
-                            idafi: ultimaAfi.id};
-                $scope.data.push(todo);
-            }              
+            var todo = {documento:data[x].documento, 
+                        nombre:data[x].nombre, 
+                        apellido:data[x].apellido, 
+                        estadoafi: data[x].afiliacions[data[x].afiliacions.length-1].estado,
+                        idafi: data[x].afiliacions[data[x].afiliacions.length-1].id
+                    };
+            $scope.data.push(todo);
+        }
+                          
         });    
-    });
+
     // Orden de la tabla
-        $scope.sortType     = 'documento'; // set the default sort type
-        $scope.sortReverse  = false;  // set the default sort order
+    $scope.sortType     = 'documento'; // set the default sort type
+    $scope.sortReverse  = false;  // set the default sort order
 
     $scope.updPersona = function (cookie) {
         var now = new Date();
