@@ -25,18 +25,31 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
                     var laAfiliacion=persona.afiliacions[b];
                     if(laAfiliacion.estado==1){
                         //busco las asistencias mayores a la fecha de afiliacion activa
+                        var maxAsis=0;
+                        
                         for(var c=0;c<persona.asistencia.length;c++){
                             //console.log("tiene asistencias");
+                            console.log(maxAsis);
                             var laAsistencia=persona.asistencia[c];
                             if(laAsistencia.updatedAt>laAfiliacion.updatedAt){
+                                if(laAsistencia.id>maxAsis){
+                                    maxAsis=c;
+                                    console.log(maxAsis);
+
+                                }
+                        }      
+                        var ultimaAsistencia=persona.asistencia[maxAsis];
+
+///////////////////----------ME falta quedarme con la ultima asistencia ----------************
+
                                 //convierto fecha para comparar
-                                var fechaAsist = new Date(laAsistencia.updatedAt);
+                                var fechaAsist = new Date(ultimaAsistencia.updatedAt);
                                 console.log(fechaDia-fechaAsist );
                                 //si resto la fecha de entrada menos la fecha actual y estoy dentro del mismo año para una semana el resultado es -7000000
                                 //si resto la fecha de entrada menos la fecha actual y se cambia añ año siguiente para una semana el resultado es -8876000000                                
                                 if(fechaDia-fechaAsist>616948454){
                                     //console.log("hace una semana q no viene");
-                                    var auxFecha = laAsistencia.updatedAt.toString();
+                                    var auxFecha = ultimaAsistencia.updatedAt.toString();
                                     var fechaMostar=auxFecha.slice(0, 10)+ " " + auxFecha.slice(11, 16);
                                     var datoValido = {
                                         documento:persona.documento,
@@ -44,11 +57,10 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
                                         apellido:persona.apellido, 
                                         fecha:fechaMostar
                                     };
-                                    //console.log(datoValido);
                                     $scope.data.push(datoValido);  
                                 }  
                             }
-                        }        
+                                
                     }    
                 }
             }  //console.log($scope.data.length);
