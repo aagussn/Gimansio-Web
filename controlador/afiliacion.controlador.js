@@ -21,13 +21,13 @@ exports.create = (req, res) => {
   	//var pEstado=req.body.estado;
   	//var pDocumento=req.body.personaDocumento;
   	//var consulta='INSERT into afiliacions (id,estado,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT,"pEstado", NOW(), NOW(),"pDocumento")';
-	Afiliacion.sequelize.query('INSERT into afiliacions (id,estado,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT,"pEstado", NOW(), NOW(),"pDocumento")',
-    { replacements: {pDocumento: req.body.personaDocumento}, 
+	Afiliacion.sequelize.query('INSERT into afiliacions (id,estado,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT,:pEstado, NOW(), NOW(),:pDocumento)',
+    { replacements: {pDocumento: req.body.personaDocumento,pEstado:req.body.estado}, 
        	type: Afiliacion.sequelize.QueryTypes.INSERT
     }).then(afiliacion => {
 				// Send all usuarios to Client
-				//console.log(req.query.user);
-		  		res.send(afiliacion);
+				console.log(afiliacion);
+		  		//res.send(afiliacion);
 		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
