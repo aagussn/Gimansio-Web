@@ -1,7 +1,7 @@
 const db = require('../cfg/db.js');
 const Asistencia = db.asistencia;
  
-// Post a Asistencia
+/*// Post a Asistencia
 exports.create = (req, res) => {	
 	
 		// Save to MySQL database
@@ -11,8 +11,24 @@ exports.create = (req, res) => {
 			// Send created usuario to client
 			res.send(asistencia);
 		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res))
-};
+};*/
  
+exports.create = (req, res) => {	
+  	console.log('json: ', req.body);
+  	//var pEstado=req.body.estado;
+  	//var pDocumento=req.body.personaDocumento;
+  	//var consulta='INSERT into afiliacions (id,estado,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT,"pEstado", NOW(), NOW(),"pDocumento")';
+	Asistencia.sequelize.query('INSERT into asistencia (id,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT, NOW(), NOW(),:pDocumento)',
+    { replacements: {pDocumento: req.body.personaDocumento}, 
+       	type: Asistencia.sequelize.QueryTypes.INSERT
+    }).then(asistencia => {
+				// Send all usuarios to Client 
+				console.log(asistencia);
+		  		//res.send(afiliacion);
+		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+};
+
+
 // FETCH all Usuarios
 exports.findAll = (req, res) => {
 		var condition =
