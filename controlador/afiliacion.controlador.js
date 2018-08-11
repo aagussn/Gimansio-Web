@@ -1,20 +1,43 @@
 const db = require('../cfg/db.js');
 const Afiliacion = db.afiliacion;
  
-// Post a Usuario
+/*// Post a Usuario
 exports.create = (req, res) => {	
 	// creo una afiliacion
-		Afiliacion.create({  
-	  		//documento: req.body.documento,
-	  		estado:req.body.estado,
-	  		documento: req.body.personadocumento
-		}).then(afiliacion => {		
-				// Send created usuario to client
-				res.send(afiliacion);
-				console.log(req.body);
-			}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
-};
+	Afiliacion.create({ 
+
+		persona_id: req.body.persona_id,
+		estado:req.body.estado
+		//references: { model: 'users', key: 'id' }
+	  		
+	}).then(afiliacion => {		
+		// Send created usuario to client
+		res.send(afiliacion);
+		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+};*/
  
+exports.create = (req, res) => {	
+  	console.log('json: ', req.body);
+  	//var pEstado=req.body.estado;
+  	//var pDocumento=req.body.personaDocumento;
+  	//var consulta='INSERT into afiliacions (id,estado,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT,"pEstado", NOW(), NOW(),"pDocumento")';
+	Afiliacion.sequelize.query('INSERT into afiliacions (id,estado,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT,"pEstado", NOW(), NOW(),"pDocumento")',
+    { replacements: {pDocumento: req.body.personaDocumento}, 
+       	type: Afiliacion.sequelize.QueryTypes.INSERT
+    }).then(afiliacion => {
+				// Send all usuarios to Client
+				//console.log(req.query.user);
+		  		res.send(afiliacion);
+		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+};
+
+
+
+
+
+
+
+
 // FETCH all Afiliacion
 exports.findAll = (req, res) => {
 		var condition =
@@ -63,7 +86,8 @@ exports.update = (req, res) => {
 				res.status(200).send("updated successfully a usuario with id = " + id);
 			}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
- 
+
+
 // Delete a Usuario by Id
 exports.delete = (req, res) => {
 		const id = req.params.id;

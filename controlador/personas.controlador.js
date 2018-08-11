@@ -1,13 +1,12 @@
 const db = require('../cfg/db.js');
 const Persona  = db.persona;
-
+const afiliacion=db.afiliacion;
 
 // Post a Usuario
 exports.create = (req, res) => {	
 		// creo una persona
 		Persona.create({  
 		  documento : req.body.documento,
-		  afiliacionId: req.body.afiliacionId,
 		  nombre:req.body.nombre,
 		  apellido:req.body.apellido,
 		  telefono:req.body.telefono,
@@ -25,11 +24,11 @@ exports.create = (req, res) => {
 		  idinteres: req.body.idinteres,
 		  identerado: req.body.identerado,
 	  	  idaviso: req.body.idaviso
-
-		}).then(persona => {		
+	  			  	
+	  	}).then(persona => {		
 			// Send created usuario to client
 			res.send(persona);
-		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+			}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 		
 };
  
@@ -102,7 +101,7 @@ exports.findById = (req, res) => {
 // Update a persona
 exports.update = (req, res) => {
 	const id = req.params.documento;
-	Persona.update( { 	afiliacionId: req.body.afiliacionId,
+	Persona.update( { 	//afiliacionId: req.body.afiliacionId,
 					  	nombre:req.body.nombre,
 	 				  	apellido:req.body.apellido,
 	  					telefono:req.body.telefono,

@@ -69,7 +69,6 @@ module.exports = (sequelize, Sequelize) => {
       Persona.hasMany(asis);
       Persona.hasMany(pg);
 
-      
 
 	return Persona;
 }

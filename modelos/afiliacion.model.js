@@ -14,6 +14,7 @@ module.exports = (sequelize, Sequelize) => {
       estado: {
         type: Sequelize.INTEGER
       },
+     
       
 	});
 
