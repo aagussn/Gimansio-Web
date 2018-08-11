@@ -13,6 +13,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
     var listaPrincipal = $http.get('/api/lista');  
     //Lista de personas
     listaPrincipal.success(function(data) {
+         var lstCompleta=[];
         //verifico que la lista no este vacia
         if(data.length>0){
            // console.log("el data no esta vacio");
@@ -25,49 +26,63 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
                     var laAfiliacion=persona.afiliacions[b];
                     if(laAfiliacion.estado==1){
                         //busco las asistencias mayores a la fecha de afiliacion activa
-                        var maxAsis=0;
-                        
                         for(var c=0;c<persona.asistencia.length;c++){
-                            //console.log("tiene asistencias");
-                            console.log(maxAsis);
                             var laAsistencia=persona.asistencia[c];
                             if(laAsistencia.updatedAt>laAfiliacion.updatedAt){
-                                if(laAsistencia.id>maxAsis){
-                                    maxAsis=c;
-                                    console.log(maxAsis);
-
-                                }
-                        }      
-                        var ultimaAsistencia=persona.asistencia[maxAsis];
-
-///////////////////----------ME falta quedarme con la ultima asistencia ----------************
-
                                 //convierto fecha para comparar
-                                var fechaAsist = new Date(ultimaAsistencia.updatedAt);
-                                console.log(fechaDia-fechaAsist );
+                                var fechaAsist = new Date(laAsistencia.updatedAt);
                                 //si resto la fecha de entrada menos la fecha actual y estoy dentro del mismo año para una semana el resultado es -7000000
                                 //si resto la fecha de entrada menos la fecha actual y se cambia añ año siguiente para una semana el resultado es -8876000000                                
                                 if(fechaDia-fechaAsist>616948454){
-                                    //console.log("hace una semana q no viene");
-                                    var auxFecha = ultimaAsistencia.updatedAt.toString();
+                                    var auxFecha = laAsistencia.updatedAt.toString();
                                     var fechaMostar=auxFecha.slice(0, 10)+ " " + auxFecha.slice(11, 16);
                                     var datoValido = {
+                                        idAsis:laAsistencia.id,
                                         documento:persona.documento,
                                         nombre:persona.nombre, 
                                         apellido:persona.apellido, 
                                         fecha:fechaMostar
                                     };
-                                    $scope.data.push(datoValido);  
-                                }  
-                            }
+                                    lstCompleta.push(datoValido);    
                                 
-                    }    
+                                }
+                            }   
+                        }     
+
+                                   
+                            
+                    } //fin si tendo afiliacion en estado1   
                 }
-            }  //console.log($scope.data.length);
+            }
         }else{
             console.log('Data personas NO EXISTE ' + data.length);
         }
-    }); listaPrincipal.error(function(data){
+        var max=0;
+        for(var a=0;b<lstCompleta.length;a++){
+            var documento=lstCompleta[a].documento;
+            for(var b=0; b<lstCompleta.length;b++){
+                var documento2=lstCompleta[b].documento;
+                if(documento==documento2){
+                    if(lstCompleta[b].idAsis>max){
+                        max=lstCompleta[b].idAsis;
+                    }
+                }
+            }
+            for(var b=0; b<lstCompleta.length;b++){
+                if(lstCompleta[b].idAsis==max){
+                    var datofin = {
+                        documento:lstCompleta[b].documento,
+                        nombre:lstCompleta[b].nombre, 
+                        apellido:lstCompleta[b].apellido, 
+                        fecha:lstCompleta[b].fecha
+                                    };
+                  $scope.data.push(datofin) 
+                }
+            }
+
+        }
+
+      }); listaPrincipal.error(function(data){
         console.log('Error: ' + data); 
         });
 
@@ -79,22 +94,11 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
         $cookies.put('Pagocookie', cookie);
         window.location.href = "/pagos";
     }             
-                    
-   
-
-
     // Orden de la tabla
     $scope.sortType     = 'documento'; // set the default sort type
     $scope.sortReverse  = false;  // set the default sort order
 
-    $scope.updPersona = function (cookie) {
-        var now = new Date();
-        var exp = new Date(now);
-        exp.setMinutes(now.getMinutes()+1)
-        $cookies.put('updPersona', cookie, {'expires': exp});
-        window.location.href = "/afiliacion";
-    }
-
+   
     $scope.setCookie = function (cookie) {
         var now = new Date();
         var exp = new Date(now);
