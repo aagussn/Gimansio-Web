@@ -1,7 +1,7 @@
 const db = require('../cfg/db.js');
 const Pago = db.pago;
  
-// Post a pago
+/*// Post a pago
 exports.create = (req, res) => {	
 	// Save to MySQL database
 	Pago.create({ 
@@ -17,7 +17,32 @@ exports.create = (req, res) => {
 		// Send created pago to client
 		res.send(pago);
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+};*/
+
+exports.create = (req, res) => {	
+  	console.log('json: ', req.body);
+  	//var pEstado=req.body.estado;
+  	//var pDocumento=req.body.personaDocumento;
+  	//var consulta='INSERT into afiliacions (id,estado,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT,"pEstado", NOW(), NOW(),"pDocumento")';
+	Pago.sequelize.query('INSERT into pagos (id,importe,mes,anio,tipomovimiento,tipopago,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT,:pImporte,:pMes,:pAnio,:pTipomovimiento,:pTipopago, NOW(), NOW(),:pDocumento)',
+    { replacements: {pDocumento: req.body.personaDocumento,pImporte:req.body.importe,pMes:req.body.mes,pAnio:req.body.anio,pTipomovimiento:req.body.tipomovimiento,pTipopago:req.body.tipopago}, 
+       	type: Pago.sequelize.QueryTypes.INSERT
+    }).then(pago => {
+				// Send all usuarios to Client 
+				console.log(pago);
+		  		//res.send(afiliacion);
+		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
+
+
+
+
+
+
+
+
+
+
  
 // FETCH all pagos
 exports.findAll = (req, res) => {
