@@ -3,95 +3,50 @@ var app = angular.module('asistencia', ['ngCookies']);
 app.controller('myController', function($scope, $http, $cookies) {
     $scope.data = [];
     
-    var requestPersona = $http.get('/api/personas');  
-    var requestAsistencia = $http.get('/api/asistencia');
-    var requestAfiliacion = $http.get('/api/afiliacions');
-
-    var auxPersona=null;
-    var auxAsistencia=null;
-    var auxAfiliacion=null;
-    var listaResultado=null;
-
+    var listaPrincipal = $http.get('/api/lista');  
+   
     //Lista de personas
-    requestPersona.success(function(data) {
+    listaPrincipal.success(function(data) {
         //verifico que la lista no este vacia
         if(data.length>0){
-            auxPersona=data;            //Ver de crear un array con los datos de personas y asistencias(un join de ambas)
-            //Lista de asistencias
-            requestAsistencia.success(function(data2) {
-                if(data2.length>0){
-                    auxAsistencia = data2;
-                    requestAfiliacion.success(function(data3) {
-                        if(data3.length>0) {   
-                            auxAfiliacion=data3;            //Ver de crear un array con los datos de personas y asistencias(un join de ambas)
-                            //recorro la lista y armo una lista resultante.campos a tener en 
-                            //cuenta createdAt,updatedAt, id y documento
-                            //eligo una persona    
-                            for(var a=0;a<auxPersona.length;a++){
-                                laPersona=auxPersona[a];
-                            //busco si la persona tiene una afiliacion activa(estado=1)
-                                for( var b=0;b<auxAfiliacion.length;b++){
-                                    laAfiliacion=auxAfiliacion[b];
-                                    if(laAfiliacion.documento==laPersona.documento && laAfiliacion.estado==1){
-                                        //busco las asistencias del afiliado activo
-                                        for(var c=0;c<auxAfiliacion.length;c++){
-                                            laAsistencia=auxAfiliacion[c];
-                                            if(laAsistencia.documento==laPersona.documento){
-                                                if(laAsistencia.updatedAt>=laAfiliacion.updatedAt){
-                                                    var paraMostrar = JSON.stringify(
-                                                        {
-                                                        documento: laPersona.documento,
-                                                        nombre: laPersona.nombre,
-                                                        apellido:laPersona.apellido,    
-                                                        fecha: laAsistencia.createdAt,
-                                                        }
-                                                    );
-                                                        console.log(paraMostrar);
-                                                        var listprueba=null;
-                                                        listprueba.push(paraMostrar);
-                                                        console.log(listprueba.length);
-                                                        console.log(listprueba[0]);
-                                                        $scope.mostar=paraMostrar;
-                                                        $scope.listaAsistencia=listaResultado;
-                                                        //Cabiar el valor de la variable $scrope. que quiero luego de los segundos que quiera
-                                                        setTimeuot(function(){
-                                                            $scope.$apply(function(){
-                                                            $scope.listaAsistencia=listaResultado;
-                                                            });
-                                                        },2000);
-                                                        
-                                                }           
-                                            }
-                                        }
-                                    }
-                                }
+           // console.log("el data no esta vacio");
+            //agrego los datos que quiero a la lista resultante
+            for(var a=0;a<data.length;a++){
+                var persona=data[a];
+                // busco las afiliacion activa y me quedo con la fecha
+                for(var b=0;b<persona.afiliacions.length;b++){
+                   // console.log("tiene afiliacion");
+                    var laAfiliacion=persona.afiliacions[b];
+                    if(laAfiliacion.estado==1){
+                        //busco las asistencias mayores a la fecha de afiliacion activa
+                        for(var c=0;c<persona.asistencia.length;c++){
+                            //console.log("tiene asistencias");
+                            var laAsistencia=persona.asistencia[c];
+                            if(laAsistencia.updatedAt>laAfiliacion.updatedAt){
+                               // console.log("las asistencias son de la afiliacion activa");
+                               var auxFecha = laAsistencia.updatedAt.toString();
+                               var fechaMostar=auxFecha.slice(0, 10)+ " " + auxFecha.slice(11, 16);
+                               console.log(fechaMostar);
+
+                                var datoValido = {
+                                    documento:persona.documento,
+                                    nombre:persona.nombre, 
+                                    apellido:persona.apellido, 
+                                    fecha:fechaMostar
+                                };
+                                //console.log(datoValido);
+                                $scope.data.push(datoValido);    
                             }
-                        }else{
-                            console.log('Data afiliacion NO EXISTE ' + data3.length);
-                        }
-                    });requestAfiliacion.error(function(data3){
-                        console.log('Error: ' + data3); 
-    }); 
-
-
-                }else{
-                    console.log('Data asistencias NO EXISTE ' + data2.length);
+                        }        
+                    }    
                 }
-            });requestAsistencia.error(function(data2){
-                console.log('Error: ' + data2);
-                });
-
-
+            }  console.log($scope.data.length);
         }else{
             console.log('Data personas NO EXISTE ' + data.length);
         }
-    }); requestPersona.error(function(data){
+    }); listaPrincipal.error(function(data){
         console.log('Error: ' + data); 
         });
-
-   
-  
-    
 
     // Orden de la tabla
     $scope.sortType     = 'documento'; // set the default sort type
