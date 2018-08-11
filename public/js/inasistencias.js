@@ -4,9 +4,16 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
 
  
 //si resto la fecha de entrada menos la fecha actual y estoy dentro del mismo año para una semana el resultado es -7000000
- //si resto la fecha de entrada menos la fecha actual y se cambia añ año siguiente para una semana el resultado es -8876000000
-     $scope.data = [];
-    
+//si resto la fecha de entrada menos la fecha actual y se cambia añ año siguiente para una semana el resultado es -8876000000
+    $scope.data = [];
+    //variables globales
+    var f = new Date();
+    var fecha=  f.getFullYear()+ "-" +(f.getMonth() +1)+"-"+f.getDate()+" "+ f.getHours()+":"+f.getMinutes()+":"+f.getSeconds()+"."+f.getMilliseconds();
+    var mes=f.getMonth() +1;
+    var anio=f.getFullYear();
+    var fechaParse=Date.parse(fecha)
+    console.log("la fecha es "+fechaParse);
+
     var listaPrincipal = $http.get('/api/lista');  
    
     //Lista de personas
@@ -27,18 +34,25 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
                             //console.log("tiene asistencias");
                             var laAsistencia=persona.asistencia[c];
                             if(laAsistencia.updatedAt>laAfiliacion.updatedAt){
-                               var auxFecha = laAsistencia.updatedAt.toString();
-                               var fechaMostar=auxFecha.slice(0, 10)+ " " + auxFecha.slice(11, 16);
-                               console.log(fechaMostar);
+                                console.log("tengo para afi activa");
+                                //si resto la fecha de entrada menos la fecha actual y estoy dentro del mismo año para una semana el resultado es -7000000
+                                //si resto la fecha de entrada menos la fecha actual y se cambia añ año siguiente para una semana el resultado es -8876000000                                
+                                console.log(fechaParse+" "+laAsistencia.updatedAt);
+                                if(fecha-laAsistencia.updatedAt>7000000){
+                                    console.log("hace una semana q no viene");
+                                    var auxFecha = laAsistencia.updatedAt.toString();
+                                    var fechaMostar=auxFecha.slice(0, 10)+ " " + auxFecha.slice(11, 16);
+                                    console.log(fechaMostar);
 
-                                var datoValido = {
-                                    documento:persona.documento,
-                                    nombre:persona.nombre, 
-                                    apellido:persona.apellido, 
-                                    fecha:fechaMostar
-                                };
-                                //console.log(datoValido);
-                                $scope.data.push(datoValido);    
+                                    var datoValido = {
+                                        documento:persona.documento,
+                                        nombre:persona.nombre, 
+                                        apellido:persona.apellido, 
+                                        fecha:fechaMostar
+                                    };
+                                    //console.log(datoValido);
+                                    $scope.data.push(datoValido);  
+                                }  
                             }
                         }        
                     }    
