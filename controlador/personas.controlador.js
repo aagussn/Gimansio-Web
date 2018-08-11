@@ -1,6 +1,5 @@
 const db = require('../cfg/db.js');
 const Persona  = db.persona;
-const afiliacion=db.afiliacion;
 
 // Post a Usuario
 exports.create = (req, res) => {	
@@ -172,20 +171,25 @@ exports.listPerAfiPagF1 = (req, res) => {
 	console.log(req.query);
 	var condition =	{
 		
+    	where : {
+        documento : req.body.documento
+    	},
 		include: [
 		   		
 			{
         	model: db.afiliacion ,	
         			where: { estado: 1 }
     		},
-
+    		{
+        	model: db.pago ,
+        		
+        	},
     		{
         	model: db.asistencia ,	
+        	//attributes: [Persona.sequelize.fn('MAX', Persona.sequelize.col('id'))],
+        	//order: [['id', 'desc']],limit: 1
         	},
-        	{
-        	model: db.pago ,
-        		where: {tipomovimiento: 1, tipopago: 1}
-        	},
+        	
     	]
 	}
 

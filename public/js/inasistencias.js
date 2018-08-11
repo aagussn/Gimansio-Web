@@ -25,6 +25,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
                    // console.log("tiene afiliacion");
                     var laAfiliacion=persona.afiliacions[b];
                     if(laAfiliacion.estado==1){
+                        var max=0;
                         //busco las asistencias mayores a la fecha de afiliacion activa
                         for(var c=0;c<persona.asistencia.length;c++){
                             var laAsistencia=persona.asistencia[c];
@@ -43,11 +44,11 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
                                         apellido:persona.apellido, 
                                         fecha:fechaMostar
                                     };
-                                    lstCompleta.push(datoValido);    
-                                
+                                    lstCompleta.push(datoValido);  
                                 }
                             }   
                         }     
+                                 
 
                                    
                             
@@ -57,29 +58,35 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
         }else{
             console.log('Data personas NO EXISTE ' + data.length);
         }
-        var max=0;
-        for(var a=0;b<lstCompleta.length;a++){
+        
+        console.log(lstCompleta.length);
+        for(var a=0;a<lstCompleta.length;a++){
             var documento=lstCompleta[a].documento;
+            var max=lstCompleta[a].idAsis;
+            console.log("aca  "+ documento +" y valor max "+ max+" valor a "+ a);
             for(var b=0; b<lstCompleta.length;b++){
                 var documento2=lstCompleta[b].documento;
                 if(documento==documento2){
+                    console.log("comparo " +lstCompleta[b].idAsis +"="+max );
+
                     if(lstCompleta[b].idAsis>max){
                         max=lstCompleta[b].idAsis;
                     }
                 }
             }
-            for(var b=0; b<lstCompleta.length;b++){
-                if(lstCompleta[b].idAsis==max){
+            for(var c=0; c<lstCompleta.length;c++){
+                if(lstCompleta[c].idAsis==max){
+                    console.log(lstCompleta[c]);
+
                     var datofin = {
-                        documento:lstCompleta[b].documento,
-                        nombre:lstCompleta[b].nombre, 
-                        apellido:lstCompleta[b].apellido, 
-                        fecha:lstCompleta[b].fecha
+                        documento:lstCompleta[c].documento,
+                        nombre:lstCompleta[c].nombre, 
+                        apellido:lstCompleta[c].apellido, 
+                        fecha:lstCompleta[c].fecha
                                     };
                   $scope.data.push(datofin) 
                 }
             }
-
         }
 
       }); listaPrincipal.error(function(data){
