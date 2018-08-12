@@ -13,7 +13,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
     var listaPrincipal = $http.get('/api/lista');  
     //Lista de personas
     listaPrincipal.success(function(data) {
-         var lstCompleta=[];
+        //var lstCompleta=[];
         //verifico que la lista no este vacia
         if(data.length>0){
            // console.log("el data no esta vacio");
@@ -25,10 +25,11 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
                    // console.log("tiene afiliacion");
                     var laAfiliacion=persona.afiliacions[b];
                     if(laAfiliacion.estado==1){
-                        var max=0;
+                        var cantidadAsistencias=persona.asistencia.length-1;
                         //busco las asistencias mayores a la fecha de afiliacion activa
-                        for(var c=0;c<persona.asistencia.length;c++){
+                        for(var c=cantidadAsistencias;c<persona.asistencia.length;c++){
                             var laAsistencia=persona.asistencia[c];
+                            console.log(laAsistencia);
                             if(laAsistencia.updatedAt>laAfiliacion.updatedAt){
                                 //convierto fecha para comparar
                                 var fechaAsist = new Date(laAsistencia.updatedAt);
@@ -44,21 +45,18 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
                                         apellido:persona.apellido, 
                                         fecha:fechaMostar
                                     };
-                                    lstCompleta.push(datoValido);  
+                                    //lstCompleta.push(datoValido); 
+                                    $scope.data.push(datoValido); 
                                 }
                             }   
                         }     
-                                 
-
-                                   
-                            
                     } //fin si tendo afiliacion en estado1   
                 }
             }
         }else{
             console.log('Data personas NO EXISTE ' + data.length);
         }
-        
+       /* 
         console.log(lstCompleta.length);
         for(var a=0;a<lstCompleta.length;a++){
             var documento=lstCompleta[a].documento;
@@ -87,7 +85,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
                   $scope.data.push(datofin) 
                 }
             }
-        }
+        }*/
 
       }); listaPrincipal.error(function(data){
         console.log('Error: ' + data); 
@@ -98,7 +96,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
     $scope.sortReverse  = false;  // set the default sort order
 
     $scope.setCookie = function (cookie) {
-        $cookies.put('Pagocookie', cookie);
+        $cookies.put('inasistenciacookie', cookie);
         window.location.href = "/pagos";
     }             
     // Orden de la tabla
