@@ -25,31 +25,34 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
                    // console.log("tiene afiliacion");
                     var laAfiliacion=persona.afiliacions[b];
                     if(laAfiliacion.estado==1){
-                        var cantidadAsistencias=persona.asistencia.length-1;
-                        //busco las asistencias mayores a la fecha de afiliacion activa
-                        for(var c=cantidadAsistencias;c<persona.asistencia.length;c++){
-                            var laAsistencia=persona.asistencia[c];
-                            console.log(laAsistencia);
-                            if(laAsistencia.updatedAt>laAfiliacion.updatedAt){
-                                //convierto fecha para comparar
-                                var fechaAsist = new Date(laAsistencia.updatedAt);
-                                //si resto la fecha de entrada menos la fecha actual y estoy dentro del mismo año para una semana el resultado es -7000000
-                                //si resto la fecha de entrada menos la fecha actual y se cambia añ año siguiente para una semana el resultado es -8876000000                                
-                                if(fechaDia-fechaAsist>616948454){
-                                    var auxFecha = laAsistencia.updatedAt.toString();
-                                    var fechaMostar=auxFecha.slice(0, 10)+ " " + auxFecha.slice(11, 16);
-                                    var datoValido = {
-                                        idAsis:laAsistencia.id,
-                                        documento:persona.documento,
-                                        nombre:persona.nombre, 
-                                        apellido:persona.apellido, 
-                                        fecha:fechaMostar
-                                    };
-                                    //lstCompleta.push(datoValido); 
-                                    $scope.data.push(datoValido); 
-                                }
-                            }   
-                        }     
+                        var cantidadAsistencias=persona.asistencia.length;
+                        //verifico que tenga asistencias
+                        if(cantidadAsistencias>0){
+                            //busco las asistencias mayores a la fecha de afiliacion activa
+                            for(var c=cantidadAsistencias-1;c<persona.asistencia.length;c++){
+                                var laAsistencia=persona.asistencia[c];
+                                console.log(laAsistencia);
+                                if(laAsistencia.updatedAt>laAfiliacion.updatedAt){
+                                    //convierto fecha para comparar
+                                    var fechaAsist = new Date(laAsistencia.updatedAt);
+                                    //si resto la fecha de entrada menos la fecha actual y estoy dentro del mismo año para una semana el resultado es -7000000
+                                    //si resto la fecha de entrada menos la fecha actual y se cambia añ año siguiente para una semana el resultado es -8876000000                                
+                                    if(fechaDia-fechaAsist>616948454){
+                                        var auxFecha = laAsistencia.updatedAt.toString();
+                                        var fechaMostar=auxFecha.slice(0, 10)+ " " + auxFecha.slice(11, 16);
+                                        var datoValido = {
+                                            idAsis:laAsistencia.id,
+                                            documento:persona.documento,
+                                            nombre:persona.nombre, 
+                                            apellido:persona.apellido, 
+                                            fecha:fechaMostar
+                                        };
+                                        //lstCompleta.push(datoValido); 
+                                        $scope.data.push(datoValido); 
+                                    }
+                                }   
+                            }     
+                        }//fin verifico si tene asistencias
                     } //fin si tendo afiliacion en estado1   
                 }
             }
