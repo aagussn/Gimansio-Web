@@ -53,7 +53,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
                                 }   
                             }     
                         }//fin verifico si tene asistencias
-                    } //fin si tendo afiliacion en estado1   
+                    } //fin si tendo afiliacion en estado 1   
                 }
             }
         }else{
@@ -100,19 +100,26 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
 
     $scope.setCookie = function (cookie) {
         $cookies.put('inasistenciacookie', cookie);
-        window.location.href = "/pagos";
+        window.location.href = "/inasistencia";
     }             
     // Orden de la tabla
     $scope.sortType     = 'documento'; // set the default sort type
     $scope.sortReverse  = false;  // set the default sort order
 
    
-    $scope.setCookie = function (cookie) {
+   /*$scope.setCookie = function (cookie) {
         var now = new Date();
         var exp = new Date(now);
         exp.setMinutes(now.getMinutes()+1)
         $cookies.put('Pagocookie', cookie, {'expires': exp});
         window.location.href = "/pagos";
+    }*/
+    $scope.updPersona = function (cookie) {
+        var now = new Date();
+        var exp = new Date(now);
+        exp.setMinutes(now.getMinutes()+1)
+        $cookies.put('updPersona', cookie, {'expires': exp});
+        window.location.href = "/afiliacion";
     }
    
 });

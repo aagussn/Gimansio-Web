@@ -69,7 +69,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
         $scope.list = '/api/afiliacions';
         var request = $http.post($scope.list, parameter);
 
-        request.success(function (data) {
+      /* request.success(function (data) {
             // Si inserto bien actualizo el dato en la tabla personas
             $scope.list = '/api/personas/'+ documento;
 
@@ -79,7 +79,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
 
             var request = $http.put($scope.list, parameter);
             window.location.href = "/personas";
-        });        
+        });   */     
 
     }
 });
