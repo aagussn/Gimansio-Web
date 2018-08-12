@@ -171,9 +171,11 @@ exports.listPerAfiPagF1 = (req, res) => {
 	console.log(req.query);
 	var condition =	{
 		
-    	where : {
-        documento : req.body.documento
-    	},
+    	/*where : {
+        documento : 43515757
+        //req.body.documento
+    	},*/
+
 		include: [
 		   		
 			{
@@ -187,7 +189,8 @@ exports.listPerAfiPagF1 = (req, res) => {
     		{
         	model: db.asistencia ,	
         	//attributes: [Persona.sequelize.fn('MAX', Persona.sequelize.col('id'))],
-        	//order: [['id', 'desc']],limit: 1
+        	//order: [["updatedAt", 'desc']],//limit: 1
+
         	},
         	
     	]
