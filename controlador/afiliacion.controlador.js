@@ -1,42 +1,19 @@
 const db = require('../cfg/db.js');
 const Afiliacion = db.afiliacion;
  
-/*// Post a Usuario
-exports.create = (req, res) => {	
-	// creo una afiliacion
-	Afiliacion.create({ 
 
-		persona_id: req.body.persona_id,
-		estado:req.body.estado
-		//references: { model: 'users', key: 'id' }
-	  		
-	}).then(afiliacion => {		
-		// Send created usuario to client
-		res.send(afiliacion);
-		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
-};*/
- 
 exports.create = (req, res) => {	
   	console.log('json: ', req.body);
-  	//var pEstado=req.body.estado;
-  	//var pDocumento=req.body.personaDocumento;
-  	//var consulta='INSERT into afiliacions (id,estado,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT,"pEstado", NOW(), NOW(),"pDocumento")';
+	
 	Afiliacion.sequelize.query('INSERT into afiliacions (id,estado,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT,:pEstado, NOW(), NOW(),:pDocumento)',
     { replacements: {pDocumento: req.body.personaDocumento,pEstado:req.body.estado}, 
        	type: Afiliacion.sequelize.QueryTypes.INSERT
     }).then(afiliacion => {
 				// Send all usuarios to Client
 				console.log(afiliacion);
-		  		//res.send(afiliacion);
+		  		res.send(afiliacion);
 		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
-
-
-
-
-
-
-
 
 // FETCH all Afiliacion
 exports.findAll = (req, res) => {
@@ -64,8 +41,6 @@ exports.findAll = (req, res) => {
 		
 			Afiliacion.findAll(condition)
 				.then(afiliacion => {
-				// Send all usuarios to Client
-				//console.log(req.query.user);
 		  		res.send(afiliacion);
 			}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));	
 };
@@ -97,8 +72,6 @@ exports.delete = (req, res) => {
 	  		res.status(200).send('deleted successfully a usuario with id = ' + id);
 		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
-
-
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500

@@ -1,24 +1,7 @@
 const db = require('../cfg/db.js');
 const Pago = db.pago;
  
-/*// Post a pago
-exports.create = (req, res) => {	
-	// Save to MySQL database
-	Pago.create({ 
-	  id: req.body.id,
-	  documento: req.body.documento,
-	  importe: req.body.importe,
-	  mes: req.body.mes,
-	  anio: req.body.anio,
-	  tipomovimiento: req.body.tipomovimiento,
-	  tipopago: req.body.tipopago
-
-	}).then(pago => {		
-		// Send created pago to client
-		res.send(pago);
-	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
-};*/
-
+// Post a pago
 exports.create = (req, res) => {	
   	console.log('json: ', req.body);
   	//var pEstado=req.body.estado;
@@ -34,16 +17,6 @@ exports.create = (req, res) => {
 		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
-
-
-
-
-
-
-
-
-
- 
 // FETCH all pagos
 exports.findAll = (req, res) => {
 	var condition =
@@ -55,7 +28,7 @@ exports.findAll = (req, res) => {
 	}
 	
 	if (req.query.documento) {
-		condition.where.documento = req.query.documento
+		condition.where.personaDocumento = req.query.documento
 	}
 	if (req.query.importe) {
 			condition.where.importe = req.query.importe
@@ -78,8 +51,6 @@ exports.findAll = (req, res) => {
 	if (req.query.updatedAt) {
 		condition.where.updatedAt = req.query.updatedAt
 	}
-
-
 	
 	Pago.findAll(condition).then(pago => {
 	  // Send all pagos to Client
