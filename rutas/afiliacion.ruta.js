@@ -13,7 +13,11 @@ module.exports = function(app) {
  
     // Update a afiliacion with Id
     app.put('/api/afiliacions/:id', afiliacions.update);
- 
+
     // Delete a afiliacion with Id
     app.delete('/api/afiliacions/:id', afiliacions.delete);
+
+
+
+
 }

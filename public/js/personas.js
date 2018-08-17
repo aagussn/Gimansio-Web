@@ -4,40 +4,27 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
 
     $scope.data = [];
     
-    var request = $http.get('/api/personas');    
+    var request = $http.get('/api/lista');    
     
     request.success(function(data) {    
-        //console.log(data);
-        var promises = [];
-        // voy a buscar la ultima afiliacion
-        for (var i = 0; i<data.length; i++) {
-            var id = data[i].afiliacionId;
-            var doc = data[i].documento;
-            var nom = data[i].nombre;
-            var ape = data[i].apellido;
-            var promise = $http.get('/api/afiliacions/' + id );
-            //console.log(id);
-            promises.push(promise);
-        };
+        console.log(data);
+        
+        for (x=0;x<data.length;x++) {
+            console.log('aca')
+            console.log(data[x].afiliacions[data[x].afiliacions.length-1].estado);
 
-        $q.all(promises).then( function(value){
-            console.log(value);
-            for (var i = 0; i<data.length; i++) {
-                var id = data[i].afiliacionId;
-                var doc = data[i].documento;
-                var nom = data[i].nombre;
-                var ape = data[i].apellido;
-                var estado = value[i].data.estado;  
-                console.log(i);
-                var todo = {documento:doc, 
-                            nombre:nom, 
-                            apellido:ape, 
-                            estadoafi:estado,
-                            idafi: id};
-                $scope.data.push(todo);
-            }              
+
+            var todo = {documento:data[x].documento, 
+                        nombre:data[x].nombre, 
+                        apellido:data[x].apellido, 
+                        estadoafi: data[x].afiliacions[data[x].afiliacions.length-1].estado,
+                        idafi: data[x].afiliacions[data[x].afiliacions.length-1].id
+                    };
+            $scope.data.push(todo);
+        }
+                          
         });    
-    });
+
     // Orden de la tabla
     $scope.sortType     = 'documento'; // set the default sort type
     $scope.sortReverse  = false;  // set the default sort order
@@ -61,7 +48,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
     $scope.darBaja = function (idafi) {
         console.log('darBaja');
         // Hago el upd
-        parameter = JSON.stringify({
+        parameter = JSON.stringify({//Parsear a string un json 
                         estado : 0
                     });
         $scope.list = '/api/afiliacions/' + idafi;
@@ -77,7 +64,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
         // Hago el insert
         parameter = JSON.stringify({
                         estado : 1,
-                        documento: documento
+                        personaDocumento: documento
                     });
         $scope.list = '/api/afiliacions';
         var request = $http.post($scope.list, parameter);
@@ -92,7 +79,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
 
             var request = $http.put($scope.list, parameter);
             window.location.href = "/personas";
-        });        
+        }); 
 
     }
 });

@@ -3,22 +3,20 @@ const Pago = db.pago;
  
 // Post a pago
 exports.create = (req, res) => {	
-	// Save to MySQL database
-	Pago.create({ 
-	  id: req.body.id,
-	  documento: req.body.documento,
-	  importe: req.body.importe,
-	  mes: req.body.mes,
-	  anio: req.body.anio,
-	  tipomovimiento: req.body.tipomovimiento,
-	  tipopago: req.body.tipopago
-
-	}).then(pago => {		
-		// Send created pago to client
-		res.send(pago);
-	});
+  	console.log('json: ', req.body);
+  	//var pEstado=req.body.estado;
+  	//var pDocumento=req.body.personaDocumento;
+  	//var consulta='INSERT into afiliacions (id,estado,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT,"pEstado", NOW(), NOW(),"pDocumento")';
+	Pago.sequelize.query('INSERT into pagos (id,importe,mes,anio,tipomovimiento,tipopago,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT,:pImporte,:pMes,:pAnio,:pTipomovimiento,:pTipopago, NOW(), NOW(),:pDocumento)',
+    { replacements: {pDocumento: req.body.personaDocumento,pImporte:req.body.importe,pMes:req.body.mes,pAnio:req.body.anio,pTipomovimiento:req.body.tipomovimiento,pTipopago:req.body.tipopago}, 
+       	type: Pago.sequelize.QueryTypes.INSERT
+    }).then(pago => {
+				// Send all usuarios to Client 
+				console.log(pago);
+		  		//res.send(afiliacion);
+		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
- 
+
 // FETCH all pagos
 exports.findAll = (req, res) => {
 	var condition =
@@ -30,7 +28,7 @@ exports.findAll = (req, res) => {
 	}
 	
 	if (req.query.documento) {
-		condition.where.documento = req.query.documento
+		condition.where.personaDocumento = req.query.documento
 	}
 	if (req.query.importe) {
 			condition.where.importe = req.query.importe
@@ -53,8 +51,6 @@ exports.findAll = (req, res) => {
 	if (req.query.updatedAt) {
 		condition.where.updatedAt = req.query.updatedAt
 	}
-
-
 	
 	Pago.findAll(condition).then(pago => {
 	  // Send all pagos to Client
@@ -62,14 +58,14 @@ exports.findAll = (req, res) => {
 	  	pago.reverse();
 	  }
 	  res.send(pago);
-	});
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
 // Find a pago by Id
 exports.findById = (req, res) => {	
 	Pago.findById(req.params.id).then(pago => {
 		res.send(pago);
-	})
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
  
 // Update a pago
@@ -79,7 +75,7 @@ exports.update = (req, res) => {
 					 { where: {id: req.params.id} }
 				   ).then(() => {
 					 res.status(200).send("updated successfully de la pago del  pago");
-				   });
+				   }).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
  
 // Delete a pago by Id
@@ -89,5 +85,33 @@ exports.delete = (req, res) => {
 	  where: { id: id }
 	}).then(() => {
 	  res.status(200).send('deleted successfully a de la pago de pago');
-	});
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
+
+
+
+function handleError(res, statusCode) {
+  statusCode = statusCode || 500
+  return function(err) {
+    res.status(statusCode).send(err)
+  }
+}
+
+function responseWithResult(res, statusCode) {
+  statusCode = statusCode || 200
+  return function(entity) {
+    if (entity) {
+      res.status(statusCode).json(entity)
+    }
+  }
+}
+
+function handleEntityNotFound(res) {
+  return function(entity) {
+    if (!entity) {
+      res.status(404).end()
+      return null
+    }
+    return entity
+  }
+}

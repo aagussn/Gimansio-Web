@@ -23,7 +23,7 @@
       <input class="col-sm-3" type="text" ng-model="search.documento" placeholder="Documento">
       <input class="col-sm-3" type="text" ng-model="search.nombre" placeholder="Nombre">
       <input class="col-sm-3" type="text" ng-model="search.apellido" placeholder="Apellido">
-      <input class="col-sm-3" type="text" ng-model="search.fecha" placeholder="Fecha">
+      <input class="col-sm-3" type="text" ng-model="search.fecha" placeholder="Fecha u hora">
     </div>
     <div class="container form-row">
       <table class="table">
@@ -36,11 +36,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="listaAsistencia in data | filter:search:strict | orderBy:sortType:false | limitTo: 20 ">
-            <th scope="row">{{listaAsistencia.documento}}</th>
-            <td>{{listaAsistencia.nombre}}</td>
-            <td>{{listaAsistencia.apellido}}</td>
-            <td>{{listaAsistencia.fecha}}</td>
+          <tr ng-repeat="item in data | filter:search:strict | orderBy:sortType:false | limitTo: 20 ">
+             <th scope="row"><a href="#" ng-click="updPersona(item.documento)">{{item.documento}}</a>.</th>         
+            <td>{{item.nombre}}</td>
+            <td>{{item.apellido}}</td>
+            <td>{{item.fecha}}</td>
           </tr>
         </tbody>
       </table>  
@@ -50,7 +50,7 @@
     <!-- Optional JavaScript -->
   <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
-  <script src="/js/inasistencia.js"></script>
+  <script src="/js/inasistencias.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="../js/jquery-3.3.1.min.js" ></script>
     <script src="../js/popper.min.js" ></script>

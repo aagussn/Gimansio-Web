@@ -17,4 +17,13 @@ module.exports = function(app) {
  
     // Delete a personas with documento
     app.delete('/api/personas/:documento', personas.delete);
+
+    //me traigo la persona, pagos y afiliacion
+    app.get('/api/lista', personas.listPerAfiPag);
+
+    //me traigo la persona, pagos y afiliacion con afi vigentes y pagos solamente
+    app.get('/api/listaF1', personas.listPerAfiPagF1);
+
+    
+
 }
