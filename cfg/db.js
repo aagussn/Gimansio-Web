@@ -17,9 +17,9 @@ sequelize
 sequelize.sync();
 
 // Forzado: true dropea las tablas si existen
-sequelize.sync({force: true}).then(() => {
-  console.log('Drop and Resync with { force: true }');
-});  
+//sequelize.sync({force: true}).then(() => {
+//  console.log('Drop and Resync with { force: true }');
+//});  
  
 //Models/tables
 const db = {};
@@ -28,6 +28,8 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.usuarios   = require('../modelos/usuario.model.js')(sequelize, Sequelize);
+db.itemcomentarios   = require('../modelos/itemcomentarios.model.js')(sequelize, Sequelize);
+db.comentarios   = require('../modelos/comentarios.model.js')(sequelize, Sequelize);
 db.pago=require('../modelos/pago.model.js')(sequelize, Sequelize);
 db.afiliacion = require('../modelos/afiliacion.model.js')(sequelize, Sequelize);
 db.afiliacion_hist = require('../modelos/afiliacion_hist.model.js')(sequelize, Sequelize);
@@ -40,6 +42,7 @@ db.pago_hist=require('../modelos/pago_hist.model.js')(sequelize, Sequelize);
 db.paramnum=require('../modelos/paramnum.model.js')(sequelize, Sequelize);
 db.profesion=require('../modelos/paramnum.model.js')(sequelize, Sequelize);
 db.persona=require('../modelos/persona.model.js')(sequelize, Sequelize);
+
 
 
 module.exports = db;

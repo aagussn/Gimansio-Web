@@ -1,12 +1,19 @@
 //tabla categoria
 module.exports = (sequelize, Sequelize) => {
+	
+	const itemCategoria=require('../modelos/itemcategoria.model.js')(sequelize, Sequelize);   
+
 	const Categoria = sequelize.define('categoria', {
-		 
-      descripcion: {
-      type: Sequelize.STRING
-      },
+		id: {
+        	type: Sequelize.INTEGER,
+        	primaryKey: true,
+        	autoIncrement: true,
+      	},	 
+     
       
 	});
 	
+	Categoria.hasMany(itemCategoria);
+
 	return Categoria;
 }

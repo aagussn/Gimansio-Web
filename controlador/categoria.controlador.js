@@ -3,13 +3,16 @@ const Categoria = db.categoria;
  
 // Post a Usuario
 exports.create = (req, res) => {	
-	// Save to MySQL database
-	Categoria.create({  
-	  descripcion: req.body.descripcion
-	}).then(categoria => {		
-		// Send created categoria to client
-		res.send(categoria);
-	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+  	console.log('json: ', req.body);
+	
+	Categoria.sequelize.query('INSERT into categoria (id,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT, NOW(), NOW(),:ppersonaDocumento)',
+    { replacements: {ppersonaDocumento: req.body.personaDocumento}, 
+       	type: Categoria.sequelize.QueryTypes.INSERT
+    }).then(categoria => {
+				// Send all usuarios to Client
+				console.log(categoria);
+		  		res.send(categoria);
+		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
  
 // FETCH all Usuarios
@@ -28,14 +31,14 @@ exports.findById = (req, res) => {
 };
  
 // Update a Usuario
-exports.update = (req, res) => {
+/*exports.update = (req, res) => {
 	const id = req.params.id;
 	Categoria.update( { descripcion: req.body.descripcion }, 
 					 { where: {id: req.params.id} }
 				   ).then(() => {
 					 res.status(200).send("updated successfully a usuario with id = " + id);
 				   }).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
-};
+};*/
  
 // Delete a Usuario by Id
 exports.delete = (req, res) => {
