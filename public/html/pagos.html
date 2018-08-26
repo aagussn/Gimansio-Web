@@ -56,7 +56,6 @@
             <input class="col-md-5" type="text" pattern="[0-9.]+" ng-model="search.importe" ng-change="clear()" placeholder="Importe" required>   
 
            <!--  <button class="btn btn-lg btn-primary btn-block col-md-5" type="submit" id="submit" value="Submit" >Insertar pago</button>  -->   
-           {{banderaPago}}
             <div ng-switch on="banderaPago">
              <div ng-switch-when="1">
               <button class="btn btn-lg btn-primary btn-block col-md-7" type="submit" id="submit" value="Submit">Insertar pago</button>
