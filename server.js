@@ -1,8 +1,8 @@
 var app = require('./cfg/app');
 var db = require('./cfg/db');
 var path = require('path');
-//var port = process.env.PORT || 3000; //test
-var port = process.env.PORT || 49152; //produccion
+var port = process.env.PORT || 3000; //test
+//var port = process.env.PORT || 49152; //produccion
 
  
 require('./rutas/afiliacion.ruta.js')(app);

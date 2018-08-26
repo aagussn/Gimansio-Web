@@ -13,14 +13,16 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" >
     <title>Personas</title>
   </head>
+
   <body ng-controller="myController">
+
   
   <div ng-include="'barra'"> </div>    
   <div class="container"><br><br><br></div>
   <div class="container content-wrapper">
     <div class="container-fluid">
       <div class="container form-row" >
-        <input class="col-md-3" type="text" ng-model="search.documento" placeholder="Documento">
+          <input class="col-md-3" type="text" ng-model="search.documento" placeholder="Documento">
         <input class="col-md-4" type="text" ng-model="search.nombre" placeholder="Nombre">
         <input class="col-md-4" type="text" ng-model="search.apellido" placeholder="Apellido">
         <a href="/afiliacion"><button class="btn btn-sm btn-success" id="addPersona"><i class="fas fa-plus-square"></i></button></a>
@@ -56,10 +58,16 @@
   	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
   	<script src="/js/personas.js"></script>
+    
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="/js/jquery-3.3.1.min.js" ></script>
     <script src="/js/popper.min.js" ></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/common.js"></script>
+
+
+
+
   </body>
 </html>
