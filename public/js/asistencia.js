@@ -1,6 +1,14 @@
 var app = angular.module('asistencia', ['ngCookies']);
 
 app.controller('myController', function($scope, $http, $cookies) {
+    
+    var chkLogin = $cookies.get('login');
+    console.log(chkLogin);
+    if (chkLogin==0 || !chkLogin) {
+        console.log('bla');
+        window.location.href = "/login";
+    }
+
     $scope.data = [];
     
     var listaPrincipal = $http.get('/api/lista');  

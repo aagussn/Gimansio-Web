@@ -1,6 +1,14 @@
-var app = angular.module('ingreso', []);
-app.controller('myController', function($scope,$http,$timeout){
+var app = angular.module('ingreso', ['ngCookies']);
 
+app.controller('myController', function($scope,$http,$timeout,$cookies){
+	
+	var chkLogin = $cookies.get('login');
+	console.log(chkLogin);
+	if (chkLogin==0 || !chkLogin) {
+		console.log('bla');
+		window.location.href = "/login";
+	}
+	
 	//variables globales
 	var f = new Date();
 	var fecha=f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();

@@ -1,6 +1,13 @@
 var app = angular.module('personas', ['ngCookies'])
 
 app.controller('myController', function($scope, $http, $cookies, $q) {
+    
+    var chkLogin = $cookies.get('login');
+    console.log("Log:" + chkLogin);
+    if (chkLogin==0 || !chkLogin) {
+        console.log('bla');
+        window.location.href = "/login";
+    }
 
     $scope.data = [];
     

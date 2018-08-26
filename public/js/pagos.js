@@ -1,5 +1,13 @@
 var app = angular.module('Pagos', ['ngCookies']);
 app.controller('myController', function($scope, $http, $cookies) {
+    
+    var chkLogin = $cookies.get('login');
+    console.log(chkLogin);
+    if (chkLogin==0 || !chkLogin) {
+        console.log('bla');
+        window.location.href = "/login";
+    }
+
     $scope.documento = $cookies.get('Pagocookie');
     $scope.banderaPago=1;
 

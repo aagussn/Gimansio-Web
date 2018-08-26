@@ -32,21 +32,18 @@
 			</div> -->
 			
 			<button class="btn btn-lg btn-primary btn-block" type="submit" id="submit" value="Submit" >Ingresar</button>
+  			
+  			<div ng-switch on="exito" class="container-fluid">
+	 			<div ng-switch-when="1">
+	   				<div class="alert alert-success alert-dismissible role="alert">Bienvenido</div>
+	 			</div>
+	 			 
+	 			<div ng-switch-when="2">
+					<div class="alert alert-danger alert-dismissible role="alert"> Usuario y/o contrase&ntilde;a incorrectos. </div>
+	 			</div>
+			</div>
+
 			<p class="mt-5 mb-3 text-muted">Nico & Agus &copy; 2018</p>
-
-			  		<!--<div ng-switch on="bandera">
-             			<div ng-switch-when="1">
-               				<div class="alert alert-success alert-dismissible role="alert">Bienvenido {{persona.nombre}}   {{persona.apellido}} última cuota paga {{pago.mes}}/{{pago.anio}} </div>
-             			</div>
-             			 
-             			<div ng-switch-when="2">
-            				<div class="alert alert-danger alert-dismissible role="alert">Bienvenido {{persona.nombre}}   {{persona.apellido}} última cuota paga {{pago.mes}}/{{pago.anio}} </div>
-             			</div>
-          			</div>-->
-
-
-
-			<!-- <pre>list={{list}}</pre> -->
 		</form>
 	</div>
 	

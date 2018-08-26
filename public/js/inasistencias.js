@@ -2,6 +2,13 @@ var app = angular.module('inasistencia', ['ngCookies'])
 
 app.controller('myController', function($scope, $http, $cookies, $q) {
 
+    var chkLogin = $cookies.get('login');
+    console.log(chkLogin);
+    if (chkLogin==0 || !chkLogin) {
+        console.log('bla');
+        window.location.href = "/login";
+    }
+    
     //variable para front end
     $scope.data = [];
 

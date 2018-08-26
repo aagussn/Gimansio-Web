@@ -7,7 +7,7 @@ app.controller('LoginControl',  function($scope, $http, $cookies) {
 	// Controlo login
 	// Si ya esta logeado lo mando a la pagina principal
 	var chkLogin = $cookies.get('login');
-	if (chkLogin) {
+	if (chkLogin>0) {
 		window.location.href = "/";
 	}
 
@@ -30,8 +30,11 @@ app.controller('LoginControl',  function($scope, $http, $cookies) {
 	        	console.log("Boh");
 	        	$scope.exito=1;
 
+	        } else {
+	        	$scope.exito=2;
 	        }
-			// console.log(data.length);
+			console.log(data);
+			console.log($scope.exito);
 	    });
 	    
 		request.error(function(data){
