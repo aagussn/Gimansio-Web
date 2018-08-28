@@ -9,6 +9,8 @@ require('./rutas/afiliacion.ruta.js')(app);
 require('./rutas/afiliacions_hist.ruta.js')(app);
 require('./rutas/asistencia.ruta.js')(app);
 require('./rutas/categoria.ruta.js')(app);
+require('./rutas/comentarios.ruta.js')(app);
+require('./rutas/itemcomentarios.ruta.js')(app);
 require('./rutas/itemcategoria.ruta.js')(app);
 require('./rutas/objetivos.ruta.js')(app);
 require('./rutas/pago.ruta.js')(app);

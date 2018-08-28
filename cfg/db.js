@@ -29,7 +29,7 @@ db.sequelize = sequelize;
 
 db.usuarios   = require('../modelos/usuario.model.js')(sequelize, Sequelize);
 db.itemcomentarios   = require('../modelos/itemcomentarios.model.js')(sequelize, Sequelize);
-db.comentarios   = require('../modelos/comentarios.model.js')(sequelize, Sequelize);
+db.comentarios = require('../modelos/comentarios.model.js')(sequelize, Sequelize);
 db.pago=require('../modelos/pago.model.js')(sequelize, Sequelize);
 db.afiliacion = require('../modelos/afiliacion.model.js')(sequelize, Sequelize);
 db.afiliacion_hist = require('../modelos/afiliacion_hist.model.js')(sequelize, Sequelize);

@@ -4,7 +4,7 @@ module.exports = function(app) {
   const itemcomentarios = require('../controlador/itemcomentarios.controlador.js');
   
     // Create a new itemcategoria
-    app.post('/api/itemcomentarios', itemcategoria.create);
+    app.post('/api/itemcomentarios', itemcomentarios.create);
  
     // Retrieve all itemcategoria
     app.get('/api/itemcomentarios', itemcomentarios.findAll);

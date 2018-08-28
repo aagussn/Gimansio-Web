@@ -17,10 +17,21 @@ exports.create = (req, res) => {
  
 // FETCH all Usuarios
 exports.findAll = (req, res) => {
-	Categoria.findAll().then(categoria => {
-	  // Send all usuarios to Client
-	  res.send(categoria);
-	});
+	var condition =
+	{
+		where:
+			{
+
+			}
+	}
+	if (req.query.personaDocumento) {
+		condition.where.personaDocumento = req.query.personaDocumento
+	}
+
+	Categoria.findAll(condition)
+	.then(categoria => {
+	   res.send(categoria);
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
  
 // Find a Usuario by Id
@@ -40,9 +51,10 @@ exports.findById = (req, res) => {
 				   }).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };*/
  
-// Delete a Usuario by Id
+// Delete a Usuario by Id     ****** no puedo borrar verificar por que******
 exports.delete = (req, res) => {
 	const id = req.params.id;
+	write(req.params.id);
 	Categoria.destroy({
 	  where: { id: id }
 	}).then(() => {
