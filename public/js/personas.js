@@ -39,7 +39,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
     $scope.updPersona = function (cookie) {
         var now = new Date();
         var exp = new Date(now);
-        exp.setMinutes(now.getMinutes()+1)
+        exp.setMinutes(now.getMinutes()+20)
         $cookies.put('updPersona', cookie, {'expires': exp});
         window.location.href = "/afiliacion";
     }
@@ -47,7 +47,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
     $scope.setCookie = function (cookie) {
         var now = new Date();
         var exp = new Date(now);
-        exp.setMinutes(now.getMinutes()+1)
+        exp.setMinutes(now.getMinutes()+20)
         $cookies.put('Pagocookie', cookie, {'expires': exp});
         window.location.href = "/pagos";
     }
