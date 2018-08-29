@@ -15,7 +15,8 @@ app.controller('myController', function($scope,$http,$timeout,$cookies){
 	var mes=f.getMonth() +1;
 	var anio=f.getFullYear();
 	$scope.bandera=0;
-	console.log('valor inicial bandera: ' + $scope.bandera);
+	var bandera=0;
+	console.log('valor inicial $scope.bandera: ' + $scope.bandera + " y bandera "+bandera );
 	
 
  	//Busco la persona	
@@ -29,7 +30,7 @@ app.controller('myController', function($scope,$http,$timeout,$cookies){
 	        	console.log("data tiene datos");
 	        	//recorro la lista buscando el afiliado
 	        	var encontre=false;
-	        	for(var a=0;a<data.length;a++ && !encontre){
+	        	for(var a=0;a<data.length && !encontre ;a++ ){
 	        		var persona=data[a];
 	        		//busco a la persona si esta no tiene afiliacion vigente no la voy a encontrar
 	        		if(persona.documento==$scope.Documento){
@@ -75,50 +76,31 @@ app.controller('myController', function($scope,$http,$timeout,$cookies){
 								if(anioPago>anio){
 									//si el año es mayor no controlo mes y devuelvo exito
 									console.log("el año es mayor");
-									$scope.bandera=1;
-									$scope.antes=$scope.bandera;
-									$timeout(function callAtTimeout() {
-   											$scope.bandera=0;
-    										$scope.$apply;;
-										},2000);
-									
+									bandera=1;
 								}else{
 									if(anioPago==anio){
 									  	console.log("el anio  es igual ");
 									  	// si entro en if la persona esta atrasada
 									  	if(mesPago<mes){
-									  		$scope.bandera=2;
-											$timeout(function callAtTimeout() {
-   												$scope.bandera=0;
-    											$scope.$apply;;
-											},2000);	
-										 //si entro aca la persona esta al dia	
+									  		console.log("el mes  es menor ");
+									  		bandera=2;
+									  	//si entro aca la persona esta al dia	
 									  	}else{
-									  		$scope.bandera=1;
-											$scope.antes=$scope.bandera;
-												$timeout(function callAtTimeout() {
-		   											$scope.bandera=0;
-    												$scope.$apply;;
-												},2000);		
+									  		console.log("el mes no es menor ");
+									  		bandera=1;
 									  	}
 									}else {
 										console.log("el anio  es menor ");
-										$scope.bandera=2;
-										$timeout(function callAtTimeout() {
-   												$scope.bandera=0;
-    											$scope.$apply;;
-											},2000);		
+										bandera=2;
 									}	
 								}	
 	        				}else{console.log('No existe pagos para la ultima afi activa');//aca termino el if donde comparo el documento
-	        					$scope.bandera=3;
-        	  					$timeout(function callAtTimeout() {
-   									$scope.bandera=0;
-    								$scope.$apply;;
-								},2000);
+	        					bandera=3;
         	  				}
+
+
 	        				// inserto la asistencia de la persona 
-							if($scope.bandera==1 || $scope.bandera==2 || $scope.bandera==3 ){
+							if(bandera==1 || bandera==2 || bandera==3 ){
 			        			// Hago el insert
         						parameter = JSON.stringify({
                         			personaDocumento: persona.documento
@@ -134,33 +116,68 @@ app.controller('myController', function($scope,$http,$timeout,$cookies){
 			        		}
 	        			}else{//si la persona tiene o no pagos
 	        					console.log('Bienvenido '+persona.nombre+" "+persona.apellido+" recuarda pagar tu cuota de socio");
-	        					$scope.bandera=4;
-        	  					$timeout(function callAtTimeout() {
-   									$scope.bandera=0;
-    								$scope.$apply;;
-								},2000);
-        	  				}
+	        					bandera=4;
+        	  			}
 	        		}else{console.log('No existe afiliacion para el documento ingresado');//aca termino el if donde comparo el documento
-	        				$scope.bandera=4;
-        	  				$timeout(function callAtTimeout() {
-   								$scope.bandera=0;
-    							$scope.$apply;;
-							},2000);
-        	  			} 
+	        				bandera=4;
+        	  		} 
 	        	}//aca termino for donde busco a la persona
+	        switch (bandera) { 
+   		
+						   		case 1: 
+						   			$scope.bandera=bandera;
+									//$scope.antes=$scope.bandera;
+									$timeout(function callAtTimeout() {
+									$scope.bandera=0;
+									$scope.$apply;;
+									},2000);		
+						      		break 
+
+						   		case 2: 
+									$scope.bandera=bandera;
+									$timeout(function callAtTimeout() {
+									$scope.bandera=0;
+									$scope.$apply;;
+									},2000);	      	
+									break 
+
+						   		case 3: 
+						   			$scope.bandera=bandera;
+									//$scope.antes=$scope.bandera;
+									$timeout(function callAtTimeout() {
+									$scope.bandera=0;
+									$scope.$apply;;
+									},2000);	
+						      		break 
+
+								case 4: 
+									$scope.bandera=bandera;
+									$timeout(function callAtTimeout() {
+									$scope.bandera=0;
+									$scope.$apply;;
+									},2000);	      	
+									break 
+
+						   		default: 
+						      	console.log('la bandera no tiene valor ' + bandera); 
+							}
+
+
 	        }else{
 	        	console.log('data vacio');//fin de verificacion que el data tenga datos
-	        	$scope.bandera=4;
-				$scope.antes=$scope.bandera;
-				$timeout(function callAtTimeout() {
-		   			$scope.bandera=0;
-    				$scope.$apply;;
-					},2000);	
+	        	bandera=4
 	        }
 	    });lstPersonas.error(function(data){
 	    		console.log('Error no encontre persona: ' + data);
 	    	});
+	
+
+		
+
+
 	}
+
+
 });
 
 
