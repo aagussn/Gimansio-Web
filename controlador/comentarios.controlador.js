@@ -33,7 +33,7 @@ exports.findAll = (req, res) => {
 			
 
 		
-			Comentarios.findAll(comentarios)
+			Comentarios.findAll(condition)
 				.then(comentarios => {
 		  		res.send(comentarios);
 			}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));	
