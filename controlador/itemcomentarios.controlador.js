@@ -1,5 +1,5 @@
 const db = require('../cfg/db.js');
-const Itemcomentarios = db.itemitemcomentarios;
+const Itemcomentarios = db.itemcomentarios;
  
 
 exports.create = (req, res) => {	
@@ -7,7 +7,7 @@ exports.create = (req, res) => {
 	
 	Itemcomentarios.sequelize.query('INSERT into itemcomentarios (id,descripcion,createdAt,updatedAt,comentarioId) VALUES (DEFAULT,:pdescripcion, NOW(), NOW(),:pcomentarioId)',
     { replacements: {pcomentarioId: req.body.comentarioId,pdescripcion: req.body.descripcion}, 
-       	type: itemcomentarios.sequelize.QueryTypes.INSERT
+       	type: Itemcomentarios.sequelize.QueryTypes.INSERT
     }).then(itemcomentarios => {
 				// Send all usuarios to Client
 				console.log(itemcomentarios);
@@ -33,7 +33,7 @@ exports.findAll = (req, res) => {
 			
 
 		
-			Itemcomentarios.findAll(itemcomentarios)
+			Itemcomentarios.findAll(condition)
 				.then(itemcomentarios => {
 		  		res.send(itemcomentarios);
 			}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));	
