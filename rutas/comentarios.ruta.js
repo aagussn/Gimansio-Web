@@ -17,4 +17,8 @@ module.exports = function(app) {
  
     // Delete a categoria with Id
     app.delete('/api/comentarios/:id', comentarios.delete);
+
+    // lista con comentarios y el detalle del tipo de comentario
+    app.get('/api/categoComentarios', comentarios.categoriaComentarios);
+
 }

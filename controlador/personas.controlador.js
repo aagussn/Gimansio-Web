@@ -202,6 +202,32 @@ exports.listPerAfiPagF1 = (req, res) => {
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
+//me traigo la persona, pagos y afiliacion con afi vigentes y pagos solamente
+exports.listPerComentarios = (req, res) => {	
+	console.log(req.query);
+	var condition =	{
+	
+		include: [
+		   		
+			{
+        		model: db.comentarios ,	
+				include: [
+		   			{
+        				model: db.itemcomentarios ,	
+        			},
+        		]	
+    		},
+    		
+        	
+    	]
+	}
+
+	Persona.findAll(condition)
+		.then(persona => {
+	   		res.send(persona);
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+};
+
 
 
 function handleError(res, statusCode) {

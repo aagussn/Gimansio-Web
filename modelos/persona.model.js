@@ -4,7 +4,9 @@ module.exports = (sequelize, Sequelize) => {
       const afi=require('../modelos/afiliacion.model.js')(sequelize, Sequelize);
       const asis=require('../modelos/asistencia.model.js')(sequelize, Sequelize);
       const pg=require('../modelos/pago.model.js')(sequelize, Sequelize);    
+      //const coment=require('../modelos/itemcomentarios.model.js')(sequelize, Sequelize);   
       const coment=require('../modelos/comentarios.model.js')(sequelize, Sequelize);   
+
       const catego=require('../modelos/categoria.model.js')(sequelize, Sequelize);   
 
 

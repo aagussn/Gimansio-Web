@@ -5,8 +5,8 @@ const Comentarios = db.comentarios;
 exports.create = (req, res) => {	
   	console.log('json: ', req.body);
 	
-	Comentarios.sequelize.query('INSERT into comentarios (id,comentario,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT,:pComentario, NOW(), NOW(),:pPersonaDocumento)',
-    { replacements: {pComentario: req.body.comentario, pPersonaDocumento:req.body.personaDocumento}, 
+	Comentarios.sequelize.query('INSERT into comentarios (id,comentario,createdAt,updatedAt,itemcomentarioId,personaDocumento) VALUES (DEFAULT,:pComentario, NOW(), NOW(),:pitemcomentarioId,:pPersonaDocumento)',
+    { replacements: {pComentario: req.body.comentario,pitemcomentarioId:req.body.itemcomentarioId ,pPersonaDocumento:req.body.personaDocumento}, 
        	type: Comentarios.sequelize.QueryTypes.INSERT
     }).then(comentarios => {
 				// Send all usuarios to Client
@@ -30,7 +30,9 @@ exports.findAll = (req, res) => {
 			if (req.query.personaDocumento) {
 				condition.where.personaDocumento = req.query.personaDocumento
 			}
-			
+			if (req.query.itemcomentarioId) {
+				condition.where.itemcomentarioId = req.query.itemcomentarioId
+			}
 
 		
 			Comentarios.findAll(condition)
@@ -66,6 +68,28 @@ exports.delete = (req, res) => {
 	  		res.status(200).send('deleted successfully a usuario with id = ' + id);
 		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
+
+
+
+//veo el tipo de comentario
+exports.categoriaComentarios = (req, res) => {
+		var condition =	{
+	
+			include: [
+		   		
+				{
+        		model: db.itemcomentarios ,	
+    			},
+    		]
+		}
+		Comentarios.findAll(condition)
+				.then(comentarios => {
+		  		res.send(comentarios);
+			}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));	
+};
+
+
+
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500

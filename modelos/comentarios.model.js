@@ -20,7 +20,12 @@ module.exports = (sequelize, Sequelize) => {
       
 	});
   
-  Comantarios.hasMany(itemComentarios);
+  //Comantarios.hasMany(itemComentarios);
+  //Comantarios.hasOne(itemComentarios);
+   Comantarios.belongsTo(itemComentarios);
+
+
+
 
 	return Comantarios;
 }

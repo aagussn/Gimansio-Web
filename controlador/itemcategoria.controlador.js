@@ -5,7 +5,7 @@ const Itemcategoria = db.itemcategoria;
 exports.create = (req, res) => {	
   	console.log('json: ', req.body);
 	
-	Itemcategoria.sequelize.query('INSERT into itemcategoria (id,tipo,descripcion,createdAt,updatedAt,categoriumId) VALUES (DEFAULT,:ptipo,pdescripcion, NOW(), NOW(),:pcategoriumId)',
+	Itemcategoria.sequelize.query('INSERT into itemcategoria (id,tipo,descripcion,createdAt,updatedAt,categoriumId) VALUES (DEFAULT,:ptipo,:pdescripcion, NOW(), NOW(),:pcategoriumId)',
     { replacements: {ptipo: req.body.tipo, pdescripcion:req.body.descripcion, pcategoriumId: req.body.categoriumId}, 
        	type: Itemcategoria.sequelize.QueryTypes.INSERT
     }).then(itemcategoria => {
@@ -37,7 +37,7 @@ exports.findAll = (req, res) => {
 			
 
 		
-			Itemcategoria.findAll(itemcategoria)
+			Itemcategoria.findAll(condition)
 				.then(itemcategoria => {
 		  		res.send(itemcategoria);
 			}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));	

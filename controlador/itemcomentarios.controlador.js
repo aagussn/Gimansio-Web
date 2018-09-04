@@ -3,17 +3,16 @@ const Itemcomentarios = db.itemcomentarios;
  
 
 exports.create = (req, res) => {	
-  	console.log('json: ', req.body);
-	
-	Itemcomentarios.sequelize.query('INSERT into itemcomentarios (id,descripcion,createdAt,updatedAt,comentarioId) VALUES (DEFAULT,:pdescripcion, NOW(), NOW(),:pcomentarioId)',
-    { replacements: {pcomentarioId: req.body.comentarioId,pdescripcion: req.body.descripcion}, 
-       	type: Itemcomentarios.sequelize.QueryTypes.INSERT
-    }).then(itemcomentarios => {
-				// Send all usuarios to Client
-				console.log(itemcomentarios);
-		  		res.send(itemcomentarios);
-		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
-};
+	// creo una itemcomentario
+		Itemcomentarios.create({  
+		  id : req.body.id,
+		  descripcion:req.body.descripcion,
+		 			  	
+	  	}).then(itemcomentarios => {		
+			// Send created usuario to client
+			res.send(itemcomentarios);
+			}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));	
+};	
 
 // FETCH all Afiliacion
 exports.findAll = (req, res) => {
@@ -27,9 +26,7 @@ exports.findAll = (req, res) => {
 			if (req.query.descripcion) {
 				condition.where.descripcion = req.query.descripcion
 			}
-			if (req.query.comentarioId) {
-				condition.where.comentarioId = req.query.comentarioId
-			}
+			
 			
 
 		

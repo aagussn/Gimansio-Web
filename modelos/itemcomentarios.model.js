@@ -19,7 +19,9 @@ module.exports = (sequelize, Sequelize) => {
       
 	});
 
- // itemComentarios.hasMany(Comentarios);
+  //itemComentarios.hasMany(Comentarios);
+  //itemComentarios.belongsTo(Comentarios);
+
 
 	return itemComentarios;
 }

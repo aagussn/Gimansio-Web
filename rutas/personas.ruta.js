@@ -24,6 +24,10 @@ module.exports = function(app) {
     //me traigo la persona, pagos y afiliacion con afi vigentes y pagos solamente
     app.get('/api/listaF1', personas.listPerAfiPagF1);
 
+    // las personas y sus comentarios
+    app.get('/api/listComentarios', personas.listPerComentarios);
+    
+
     
 
 }
