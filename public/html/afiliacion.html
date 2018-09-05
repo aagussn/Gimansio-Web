@@ -215,7 +215,7 @@
 				<div class="card-header">
 					<!-- Send -->
 					<h3 class="mb-0">
-						<button type="submit" class="btn btn-primary col-md-1">Enviar</button>			
+						<button type="submit" class="btn btn-primary col-md-2">Enviar</button>			
 					</h3>
 				</div>
 			</div>
@@ -227,7 +227,90 @@
 						<a role="button" data-toggle="collapse" data-parent="#accordion" href="#Comentarios" >
 							Comentarios
 		        		</a>
-		      		</h3>
+		      		</h3><br>
+
+		        		<div class="form-row col-md-4">
+								<div class="form-group">
+									<label for="tipoComentario">Tipo de comentario</label>
+									<select id="tipoComentario" class="form-control" required ng-model="identerado">						<option value="1">Un amigo</option>
+										<option value="2">Radio / TV</option>
+										<option value="3">Facebook / Instagram </option>
+										<option value="4">Evento / Clase abierta</option>
+										<option value="5">Folleto / Afiche</option>
+										<option value="6">Otro</option>
+									</select>
+								</div>
+								<div class="input-group ">
+  									<div class="input-group-prepend ">
+    									<span class="input-group-text">Comantario</span>
+  									</div>
+  									<textarea class="form-control " aria-label="With textarea"></textarea>
+								</div>
+
+								<button type="submit" class="btn btn-primary col-md-5">Agregar</button>			
+	
+						</div><br><br>
+						
+						<h4 class="mb-0">
+							<a role="button" data-toggle="collapse" data-parent="#accordion" href="#Comentarios" >
+							Mis Comentarios
+		        			</a>
+		      			</h4><br>
+
+
+		      			<!--*************** aca ven los comentarios segun la categoria seleccionada ***************-->
+		      			<!--ver la manera de hacerlo variable la cantidad de comentarios-->
+						<div class="accordion" id="accordionExample">
+						  <div class="card">
+						    <div class="card-header" id="headingOne">
+						      <h5 class="mb-0">
+						        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+						          Collapsible Group Item #1
+						        </button>
+						      </h5>
+						    </div>
+
+						    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+						      <div class="card-body">
+						        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+						      </div>
+						    </div>
+						  </div>
+						  <div class="card">
+						    <div class="card-header" id="headingTwo">
+						      <h5 class="mb-0">
+						        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+						          Collapsible Group Item #2
+						        </button>
+						      </h5>
+						    </div>
+						    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+						      <div class="card-body">
+						        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+						      </div>
+						    </div>
+						  </div>
+						  <div class="card">
+						    <div class="card-header" id="headingThree">
+						      <h5 class="mb-0">
+						        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+						          Collapsible Group Item #3
+						        </button>
+						      </h5>
+						    </div>
+						    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+						      <div class="card-body">
+						        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+						      </div>
+						    </div>
+						  </div>
+						</div>
+
+
+
+
+
+
 		      	</div>
 
 		      	<div id="Comentarios" class="collapse" aria-labelledby="Comentarios" data-parent="#accordion">
