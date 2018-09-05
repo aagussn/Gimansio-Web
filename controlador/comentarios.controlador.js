@@ -5,8 +5,8 @@ const Comentarios = db.comentarios;
 exports.create = (req, res) => {	
   	console.log('json: ', req.body);
 	
-	Comentarios.sequelize.query('INSERT into comentarios (id,comentario,createdAt,updatedAt,itemcomentarioId,personaDocumento) VALUES (DEFAULT,:pComentario, NOW(), NOW(),:pitemcomentarioId,:pPersonaDocumento)',
-    { replacements: {pComentario: req.body.comentario,pitemcomentarioId:req.body.itemcomentarioId ,pPersonaDocumento:req.body.personaDocumento}, 
+	Comentarios.sequelize.query('INSERT into comentarios (id,titulo,comentario,createdAt,updatedAt,itemcomentarioId,personaDocumento) VALUES (DEFAULT,:ptitulo,:pComentario, NOW(), NOW(),:pitemcomentarioId,:pPersonaDocumento)',
+    { replacements: { ptitulo:req.body.titulo,pComentario: req.body.comentario,pitemcomentarioId:req.body.itemcomentarioId ,pPersonaDocumento:req.body.personaDocumento}, 
        	type: Comentarios.sequelize.QueryTypes.INSERT
     }).then(comentarios => {
 				// Send all usuarios to Client
@@ -23,6 +23,9 @@ exports.findAll = (req, res) => {
 					{
 
 					}
+			}
+			if (req.query.titulo) {
+				condition.where.titulo = req.query.titulo
 			}
 			if (req.query.comentario) {
 				condition.where.comentario = req.query.comentario

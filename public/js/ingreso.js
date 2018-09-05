@@ -122,6 +122,7 @@ app.controller('myController', function($scope,$http,$timeout,$cookies){
 	        				bandera=4;
         	  		} 
 	        	}//aca termino for donde busco a la persona
+	        var tiempo=3000;
 	        switch (bandera) { 
    		
 						   		case 1: 
@@ -130,7 +131,7 @@ app.controller('myController', function($scope,$http,$timeout,$cookies){
 									$timeout(function callAtTimeout() {
 									$scope.bandera=0;
 									$scope.$apply;;
-									},2000);		
+									},tiempo);		
 						      		break 
 
 						   		case 2: 
@@ -138,7 +139,7 @@ app.controller('myController', function($scope,$http,$timeout,$cookies){
 									$timeout(function callAtTimeout() {
 									$scope.bandera=0;
 									$scope.$apply;;
-									},2000);	      	
+									},tiempo);	      	
 									break 
 
 						   		case 3: 
@@ -147,7 +148,7 @@ app.controller('myController', function($scope,$http,$timeout,$cookies){
 									$timeout(function callAtTimeout() {
 									$scope.bandera=0;
 									$scope.$apply;;
-									},2000);	
+									},tiempo);	
 						      		break 
 
 								case 4: 
@@ -155,7 +156,7 @@ app.controller('myController', function($scope,$http,$timeout,$cookies){
 									$timeout(function callAtTimeout() {
 									$scope.bandera=0;
 									$scope.$apply;;
-									},2000);	      	
+									},tiempo);	      	
 									break 
 
 						   		default: 

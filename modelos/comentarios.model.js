@@ -12,6 +12,9 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
+      titulo: {
+        type: Sequelize.STRING(60)                        
+      },
       comentario: {
         type: Sequelize.TEXT                        
       },
