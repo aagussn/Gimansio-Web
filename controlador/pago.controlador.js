@@ -7,8 +7,8 @@ exports.create = (req, res) => {
   	//var pEstado=req.body.estado;
   	//var pDocumento=req.body.personaDocumento;
   	//var consulta='INSERT into afiliacions (id,estado,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT,"pEstado", NOW(), NOW(),"pDocumento")';
-	Pago.sequelize.query('INSERT into pagos (id,importe,mes,anio,tipomovimiento,tipopago,createdAt,updatedAt,planesId) VALUES (DEFAULT,:pImporte,:pMes,:pAnio,:pTipomovimiento,:pTipopago, NOW(), NOW(),:pDocumento)',
-    { replacements: {pPlanesId: req.body.planesId,pImporte:req.body.importe,pMes:req.body.mes,pAnio:req.body.anio,pTipomovimiento:req.body.tipomovimiento,pTipopago:req.body.tipopago}, 
+	Pago.sequelize.query('INSERT into pagos (id,importe,mes,anio,tipomovimiento,tipopago,createdAt,updatedAt,planId) VALUES (DEFAULT,:pImporte,:pMes,:pAnio,:pTipomovimiento,:pTipopago, NOW(), NOW(),:pPlanId)',
+    { replacements: {pPlanId: req.body.planId,pImporte:req.body.importe,pMes:req.body.mes,pAnio:req.body.anio,pTipomovimiento:req.body.tipomovimiento,pTipopago:req.body.tipopago}, 
        	type: Pago.sequelize.QueryTypes.INSERT
     }).then(pago => {
 				// Send all usuarios to Client 
