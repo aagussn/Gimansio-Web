@@ -7,8 +7,8 @@ exports.create = (req, res) => {
   	//var pEstado=req.body.estado;
   	//var pDocumento=req.body.personaDocumento;
   	//var consulta='INSERT into afiliacions (id,estado,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT,"pEstado", NOW(), NOW(),"pDocumento")';
-	Plan.sequelize.query('INSERT into plan (id,importeplan,duracion,inicio,fin,createdAt,updatedAt,afiliacionId,tipoPlan) VALUES (DEFAULT,:pImporteplan,:pDuracion,:pInicio,:pFin, NOW(), NOW(),:pAfiliacionId,:pTipoPlan)',
-    { replacements: {pAfiliacionId: req.body.afiliacionId,pImporteplan:req.body.importeplan,pDuracion:req.body.duracion,pInicio:req.body.inicio,pFin:req.body.fin,pTipoPlan:req.body.tipoPlan}, 
+	Plan.sequelize.query('INSERT into plans (id,importeplan,duracion,inicio,fin,createdAt,updatedAt,tipoplanId,afiliacionId) VALUES (DEFAULT,:pImporteplan,:pDuracion,:pInicio,:pFin, NOW(), NOW(),:pAfiliacionId,:pTipoplanId)',
+    { replacements: {pAfiliacionId: req.body.afiliacionId,pImporteplan:req.body.importeplan,pDuracion:req.body.duracion,pInicio:req.body.inicio,pFin:req.body.fin,pTipoplanId:req.body.tipoplanId}, 
        	type: Plan.sequelize.QueryTypes.INSERT
     }).then(plan => {
 				// Send all usuarios to Client 
