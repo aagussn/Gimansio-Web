@@ -23,8 +23,6 @@ module.exports = (sequelize, Sequelize) => {
       
 	});
   
-  //Comantarios.hasMany(itemComentarios);
-  //Comantarios.hasOne(itemComentarios);
    Comantarios.belongsTo(itemComentarios);
 
 

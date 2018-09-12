@@ -135,81 +135,112 @@ exports.delete = (req, res) => {
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
-
-
-//me traigo la persona, pagos y afiliacion
-exports.listPerAfiPag = (req, res) => {	
+//me traigo con afiliacion vigente y sus asistencias
+exports.lstAfiAsis1 = (req, res) => {	
 	console.log(req.query);
 	var condition =	{
 		
 			include: [
-			{
-        	model: db.afiliacion ,	
-        			//where: { estado: 1 }
-    		},
-    		{
-        	model: db.asistencia ,	
-        	},
-        	{
-        	model: db.pago ,
-        		/*where: {
-        			tipomovimiento: 1, tipopago: 1	
-				}*/
-        	},
+				{
+        		model: db.afiliacion ,	
+        			where: { estado: 1 },
+        			include: [
+		   				{
+        					model: db.asistencia,	
+        				},
+        			]	
+	    		},
     		]
-
-		
-		}
+	}
 	Persona.findAll(condition)
 		.then(persona => {
 	   		res.send(persona);
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
-//me traigo la persona, pagos y afiliacion con afi vigentes y pagos solamente
-exports.listPerAfiPagF1 = (req, res) => {	
+//me traigo con afiliacion todas  y sus asistencias
+exports.lstAfiAsis = (req, res) => {	
 	console.log(req.query);
 	var condition =	{
 		
-    	/*where : {
-        documento : 43515757
-        //req.body.documento
-    	},*/
-
-		include: [
-		   		
-			{
-        	model: db.afiliacion ,	
-        			where: { estado: 1 }
-    		},
-    		{
-        	model: db.pago ,
-        		
-        	},
-    		{
-        	model: db.asistencia ,	
-        	//attributes: [Persona.sequelize.fn('MAX', Persona.sequelize.col('id'))],
-        	//order: [["updatedAt", 'desc']],//limit: 1
-
-        	},
-        	
-    	]
+			include: [
+				{
+        		model: db.afiliacion ,	
+        			include: [
+		   				{
+        					model: db.asistencia,	
+        				},
+        			]	
+	    		},
+    		]
 	}
-
 	Persona.findAll(condition)
 		.then(persona => {
 	   		res.send(persona);
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
-//me traigo la persona, pagos y afiliacion con afi vigentes y pagos solamente
+
+//me traigo la persona con la afiliacion vigente planes y sus pagos
+exports.listPagosVigentes = (req, res) => {	
+	console.log(req.query);
+	var condition =	{
+		include: [
+			{
+        		model: db.afiliacion ,
+        	    	where: { estado: 1 },
+	    			include: [
+						{
+        					model: db.planes,
+        					include: [
+								{	
+        						model: db.pago,
+								},
+        					]	
+        				},
+        			]	
+	    	},
+    	]
+	}
+	Persona.findAll(condition)
+		.then(persona => {
+	   		res.send(persona);
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+};
+
+//me traigo la persona con la afiliacion vigente planes y sus pagos
+exports.listPagosNoVigentes = (req, res) => {	
+	console.log(req.query);
+	var condition =	{
+		include: [
+			{
+        		model: db.afiliacion ,
+	    			include: [
+						{
+        					model: db.planes,
+        					include: [
+								{	
+        						model: db.pago,
+								},
+        					]	
+        				},
+        			]	
+	    	},
+    	]
+	}
+	Persona.findAll(condition)
+		.then(persona => {
+	   		res.send(persona);
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+};
+
+
+//me traigo la persona y sus comentarios
 exports.listPerComentarios = (req, res) => {	
 	console.log(req.query);
 	var condition =	{
-	
 		include: [
-		   		
-			{
+		 	{
         		model: db.comentarios ,	
 				include: [
 		   			{
@@ -217,17 +248,35 @@ exports.listPerComentarios = (req, res) => {
         			},
         		]	
     		},
-    		
-        	
     	]
 	}
-
 	Persona.findAll(condition)
 		.then(persona => {
 	   		res.send(persona);
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
+//me traigo la persona y sus categorias
+exports.listPerCategorias = (req, res) => {	
+	console.log(req.query);
+	var condition =	{
+	
+		include: [
+		   {
+        		model: db.categoria ,	
+				include: [
+		   			{
+        				model: db.itemcategoria,	
+        			},
+        		]	
+    		},
+      	]
+	}
+	Persona.findAll(condition)
+		.then(persona => {
+	   		res.send(persona);
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+};
 
 
 function handleError(res, statusCode) {

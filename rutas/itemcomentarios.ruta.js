@@ -1,6 +1,5 @@
 module.exports = function(app) {
  
-
   const itemcomentarios = require('../controlador/itemcomentarios.controlador.js');
   
     // Create a new itemcategoria

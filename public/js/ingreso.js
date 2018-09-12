@@ -1,7 +1,8 @@
 var app = angular.module('ingreso', ['ngCookies']);
-
 app.controller('myController', function($scope,$http,$timeout,$cookies){
 	
+
+
 	var chkLogin = $cookies.get('login');
 	console.log(chkLogin);
 	if (chkLogin==0 || !chkLogin) {
@@ -10,7 +11,14 @@ app.controller('myController', function($scope,$http,$timeout,$cookies){
 	}
 	
 	//variables globales
+	var getTimezone = tz;
+	console.log(getTimezone);
+
 	var f = new Date();
+		console.log(f+ "esto es f")
+
+
+
 	var fecha=f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();
 	var mes=f.getMonth() +1;
 	var anio=f.getFullYear();
@@ -178,7 +186,14 @@ app.controller('myController', function($scope,$http,$timeout,$cookies){
 
 	}
 
-
+/*.config({
+    paths: {
+        "moment": "path/to/moment"
+    }
+});
+define(["path/to/moment-timezone-with-data"], function (moment) {
+    moment().tz("America/Los_Angeles").format();
+});*/
 });
 
 

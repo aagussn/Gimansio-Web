@@ -1,7 +1,7 @@
-//tabla detalle comentarios
+//tabla detalle tipoplanes
 module.exports = (sequelize, Sequelize) => {
 	
-  const itemComentarios = sequelize.define('itemcomentarios', {
+  const tiposPlanes = sequelize.define('tipoplan', {
 	 
       id: {
         type: Sequelize.INTEGER,
@@ -11,8 +11,11 @@ module.exports = (sequelize, Sequelize) => {
       descripcion: {
         type: Sequelize.STRING,
       },
-     
+      duracion: {
+        type: Sequelize.INTEGER
+      },
+           
 	});
-
-	return itemComentarios;
+ 
+	return tiposPlanes;
 }

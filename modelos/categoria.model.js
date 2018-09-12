@@ -9,11 +9,9 @@ module.exports = (sequelize, Sequelize) => {
         	primaryKey: true,
         	autoIncrement: true,
       	},	 
-     
-      
-	});
+     });
 	
-	Categoria.hasMany(itemCategoria);
+	Categoria.belongsTo(itemCategoria);
 
 	return Categoria;
 }

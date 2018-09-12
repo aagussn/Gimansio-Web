@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 //const sequelize = new Sequelize('mysql://root:@localhost:3306/gimnasi1'); //conexion Test
 //const sequelize = new Sequelize('mysql://alcuboah_arenasdelpinar:arenas2018@localhost:3306/alcuboah_arenasdelpinar');//produccion
-const sequelize = new Sequelize('mysql://root:@localhost:3306/gim2'); //conexion Test
-//const sequelize = new Sequelize('mysql://root:@localhost:3306/a'); //conexion Test
+//const sequelize = new Sequelize('mysql://root:@localhost:3306/gim2', {timezone :'America/Montevideo'});//{options.timezone : "-03:00"}); //conexion Test
+const sequelize = new Sequelize('mysql://root:@localhost:3306/a', {timezone :'America/Montevideo'}); //conexion Test
 
 
 sequelize
@@ -30,6 +30,10 @@ db.sequelize = sequelize;
 db.usuarios   = require('../modelos/usuario.model.js')(sequelize, Sequelize);
 db.comentarios = require('../modelos/comentarios.model.js')(sequelize, Sequelize);
 db.itemcomentarios   = require('../modelos/itemcomentarios.model.js')(sequelize, Sequelize);
+
+db.planes=require('../modelos/planes.model.js')(sequelize, Sequelize);
+db.tipoplanes=require('../modelos/tipoplanes.model.js')(sequelize, Sequelize);
+
 db.pago=require('../modelos/pago.model.js')(sequelize, Sequelize);
 db.afiliacion = require('../modelos/afiliacion.model.js')(sequelize, Sequelize);
 db.afiliacion_hist = require('../modelos/afiliacion_hist.model.js')(sequelize, Sequelize);

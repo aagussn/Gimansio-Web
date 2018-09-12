@@ -1,18 +1,18 @@
 const db = require('../cfg/db.js');
-const Pago = db.pago;
+const Plan = db.planes;
  
-// Post a pago
+// Post a plan
 exports.create = (req, res) => {	
   	console.log('json: ', req.body);
   	//var pEstado=req.body.estado;
   	//var pDocumento=req.body.personaDocumento;
   	//var consulta='INSERT into afiliacions (id,estado,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT,"pEstado", NOW(), NOW(),"pDocumento")';
-	Pago.sequelize.query('INSERT into pagos (id,importe,mes,anio,tipomovimiento,tipopago,createdAt,updatedAt,planesId) VALUES (DEFAULT,:pImporte,:pMes,:pAnio,:pTipomovimiento,:pTipopago, NOW(), NOW(),:pDocumento)',
-    { replacements: {pPlanesId: req.body.planesId,pImporte:req.body.importe,pMes:req.body.mes,pAnio:req.body.anio,pTipomovimiento:req.body.tipomovimiento,pTipopago:req.body.tipopago}, 
-       	type: Pago.sequelize.QueryTypes.INSERT
-    }).then(pago => {
+	Plan.sequelize.query('INSERT into plan (id,importeplan,duracion,inicio,fin,createdAt,updatedAt,afiliacionId,tipoPlan) VALUES (DEFAULT,:pImporteplan,:pDuracion,:pInicio,:pFin, NOW(), NOW(),:pAfiliacionId,:pTipoPlan)',
+    { replacements: {pAfiliacionId: req.body.afiliacionId,pImporteplan:req.body.importeplan,pDuracion:req.body.duracion,pInicio:req.body.inicio,pFin:req.body.fin,pTipoPlan:req.body.tipoPlan}, 
+       	type: Plan.sequelize.QueryTypes.INSERT
+    }).then(plan => {
 				// Send all usuarios to Client 
-				console.log(pago);
+				console.log(plan);
 		  		//res.send(afiliacion);
 		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
@@ -27,24 +27,24 @@ exports.findAll = (req, res) => {
 			}
 	}
 	
-	if (req.query.planesId) {
-		condition.where.planesId = req.query.planesId
+	if (req.query.importeplan) {
+		condition.where.importeplan = req.query.importeplan
 	}
-	if (req.query.importe) {
-			condition.where.importe = req.query.importe
+	if (req.query.duracion) {
+			condition.where.duracion = req.query.duracion
 	}
-	if (req.query.anio) {
-			condition.where.anio = req.query.anio
+	if (req.query.inicio) {
+			condition.where.inicio = req.query.inicio
 	}
-	if (req.query.mes) {
-			condition.where.mes = req.query.mes
+	if (req.query.fin) {
+			condition.where.fin = req.query.fin
 	}
-	if (req.query.tipomovimiento) {
-			condition.where.tipomovimiento = req.query.tipomovimiento
+	if (req.query.afiliacionId) {
+			condition.where.afiliacionId = req.query.afiliacionId
 	}
-	if (req.query.tipopago) {
-			condition.where.tipopago = req.query.tipopago
-	}		
+	if (req.query.tipoPlan) {
+			condition.where.tipoPlan = req.query.tipopago
+	}	
 	if (req.query.createdAt) {
 		condition.where.createdAt = req.query.createdAt
 	}
@@ -52,39 +52,39 @@ exports.findAll = (req, res) => {
 		condition.where.updatedAt = req.query.updatedAt
 	}
 	
-	Pago.findAll(condition).then(pago => {
+	Plan.findAll(condition).then(plan => {
 	  // Send all pagos to Client
-	  if(pago.length>0){
-	  	pago.reverse();
+	  if(plan.length>0){
+	  	plan.reverse();
 	  }
-	  res.send(pago);
+	  res.send(plan);
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
 // Find a pago by Id
 exports.findById = (req, res) => {	
-	Pago.findById(req.params.id).then(pago => {
-		res.send(pago);
+	Plan.findById(req.params.id).then(plan => {
+		res.send(plan);
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
  
 // Update a pago
 exports.update = (req, res) => {
 	const id = req.params.id;
-	Pago.update( { tipomovimiento: req.body.tipomovimiento},
+	Plan.update( { importeplan: req.body.importeplan,duracion: req.body.duracion,inicio: req.body.inicio,fin: req.body.fin,tipoPlan: req.body.tipoPlan},
 					 { where: {id: req.params.id} }
 				   ).then(() => {
-					 res.status(200).send("updated successfully de la pago del  pago");
+					 res.status(200).send("updated successfully de la plan del  plan");
 				   }).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
  
 // Delete a pago by Id
 exports.delete = (req, res) => {
 	const id = req.params.id;
-	Pago.destroy({
+	Plan.destroy({
 	  where: { id: id }
 	}).then(() => {
-	  res.status(200).send('deleted successfully a de la pago de pago');
+	  res.status(200).send('deleted successfully a de la plan de plan');
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
