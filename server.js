@@ -76,6 +76,16 @@ require('./rutas/tipoplanes.ruta.js')(app);
       res.sendFile(path.join(__dirname + '/public/html/pagos.html'));
     });
 
+    // Nuevo index
+    app.get('/new_index', function (req, res) {
+      res.sendFile(path.join(__dirname + '/public/html/new_index.html'));
+    });
+
+    // Nuevo index
+    app.get('/all_personas', function (req, res) {
+      res.sendFile(path.join(__dirname + '/public/html/all_personas.html'));
+    });
+
 try {
 var server = app.listen(port, function() {
   console.log('Aplicacion ejecutandose en puerto: ' + port);

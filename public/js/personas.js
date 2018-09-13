@@ -11,7 +11,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
 
     $scope.data = [];
     
-    var request = $http.get('/api/lista');    
+    var request = $http.get('/api/personas');    
     
     request.success(function(data) {    
         console.log(data);
