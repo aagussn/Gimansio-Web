@@ -15,6 +15,11 @@ module.exports = (sequelize, Sequelize) => {
       importeplan: {
         type: Sequelize.INTEGER
       },
+      
+      importepago: {
+        type: Sequelize.INTEGER
+      },
+      
       duracion: {
         type: Sequelize.INTEGER
       },
@@ -24,11 +29,32 @@ module.exports = (sequelize, Sequelize) => {
       fin: {
         type: Sequelize.DATEONLY
       },
+      cuotasson: {
+        type: Sequelize.INTEGER
+      },
+      cuotasvan: {
+        type: Sequelize.INTEGER
+      },
       
   });
 	 
-  Planes.hasMany(pg);
+  Planes.hasMany(pg, { onDelete: 'cascade' });
   Planes.belongsTo(tipoPlan);
+
+/*ejemplo 
+
+      Orders.hasMany(models.lines, { onDelete: 'cascade' });
+
+
+  Orders.hasMany(models.lines, { 
+  onDelete: 'cascade',
+  hooks: true, 
+});
+
+
+
+*/
+
 
 	return Planes;
 }

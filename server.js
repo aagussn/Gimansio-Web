@@ -25,6 +25,8 @@ require('./rutas/profesion.ruta.js')(app);
 require('./rutas/usuario.ruta.js')(app);
 require('./rutas/planes.ruta.js')(app);
 require('./rutas/tipoplanes.ruta.js')(app);
+require('./rutas/licencia.ruta.js')(app);
+require('./rutas/motivolicencia.ruta.js')(app);
 
 
 
@@ -74,16 +76,6 @@ require('./rutas/tipoplanes.ruta.js')(app);
     // Ruta pago
     app.get('/pagos', function (req, res) {
       res.sendFile(path.join(__dirname + '/public/html/pagos.html'));
-    });
-
-    // Nuevo index
-    app.get('/new_index', function (req, res) {
-      res.sendFile(path.join(__dirname + '/public/html/new_index.html'));
-    });
-
-    // Nuevo index
-    app.get('/all_personas', function (req, res) {
-      res.sendFile(path.join(__dirname + '/public/html/all_personas.html'));
     });
 
 try {

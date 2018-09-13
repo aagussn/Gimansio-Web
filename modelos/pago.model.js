@@ -11,18 +11,10 @@ module.exports = (sequelize, Sequelize) => {
       importe: {
         type: Sequelize.INTEGER
       },
-      mes: {
-        type: Sequelize.INTEGER
-      },
-      anio: {
-        type: Sequelize.INTEGER
-      },
-      tipomovimiento: {
-        type: Sequelize.INTEGER
-      },
-      tipopago: {
-        type: Sequelize.INTEGER
-      },
+      mes: { type: Sequelize.INTEGER,  unique: 'pagounico' },
+      anio:{ type: Sequelize.INTEGER,  unique: 'pagounico' },
+      tipomovimiento:{ type: Sequelize.INTEGER,  unique: 'pagounico' },
+      tipopago:{ type: Sequelize.INTEGER,  unique: 'pagounico' },
   });
 	 
 	return Pagos;

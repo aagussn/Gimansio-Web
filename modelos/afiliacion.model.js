@@ -3,6 +3,8 @@ module.exports = (sequelize, Sequelize) => {
 	
   const plans=require('../modelos/planes.model.js')(sequelize, Sequelize);     
   const asis=require('../modelos/asistencia.model.js')(sequelize, Sequelize);
+  const licencia=require('../modelos/licencia.model.js')(sequelize, Sequelize);
+
 
   const Afiliacion = sequelize.define('afiliacion', {
 	 
@@ -19,6 +21,7 @@ module.exports = (sequelize, Sequelize) => {
 
 	Afiliacion.hasMany(plans);
   Afiliacion.hasMany(asis);
+  Afiliacion.hasMany(licencia);
 
 
 	return Afiliacion;

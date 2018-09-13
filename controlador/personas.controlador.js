@@ -87,7 +87,6 @@ exports.findAll = (req, res) => {
 	Persona.findAll(condition)
 	.then(persona => {
 	   res.send(persona);
-	   console.log(persona);
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
  
