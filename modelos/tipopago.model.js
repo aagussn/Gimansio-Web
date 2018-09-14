@@ -1,7 +1,7 @@
-//tabla detalle comentarios
+//tabla detalle tipos de pagos
 module.exports = (sequelize, Sequelize) => {
 	
-  const itemComentarios = sequelize.define('itemcomentarios', {
+  const TipoPago = sequelize.define('tipopago', {
 	 
       id: {
         type: Sequelize.INTEGER,
@@ -9,10 +9,10 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
       },
       descripcion: {
-        type: Sequelize.STRING(20),
+        type: Sequelize.STRING(30),
       },
      
 	});
 
-	return itemComentarios;
+	return TipoPago;
 }

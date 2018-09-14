@@ -16,4 +16,7 @@ module.exports = function(app) {
  
     // Delete a itemcategoria with Id
     app.delete('/api/licencia/:id', licencia.delete);
+
+     // busco licencia y descpcion de motivo
+    app.get('/api/licenciamotivo', licencia.licenciaConMotivo);
 }

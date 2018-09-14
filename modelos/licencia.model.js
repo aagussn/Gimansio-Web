@@ -14,12 +14,8 @@ module.exports = (sequelize, Sequelize) => {
       descripcion: {
         type: Sequelize.TEXT
       },
-      inicio: {
-        type: Sequelize.DATEONLY
-      },
-      fin: {
-        type: Sequelize.DATEONLY
-      },
+      inicio: { type: Sequelize.DATEONLY,  unique: 'licenciaunica' },
+      fin: { type: Sequelize.DATEONLY,  unique: 'licenciaunica' },
 	 
   
 

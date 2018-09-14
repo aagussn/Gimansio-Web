@@ -8,9 +8,8 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      importe: {
-        type: Sequelize.INTEGER
-      },
+      
+      importe: { type: Sequelize.INTEGER,  unique: 'pagounico' },
       mes: { type: Sequelize.INTEGER,  unique: 'pagounico' },
       anio:{ type: Sequelize.INTEGER,  unique: 'pagounico' },
       tipomovimiento:{ type: Sequelize.INTEGER,  unique: 'pagounico' },

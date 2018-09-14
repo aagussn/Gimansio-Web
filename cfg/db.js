@@ -35,6 +35,9 @@ db.planes=require('../modelos/planes.model.js')(sequelize, Sequelize);
 db.tipoplanes=require('../modelos/tipoplanes.model.js')(sequelize, Sequelize);
 db.licencia = require('../modelos/licencia.model.js')(sequelize, Sequelize);
 db.motivolicencia   = require('../modelos/motivolicencia.model.js')(sequelize, Sequelize);
+db.tipopago   = require('../modelos/tipopago.model.js')(sequelize, Sequelize);
+
+
 
 db.pago=require('../modelos/pago.model.js')(sequelize, Sequelize);
 db.afiliacion = require('../modelos/afiliacion.model.js')(sequelize, Sequelize);

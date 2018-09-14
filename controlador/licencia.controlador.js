@@ -5,8 +5,8 @@ const Licencia = db.licencia;
 exports.create = (req, res) => {	
   	console.log('json: ', req.body);
 	
-	Licencia.sequelize.query('INSERT into licencia (id,titulo,comentario,createdAt,updatedAt,itemcomentarioId,personaDocumento) VALUES (DEFAULT,:ptitulo,:pComentario, NOW(), NOW(),:pitemcomentarioId,:pPersonaDocumento)',
-    { replacements: { ptitulo:req.body.titulo,pComentario: req.body.comentario,pitemcomentarioId:req.body.itemcomentarioId ,pPersonaDocumento:req.body.personaDocumento}, 
+	Licencia.sequelize.query('INSERT into licencia (id,descripcion,inicio,fin,createdAt,updatedAt,motivolicenciumId,afiliacionId) VALUES (DEFAULT,:pDescripcion,:pInicio,:pFin, NOW(), NOW(),:pMotivolicenciumId,:pAfiliacionId)',
+    { replacements: { pDescripcion:req.body.descripcion, pInicio: req.body.inicio,pFin:req.body.fin ,pMotivolicenciumId:req.body.motivolicenciumId,pAfiliacionId:req.body.afiliacionId},  
        	type: Licencia.sequelize.QueryTypes.INSERT
     }).then(licencia => {
 				// Send all usuarios to Client
@@ -24,17 +24,20 @@ exports.findAll = (req, res) => {
 
 					}
 			}
-			if (req.query.titulo) {
-				condition.where.titulo = req.query.titulo
+			if (req.query.descripcion) {
+				condition.where.descripcion = req.query.descripcion
 			}
-			if (req.query.comentario) {
-				condition.where.comentario = req.query.comentario
+			if (req.query.inicio) {
+				condition.where.inicio = req.query.inicio
 			}
-			if (req.query.personaDocumento) {
-				condition.where.personaDocumento = req.query.personaDocumento
+			if (req.query.fin) {
+				condition.where.fin = req.query.fin
 			}
-			if (req.query.itemcomentarioId) {
-				condition.where.itemcomentarioId = req.query.itemcomentarioId
+			if (req.query.motivolicenciumId) {
+				condition.where.motivolicenciumId = req.query.motivolicenciumId
+			}
+			if (req.query.afiliacionId) {
+				condition.where.afiliacionId = req.query.afiliacionId
 			}
 
 		
@@ -54,7 +57,7 @@ exports.findById = (req, res) => {
 // Update a Usuario
 exports.update = (req, res) => {
 		const id = req.params.id;
-		Licencia.update( { comentario: req.body.comentario }, 
+		Licencia.update( { descripcion: req.body.descripcion }, 
 			{ where: {id: req.params.id} }
 			).then(() => {
 				res.status(200).send("updated successfully a usuario with id = " + id);
@@ -66,7 +69,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
 		const id = req.params.id;
 		Licencia.destroy({
-	  						where: { id: id }
+	  					where: { id: id }
 		}).then(() => {
 	  		res.status(200).send('deleted successfully a usuario with id = ' + id);
 		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
@@ -75,13 +78,13 @@ exports.delete = (req, res) => {
 
 
 //veo el tipo de comentario
-exports.categoriaComentarios = (req, res) => {
+exports.licenciaConMotivo = (req, res) => {
 		var condition =	{
 	
 			include: [
 		   		
 				{
-        		model: db.itemcomentarios ,	
+        		model: db.motivolicencia ,	
     			},
     		]
 		}
