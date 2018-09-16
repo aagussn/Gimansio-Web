@@ -80,6 +80,21 @@ require('./rutas/tipopago.ruta.js')(app);
       res.sendFile(path.join(__dirname + '/public/html/pagos.html'));
     });
 
+    // Ruta index
+    app.get('/new_index', function (req, res) {
+      res.sendFile(path.join(__dirname + '/public/html/new_index.html'));
+    });
+
+    // Ruta lista persona
+    app.get('/all_personas', function (req, res) {
+      res.sendFile(path.join(__dirname + '/public/html/all_personas.html'));
+    });
+
+    // Ruta datos de una persona
+    app.get('/una_persona', function (req, res) {
+      res.sendFile(path.join(__dirname + '/public/html/una_persona.html'));
+    });
+
 try {
 var server = app.listen(port, function() {
   console.log('Aplicacion ejecutandose en puerto: ' + port);

@@ -1,26 +1,22 @@
-<div class="container-fluid">
-  <div class="container form-row" >
-      <input class="col-md-3" type="text" ng-model="search.documento" placeholder="Documento">
-    <input class="col-md-4" type="text" ng-model="search.nombre" placeholder="Nombre">
-    <input class="col-md-4" type="text" ng-model="search.apellido" placeholder="Apellido">
-    <a href="/afiliacion"><button class="btn btn-sm btn-success" id="addPersona"><i class="fas fa-plus-square"></i></button></a>
-  </div>
-	<div class="container form-row">
-    <table class="table table-hover table-striped">
-      <thead >
-        <tr>
-          <th scope="col" > <a href="#" ng-click="sortType = 'documento'"> Documento </a></th>
-          <th scope="col"> <a href="#" ng-click="sortType = 'nombre'"> Nombre</a></th>
-          <th scope="col"><a href="#" ng-click="sortType = 'apellido'">Apellido</a></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="item in data " data-ng-click="BindSelPersona(item)">
-          <th scope="row"><a href="#" ng-click="updPersona(item.documento)">{{item.documento}}</a>.</th>
-          <td>{{item.nombre}}</td>
-          <td>{{item.apellido}}</td>
-        </tr>
-      </tbody>
-    </table>  
-  </div>
+<div ng-switch on="cargando" >
+
+  <md-progress-circular md-mode="indeterminate" ng-switch-when="1"></md-progress-circular>
+
+  <md-toolbar class="md-theme-light">
+    <h2 class="md-toolbar-tools">
+      <span>Personas</span>
+    </h2>
+  </md-toolbar>
+
+  <md-content class="full-heigth">
+    <md-list style="height: {{hgt}}px !important;">
+      <md-list-item class="md-3-line" ng-repeat="item in personas" data-ng-click="BindSelPersona(item)" layout="row">
+        <div class="md-list-item-text" layout="column">
+          <h3>Nombre: {{item.nombre}} {{item.apellido}}</h3>
+          <h4>CI: {{item.documento}}</h4>
+        </div>
+      </md-list-item>
+    </md-list>
+  </md-content>
+
 </div>

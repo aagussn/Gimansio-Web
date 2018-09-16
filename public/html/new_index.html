@@ -5,20 +5,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/common.css">
     <!-- Angular Material CSS -->
     <link rel="stylesheet" href="/css/angular-material.css">
-
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Iconos -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <title>Index</title>
   </head>
   <body ng-cloak>
 
-  	<div class="container wrapper" ng-controller="Main">
-    	<div ng-include="'all_personas'"></div>
+  	<div ng-controller="Main" layout="row">
+      <div flex="30" layout="column">
+        <div ng-include="'all_personas'"></div>
+      </div>
+      <div flex="70" layout="column">
+        <div ng-include="'una_persona'"></div>
+      </div>
     </div>
     
     <!-- Dependencias de angular y material-->
@@ -31,11 +34,5 @@
     
     <!-- Optional JavaScript -->
     <script src="/js/new_index.js"></script>    
-
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="/js/jquery-3.3.1.min.js"></script>
-    <script src="/js/popper.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/common.js"></script>
   </body>
 </html>
