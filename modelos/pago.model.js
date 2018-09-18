@@ -1,6 +1,9 @@
 //tabla pago
 module.exports = (sequelize, Sequelize) => {
 	
+  const Mediopago=require('../modelos/mediopago.model.js')(sequelize, Sequelize);   
+
+
   const Pagos = sequelize.define('pago', {
 	     
       id: {
@@ -13,8 +16,11 @@ module.exports = (sequelize, Sequelize) => {
       mes: { type: Sequelize.INTEGER,  unique: 'pagounico' },
       anio:{ type: Sequelize.INTEGER,  unique: 'pagounico' },
       tipomovimiento:{ type: Sequelize.INTEGER,  unique: 'pagounico' },
-      tipopago:{ type: Sequelize.INTEGER,  unique: 'pagounico' },
+      concepto:{ type: Sequelize.INTEGER,  unique: 'pagounico' },
   });
 	 
+  Pagos.belongsTo(Mediopago);
+
+
 	return Pagos;
 }

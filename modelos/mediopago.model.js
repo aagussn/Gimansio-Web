@@ -1,7 +1,7 @@
 //tabla detalle tipos de pagos
 module.exports = (sequelize, Sequelize) => {
 	
-  const TipoPago = sequelize.define('tipopago', {
+  const Mediopago = sequelize.define('mediopago', {
 	 
       id: {
         type: Sequelize.INTEGER,
@@ -11,8 +11,12 @@ module.exports = (sequelize, Sequelize) => {
       descripcion: {
         type: Sequelize.STRING(30),
       },
+      tipo: { 
+        type: Sequelize.INTEGER
+      },
+
      
 	});
 
-	return TipoPago;
+	return Mediopago;
 }

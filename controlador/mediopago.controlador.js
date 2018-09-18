@@ -1,16 +1,16 @@
 const db = require('../cfg/db.js');
-const Tipopago = db.tipopago;
+const Mediopago = db.mediopago;
  
 
 exports.create = (req, res) => {	
 	// creo una itemcomentario
-		Tipopago.create({  
+		Mediopago.create({  
 		  id : req.body.id,
 		  descripcion:req.body.descripcion,
 		 			  	
-	  	}).then(tipopago => {		
+	  	}).then(mediopago => {		
 			// Send created usuario to client
-			res.send(tipopago);
+			res.send(mediopago);
 			}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));	
 };	
 
@@ -30,23 +30,23 @@ exports.findAll = (req, res) => {
 			
 
 		
-			Tipopago.findAll(condition)
-				.then(tipopago => {
-		  		res.send(tipopago);
+			Mediopago.findAll(condition)
+				.then(mediopago => {
+		  		res.send(mediopago);
 			}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));	
 };
  
 // Find a Afiliacion by Id
 exports.findById = (req, res) => {	
-		Tipopago.findById(req.params.id).then(tipopago => {
-		res.send(tipopago);
+		Mediopago.findById(req.params.id).then(mediopago => {
+		res.send(mediopago);
 		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
  
 // Update a Usuario
 exports.update = (req, res) => {
 		const id = req.params.id;
-		Tipopago.update( { descripcion: req.body.descripcion }, 
+		Mediopago.update( { descripcion: req.body.descripcion }, 
 			{ where: {id: req.params.id} }
 			).then(() => {
 				res.status(200).send("updated successfully a usuario with id = " + id);
@@ -57,7 +57,7 @@ exports.update = (req, res) => {
 // Delete a Usuario by Id
 exports.delete = (req, res) => {
 		const id = req.params.id;
-		Tipopago.destroy({
+		Mediopago.destroy({
 	  						where: { id: id }
 		}).then(() => {
 	  		res.status(200).send('deleted successfully a usuario with id = ' + id);

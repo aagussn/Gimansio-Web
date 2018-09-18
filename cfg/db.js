@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 //const sequelize = new Sequelize('mysql://root:@localhost:3306/gimnasi1'); //conexion Test
 //const sequelize = new Sequelize('mysql://alcuboah_arenasdelpinar:arenas2018@localhost:3306/alcuboah_arenasdelpinar');//produccion
-const sequelize = new Sequelize('mysql://root:@localhost:3306/gim2', {timezone :'America/Montevideo'});//{options.timezone : "-03:00"}); //conexion Test
-//const sequelize = new Sequelize('mysql://root:@localhost:3306/a', {timezone :'America/Montevideo'}); //conexion Test
+//const sequelize = new Sequelize('mysql://root:@localhost:3306/gim2', {timezone :'America/Montevideo'});//{options.timezone : "-03:00"}); //conexion Test
+const sequelize = new Sequelize('mysql://root:@localhost:3306/a', {timezone :'America/Montevideo'}); //conexion Test
 
 
 sequelize
@@ -35,7 +35,7 @@ db.planes=require('../modelos/planes.model.js')(sequelize, Sequelize);
 db.tipoplanes=require('../modelos/tipoplanes.model.js')(sequelize, Sequelize);
 db.licencia = require('../modelos/licencia.model.js')(sequelize, Sequelize);
 db.motivolicencia   = require('../modelos/motivolicencia.model.js')(sequelize, Sequelize);
-db.tipopago   = require('../modelos/tipopago.model.js')(sequelize, Sequelize);
+db.mediopago   = require('../modelos/mediopago.model.js')(sequelize, Sequelize);
 
 
 

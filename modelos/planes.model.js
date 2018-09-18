@@ -3,7 +3,7 @@ module.exports = (sequelize, Sequelize) => {
 	
   const pg=require('../modelos/pago.model.js')(sequelize, Sequelize);    
   const tipoPlan=require('../modelos/tipoplanes.model.js')(sequelize, Sequelize);   
-  const tipoPago=require('../modelos/tipoPago.model.js')(sequelize, Sequelize);   
+  const Mediopago=require('../modelos/mediopago.model.js')(sequelize, Sequelize);   
 
   const Planes = sequelize.define('plan', {
 	     
@@ -40,7 +40,7 @@ module.exports = (sequelize, Sequelize) => {
 	 
   Planes.hasMany(pg, { onDelete: 'cascade' });
   Planes.belongsTo(tipoPlan);
-  Planes.belongsTo(tipoPago);
+  Planes.belongsTo(Mediopago);
 
 
 /*ejemplo 

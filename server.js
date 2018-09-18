@@ -27,7 +27,7 @@ require('./rutas/planes.ruta.js')(app);
 require('./rutas/tipoplanes.ruta.js')(app);
 require('./rutas/licencia.ruta.js')(app);
 require('./rutas/motivolicencia.ruta.js')(app);
-require('./rutas/tipopago.ruta.js')(app);
+require('./rutas/mediopago.ruta.js')(app);
 
 
 
