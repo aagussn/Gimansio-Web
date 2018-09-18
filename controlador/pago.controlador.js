@@ -7,8 +7,8 @@ exports.create = (req, res) => {
   	//var pEstado=req.body.estado;
   	//var pDocumento=req.body.personaDocumento;
   	//var consulta='INSERT into afiliacions (id,estado,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT,"pEstado", NOW(), NOW(),"pDocumento")';
-	Pago.sequelize.query('INSERT into pagos (id,importe,mes,anio,tipomovimiento,tipopago,createdAt,updatedAt,planId) VALUES (DEFAULT,:pImporte,:pMes,:pAnio,:pTipomovimiento,:pTipopago, NOW(), NOW(),:pPlanId)',
-    { replacements: {pPlanId: req.body.planId,pImporte:req.body.importe,pMes:req.body.mes,pAnio:req.body.anio,pTipomovimiento:req.body.tipomovimiento,pTipopago:req.body.tipopago}, 
+	Pago.sequelize.query('INSERT into pagos (id,importe,mes,anio,tipomovimiento,concepto,createdAt,updatedAt,planId,mediopagoId) VALUES (DEFAULT,:pImporte,:pMes,:pAnio,:pTipomovimiento,:pConcepto, NOW(), NOW(),:pPlanId,:pMediopagoId)',
+    { replacements: {pPlanId: req.body.planId,pImporte:req.body.importe,pMes:req.body.mes,pAnio:req.body.anio,pTipomovimiento:req.body.tipomovimiento,pConcepto:req.body.pconcepto,pMediopagoId:req.body.mediopagoId}, 
        	type: Pago.sequelize.QueryTypes.INSERT
     }).then(pago => {
 				// Send all usuarios to Client 
@@ -42,8 +42,8 @@ exports.findAll = (req, res) => {
 	if (req.query.tipomovimiento) {
 			condition.where.tipomovimiento = req.query.tipomovimiento
 	}
-	if (req.query.tipopago) {
-			condition.where.tipopago = req.query.tipopago
+	if (req.query.concepto) {
+			condition.where.concepto = req.query.concepto
 	}		
 	if (req.query.createdAt) {
 		condition.where.createdAt = req.query.createdAt
@@ -51,6 +51,14 @@ exports.findAll = (req, res) => {
 	if (req.query.updatedAt) {
 		condition.where.updatedAt = req.query.updatedAt
 	}
+	if (req.query.planId) {
+		condition.where.planId = req.query.planId
+	}
+	
+	if (req.query.mediopagoId) {
+		condition.where.mediopagoId = req.query.mediopagoId
+	}
+	
 	
 	Pago.findAll(condition).then(pago => {
 	  // Send all pagos to Client

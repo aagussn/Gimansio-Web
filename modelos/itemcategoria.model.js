@@ -9,7 +9,7 @@ module.exports = (sequelize, Sequelize) => {
         	primaryKey: true,
         	autoIncrement: true,
       	},
-      	tipo: {
+      	tipo: { // esto seria el tipo de categoria por ejemplo objetivo
       		type: Sequelize.INTEGER
       	},
       	descripcion: {

@@ -26,7 +26,9 @@ exports.findAll = (req, res) => {
 			if (req.query.descripcion) {
 				condition.where.descripcion = req.query.descripcion
 			}
-			
+			if (req.query.tipo) {
+				condition.where.tipo = req.query.tipo
+			}
 			
 
 		

@@ -148,6 +148,14 @@ exports.lstAfiAsis1 = (req, res) => {
 		   				{
         					model: db.asistencia,	
         				},
+        				{
+        				model: db.licencia,	
+        					include: [
+		   						{
+        						model: db.motivolicencia,	
+        						},
+        					]	
+	    				},
         			]	
 	    		},
     		]
@@ -158,7 +166,7 @@ exports.lstAfiAsis1 = (req, res) => {
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
-//me traigo con afiliacion todas  y sus asistencias
+//me traigo todas las afiliacion , asistencias y si tiene licencia
 exports.lstAfiAsis = (req, res) => {	
 	console.log(req.query);
 	var condition =	{
@@ -170,8 +178,18 @@ exports.lstAfiAsis = (req, res) => {
 		   				{
         					model: db.asistencia,	
         				},
+        				{
+        				model: db.licencia,	
+        					include: [
+		   						{
+        						model: db.motivolicencia,	
+        						},
+        					]	
+	    				},
+
         			]	
 	    		},
+	    		
     		]
 	}
 	Persona.findAll(condition)
@@ -179,7 +197,6 @@ exports.lstAfiAsis = (req, res) => {
 	   		res.send(persona);
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
-
 
 //me traigo la persona con la afiliacion vigente planes y sus pagos
 exports.listPagosVigentes = (req, res) => {	
@@ -191,13 +208,20 @@ exports.listPagosVigentes = (req, res) => {
         	    	where: { estado: 1 },
 	    			include: [
 						{
-        					model: db.planes,
+        				model: db.planes,
         					include: [
 								{	
         						model: db.pago,
 								},
+								{
+		        				model: db.mediopago,
+		        				},
+		        				{
+		        				model: db.tipoplanes,
+		        				},
         					]	
         				},
+        				
         			]	
 	    	},
     	]
@@ -208,8 +232,8 @@ exports.listPagosVigentes = (req, res) => {
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
-//me traigo la persona con la afiliacion vigente planes y sus pagos
-exports.listPagosNoVigentes = (req, res) => {	
+//me traigo la persona todas las afiliacion, planes y sus pagos
+exports.listTodosPagosVigentes = (req, res) => {	
 	console.log(req.query);
 	var condition =	{
 		include: [
@@ -217,13 +241,20 @@ exports.listPagosNoVigentes = (req, res) => {
         		model: db.afiliacion ,
 	    			include: [
 						{
-        					model: db.planes,
+        				model: db.planes,
         					include: [
 								{	
         						model: db.pago,
 								},
+								{
+		        				model: db.mediopago,
+		        				},
+		        				{
+		        				model: db.tipoplanes,
+		        				},
         					]	
         				},
+        				
         			]	
 	    	},
     	]
@@ -277,6 +308,100 @@ exports.listPerCategorias = (req, res) => {
 	   		res.send(persona);
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
+
+
+//me traigo todas las  afiliacion con, sus comentarios, planes y  pagos
+exports.lstCompleta = (req, res) => {	
+	console.log(req.query);
+	var condition =	{
+		include: [
+			{
+        	model: db.afiliacion,	
+        		include: [
+					{
+        			model: db.asistencia,	
+        			},
+        			
+        			{
+        			model: db.planes,
+        				include: [
+		   					{
+        					model: db.pago,	
+	        					include: [
+			   						{
+	        						model: db.mediopago,	
+	        						},
+	        					]		
+        					},
+        						
+        					{
+        					model: db.mediopago,	
+        					},
+        					{
+        					model: db.tipoplanes,	
+        					},
+        				]	
+        			},
+        			
+        			{
+        			model: db.licencia,	
+        				include: [
+			   				{
+	        				model: db.motivolicencia,	
+	        				},
+        				]
+        			},
+        		]	
+       		},
+        		
+       		{
+       		model: db.comentarios,
+       			include: [
+		   			{
+        			model: db.itemcomentarios,	
+        			},
+       			]		
+       		},	
+        ]	
+	}
+    Persona.findAll(condition)
+		.then(persona => {
+	   		res.send(persona);
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+};
+
+//me traigo la persona con la afiliacion vigente planes y su ultimo pago
+exports.listUltimoPago = (req, res) => {	
+	console.log(req.query);
+	var condition =	{
+		include: [
+			{
+        	model: db.afiliacion ,
+        	   	where: {estado: 1 },
+	    		include: [
+					{
+        			model: db.planes,
+        				include: [
+							{	
+        					model: db.pago,
+        					// where id: {sequelize.fn('MAX', sequelize.col('id'))} ,
+        					where: {id: sequelize.fn('MAX', sequelize.col('id')) } 
+							},
+        				]	
+        			},
+        		]	
+	    	},
+    	]
+	}
+	Persona.findAll(condition)
+		.then(persona => {
+	   		res.send(persona);
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+};
+
+
+
+
 
 
 function handleError(res, statusCode) {

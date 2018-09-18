@@ -62,6 +62,25 @@ exports.delete = (req, res) => {
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
+//veo el tipo de categoria
+exports.categoriaTipo = (req, res) => {
+		var condition =	{
+	
+			include: [
+		   		
+				{
+        		model: db.itemcategoria ,	
+    			},
+    		]
+		}
+		Categoria.findAll(condition)
+				.then(categoria => {
+		  		res.send(categoria);
+			}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));	
+};
+
+
+
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500

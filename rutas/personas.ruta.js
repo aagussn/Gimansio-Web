@@ -21,14 +21,14 @@ module.exports = function(app) {
     //me traigo con afiliacion vigente y sus asistencias
     app.get('/api/lstAsistVigente', personas.lstAfiAsis1);
 
-     //me traigo con afiliacion todas y sus asistencias
+     //me traigo todas las afiliacion  y sus asistencias
     app.get('/api/lstAsist', personas.lstAfiAsis);
 
     //me traigo la persona con la afiliacion vigente planes y sus pagos
     app.get('/api/lstPagosAfiVigente', personas.listPagosVigentes);
 
     //me traigo la persona con la afiliacion vigente planes y sus pagos
-    app.get('/api/lstPagosTodos', personas.listPagosNoVigentes);
+    app.get('/api/lstPagosTodos', personas.listTodosPagosVigentes);
 
     // las personas y sus comentarios
     app.get('/api/listComentarios', personas.listPerComentarios);
@@ -36,6 +36,11 @@ module.exports = function(app) {
     // las personas y sus categorias
     app.get('/api/listCategorias', personas.listPerCategorias);
     
+    // lista completa 
+    app.get('/api/lstCompleta', personas.lstCompleta);
+
+    // ultimo pago 
+    app.get('/api/ultimoPago', personas.listUltimoPago);
 
     
 

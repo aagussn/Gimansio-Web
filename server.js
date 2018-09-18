@@ -5,9 +5,6 @@ var port = process.env.PORT || 3000; //test
 //var port = process.env.PORT || 49152; //produccion
 
 
-
-
-
 require('./rutas/afiliacion.ruta.js')(app);
 require('./rutas/afiliacions_hist.ruta.js')(app);
 require('./rutas/asistencia.ruta.js')(app);
@@ -15,7 +12,6 @@ require('./rutas/categoria.ruta.js')(app);
 require('./rutas/comentarios.ruta.js')(app);
 require('./rutas/itemcomentarios.ruta.js')(app);
 require('./rutas/itemcategoria.ruta.js')(app);
-require('./rutas/objetivos.ruta.js')(app);
 require('./rutas/pago.ruta.js')(app);
 require('./rutas/pago_hist.ruta.js')(app);
 require('./rutas/paramnum.ruta.js')(app);
@@ -28,7 +24,6 @@ require('./rutas/tipoplanes.ruta.js')(app);
 require('./rutas/licencia.ruta.js')(app);
 require('./rutas/motivolicencia.ruta.js')(app);
 require('./rutas/mediopago.ruta.js')(app);
-
 
 
 
