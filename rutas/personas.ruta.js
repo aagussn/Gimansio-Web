@@ -19,6 +19,9 @@ module.exports = function(app) {
     app.delete('/api/personas/:documento', personas.delete);
 
     //me traigo con afiliacion vigente y sus asistencias
+    app.get('/api/personaAfi', personas.lstPerAfi);
+
+    //me traigo con afiliacion vigente y sus asistencias
     app.get('/api/lstAsistVigente', personas.lstAfiAsis1);
 
      //me traigo todas las afiliacion  y sus asistencias

@@ -135,6 +135,38 @@ exports.delete = (req, res) => {
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
+//me traigo con afiliacion 
+exports.lstPerAfi = (req, res) => {	
+	console.log(req.query);
+	var condition =	{
+		
+			include: [
+				{
+        		model: db.afiliacion ,	
+        			//where: { estado: 1 },
+        			include: [
+		   				{
+        					model: db.asistencia,	
+        				},
+        				{
+        				model: db.licencia,	
+        					include: [
+		   						{
+        						model: db.motivolicencia,	
+        						},
+        					]	
+	    				},
+        			]	
+	    		},
+    		]
+	}
+	Persona.findAll(condition)
+		.then(persona => {
+	   		res.send(persona);
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+};
+
+
 //me traigo con afiliacion vigente y sus asistencias
 exports.lstAfiAsis1 = (req, res) => {	
 	console.log(req.query);
