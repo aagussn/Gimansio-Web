@@ -1,5 +1,7 @@
 const db = require('../cfg/db.js');
 const Persona  = db.persona;
+const sequelize=db.sequelize;
+
 
 // Post a Usuario
 exports.create = (req, res) => {	
@@ -139,27 +141,17 @@ exports.delete = (req, res) => {
 exports.lstPerAfi = (req, res) => {	
 	console.log(req.query);
 	var condition =	{
-		
+			
+
 			include: [
 				{
         		model: db.afiliacion ,	
-        			//where: { estado: 1 },
-        			include: [
-		   				{
-        					model: db.asistencia,	
-        				},
-        				{
-        				model: db.licencia,	
-        					include: [
-		   						{
-        						model: db.motivolicencia,	
-        						},
-        					]	
-	    				},
-        			]	
-	    		},
-    		]
-	}
+        		},
+    		],
+    		order:[[{model: db.afiliacion},'id', 'DESC']],
+    }
+
+
 	Persona.findAll(condition)
 		.then(persona => {
 	   		res.send(persona);
@@ -172,6 +164,12 @@ exports.lstAfiAsis1 = (req, res) => {
 	console.log(req.query);
 	var condition =	{
 		
+				where:
+			{
+
+			},
+
+
 			include: [
 				{
         		model: db.afiliacion ,	
@@ -192,6 +190,11 @@ exports.lstAfiAsis1 = (req, res) => {
 	    		},
     		]
 	}
+
+	if (req.query.documento) {
+		condition.where.documento = req.query.documento
+	}
+
 	Persona.findAll(condition)
 		.then(persona => {
 	   		res.send(persona);
@@ -203,6 +206,13 @@ exports.lstAfiAsis = (req, res) => {
 	console.log(req.query);
 	var condition =	{
 		
+
+			where:
+			{
+
+			},
+
+
 			include: [
 				{
         		model: db.afiliacion ,	
@@ -224,6 +234,9 @@ exports.lstAfiAsis = (req, res) => {
 	    		
     		]
 	}
+	if (req.query.documento) {
+		condition.where.documento = req.query.documento
+	}	
 	Persona.findAll(condition)
 		.then(persona => {
 	   		res.send(persona);
@@ -234,6 +247,10 @@ exports.lstAfiAsis = (req, res) => {
 exports.listPagosVigentes = (req, res) => {	
 	console.log(req.query);
 	var condition =	{
+		where:
+			{
+
+			},		
 		include: [
 			{
         		model: db.afiliacion ,
@@ -258,6 +275,10 @@ exports.listPagosVigentes = (req, res) => {
 	    	},
     	]
 	}
+	if (req.query.documento) {
+		condition.where.documento = req.query.documento
+	}	
+
 	Persona.findAll(condition)
 		.then(persona => {
 	   		res.send(persona);
@@ -268,6 +289,10 @@ exports.listPagosVigentes = (req, res) => {
 exports.listTodosPagosVigentes = (req, res) => {	
 	console.log(req.query);
 	var condition =	{
+		where:
+			{
+
+			},
 		include: [
 			{
         		model: db.afiliacion ,
@@ -291,6 +316,9 @@ exports.listTodosPagosVigentes = (req, res) => {
 	    	},
     	]
 	}
+	if (req.query.documento) {
+		condition.where.documento = req.query.documento
+	}		
 	Persona.findAll(condition)
 		.then(persona => {
 	   		res.send(persona);
@@ -302,6 +330,10 @@ exports.listTodosPagosVigentes = (req, res) => {
 exports.listPerComentarios = (req, res) => {	
 	console.log(req.query);
 	var condition =	{
+		where:
+			{
+
+			},
 		include: [
 		 	{
         		model: db.comentarios ,	
@@ -313,6 +345,9 @@ exports.listPerComentarios = (req, res) => {
     		},
     	]
 	}
+	if (req.query.documento) {
+		condition.where.documento = req.query.documento
+	}	
 	Persona.findAll(condition)
 		.then(persona => {
 	   		res.send(persona);
@@ -323,7 +358,10 @@ exports.listPerComentarios = (req, res) => {
 exports.listPerCategorias = (req, res) => {	
 	console.log(req.query);
 	var condition =	{
-	
+		where:
+			{
+
+			},
 		include: [
 		   {
         		model: db.categoria ,	
@@ -334,6 +372,9 @@ exports.listPerCategorias = (req, res) => {
         		]	
     		},
       	]
+	}
+	if (req.query.documento) {
+		condition.where.documento = req.query.documento
 	}
 	Persona.findAll(condition)
 		.then(persona => {
@@ -346,6 +387,10 @@ exports.listPerCategorias = (req, res) => {
 exports.lstCompleta = (req, res) => {	
 	console.log(req.query);
 	var condition =	{
+		where:
+			{
+
+			},
 		include: [
 			{
         	model: db.afiliacion,	
@@ -396,6 +441,10 @@ exports.lstCompleta = (req, res) => {
        		},	
         ]	
 	}
+	if (req.query.documento) {
+		condition.where.documento = req.query.documento
+	}
+
     Persona.findAll(condition)
 		.then(persona => {
 	   		res.send(persona);
@@ -417,7 +466,7 @@ exports.listUltimoPago = (req, res) => {
 							{	
         					model: db.pago,
         					// where id: {sequelize.fn('MAX', sequelize.col('id'))} ,
-        					where: {id: sequelize.fn('MAX', sequelize.col('id')) } 
+        					order : [sequelize.fn('max', sequelize.col('id'))],
 							},
         				]	
         			},
