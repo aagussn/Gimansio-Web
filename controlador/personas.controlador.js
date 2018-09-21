@@ -1,6 +1,8 @@
 const db = require('../cfg/db.js');
 const Persona  = db.persona;
 const sequelize=db.sequelize;
+const Sequelize=db.Sequelize;
+const Op = Sequelize.Op
 
 
 // Post a Usuario
@@ -142,15 +144,35 @@ exports.lstPerAfi = (req, res) => {
 	console.log(req.query);
 	var condition =	{
 			
-
+	/*funciona
 			include: [
 				{
         		model: db.afiliacion ,	
         		},
     		],
     		order:[[{model: db.afiliacion},'id', 'DESC']],
-    }
+	*/    
+	//prueba 
+			include: [
+				{
+        		model: db.afiliacion ,
+        			include: [
+						{
+        				model: db.planes,
+        			
+        				where: {  
+        					fin: {
+      							//[Op.gte]:sequelize.fn('DATE', sequelize.col('created_at')),
+              					[Op.gte]:sequelize.literal('CURRENT_DATE')
+    						}
+    					}
 
+        				},
+        			],		
+        		},
+    		],
+    		order:[[{model: db.afiliacion},'id', 'DESC']],
+    }
 
 	Persona.findAll(condition)
 		.then(persona => {
@@ -466,20 +488,20 @@ exports.listUltimoPago = (req, res) => {
 							{	
         					model: db.pago,
         					// where id: {sequelize.fn('MAX', sequelize.col('id'))} ,
-        					order : [sequelize.fn('max', sequelize.col('id'))],
+        					
 							},
-        				]	
+        				],	
         			},
-        		]	
+        		],	
 	    	},
-    	]
+    	],
+    	order:[[{model: db.pago},'updatedAt', 'DESC']],
 	}
 	Persona.findAll(condition)
 		.then(persona => {
 	   		res.send(persona);
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
-
 
 
 
@@ -510,3 +532,8 @@ function handleEntityNotFound(res) {
     return entity
   }
 }
+
+
+
+
+
