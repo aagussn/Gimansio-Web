@@ -159,13 +159,12 @@ exports.lstPerAfi = (req, res) => {
         			include: [
 						{
         				model: db.planes,
-        			
-        				where: {  
-        					fin: {
+        			    	where: {  
+        						fin: {
       							//[Op.gte]:sequelize.fn('DATE', sequelize.col('created_at')),
-              					[Op.gte]:sequelize.literal('CURRENT_DATE')
+              						[Op.gte]:sequelize.literal('CURRENT_DATE')
+    							}
     						}
-    					}
 
         				},
         			],		
@@ -265,7 +264,7 @@ exports.lstAfiAsis = (req, res) => {
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
-//me traigo la persona con la afiliacion vigente planes y sus pagos
+//me traigo la persona con la afiliacion vigente, planes  vigentes y sus pagos
 exports.listPagosVigentes = (req, res) => {	
 	console.log(req.query);
 	var condition =	{
@@ -280,6 +279,15 @@ exports.listPagosVigentes = (req, res) => {
 	    			include: [
 						{
         				model: db.planes,
+        					model: db.planes,
+        			    	where: {  
+        						fin: {
+      							//[Op.gte]:sequelize.fn('DATE', sequelize.col('created_at')),
+              						[Op.gte]:sequelize.literal('CURRENT_DATE')
+    							}
+    						},
+
+
         					include: [
 								{	
         						model: db.pago,
@@ -476,6 +484,24 @@ exports.lstCompleta = (req, res) => {
 //me traigo la persona con la afiliacion vigente planes y su ultimo pago
 exports.listUltimoPago = (req, res) => {	
 	console.log(req.query);
+	/*const tempSQL = sequelize.dialect.QueryGenerator.selectQuery('pagos',{
+    attributes: ['mes','anio','tipomovimiento','concepto','importe'],
+    where: {
+        tipomovimiento: 2
+        concepto:1
+
+    }})
+    .slice(0,-1); // to remove the ';' from the end of the SQL
+
+MyTable.find( {
+    where: {
+        id: {
+             $notIn: sequelize.literal('(' + tempSQL + ')'),
+        }
+    } 
+} );*/
+
+
 	var condition =	{
 		include: [
 			{
@@ -487,6 +513,12 @@ exports.listUltimoPago = (req, res) => {
         				include: [
 							{	
         					model: db.pago,
+        					where: {  
+        						fin: {
+      							//[Op.gte]:sequelize.fn('DATE', sequelize.col('created_at')),
+              						[Op.gte]:sequelize.literal('CURRENT_DATE')
+    							}
+    						}
         					// where id: {sequelize.fn('MAX', sequelize.col('id'))} ,
         					
 							},
