@@ -21,10 +21,10 @@ exports.create = (req, res) => {
 		  contactofamilia:req.body.contactofamilia,
 		  nombrecontacto:req.body.nombrecontacto,
 		  idprofesion:req.body.idprofesion,
-		  idobjetivos:req.body.idobjetivos,
+		 // idobjetivos:req.body.idobjetivos,
 		  idhorario: req.body.idhorario,
 		  idlogro: req.body.idlogro,
-		  idinteres: req.body.idinteres,
+		 // idinteres: req.body.idinteres,
 		  identerado: req.body.identerado,
 	  	  idaviso: req.body.idaviso
 	  			  	
@@ -116,10 +116,10 @@ exports.update = (req, res) => {
 	  					contactofamilia:req.body.contactofamilia,
 	  					nombrecontacto:req.body.nombrecontacto,
 	  					idprofesion:req.body.idprofesion,
-	  					idobjetivos:req.body.idobjetivos,
+	  					//idobjetivos:req.body.idobjetivos,
 					  	idhorario: req.body.idhorario,
 						idlogro: req.body.idlogro,
-						idinteres: req.body.idinteres,
+						//idinteres: req.body.idinteres,
 						identerado: req.body.identerado,
 					  	idaviso: req.body.idaviso
 					   }, 
@@ -155,20 +155,30 @@ exports.lstPerAfi = (req, res) => {
 	//prueba 
 			include: [
 				{
-        		model: db.afiliacion ,
+
+        		model: db.afiliacion, 
         			include: [
 						{
         				model: db.planes,
-        			    	where: {  
+        			    	/*where: {  
         						fin: {
       							//[Op.gte]:sequelize.fn('DATE', sequelize.col('created_at')),
               						[Op.gte]:sequelize.literal('CURRENT_DATE')
     							}
-    						}
+    						}*/
 
         				},
-        			],		
+        			],	
         		},
+        		{	
+        		model: db.categoria,
+					include: [
+						{
+        				model: db.itemcategoria,
+        			    },
+        			],   		
+        		},
+        		
     		],
     		order:[[{model: db.afiliacion},'id', 'DESC']],
     }

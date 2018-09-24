@@ -5,8 +5,8 @@ const Categoria = db.categoria;
 exports.create = (req, res) => {	
   	console.log('json: ', req.body);
 	
-	Categoria.sequelize.query('INSERT into categoria (id,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT, NOW(), NOW(),:ppersonaDocumento)',
-    { replacements: {ppersonaDocumento: req.body.personaDocumento}, 
+	Categoria.sequelize.query('INSERT into categoria (id,createdAt,updatedAt,itemcategoriumId,personaDocumento) VALUES (DEFAULT, NOW(), NOW(),:pItemcategoriumId,:pPersonaDocumento)',
+    { replacements: {pPersonaDocumento: req.body.personaDocumento, pItemcategoriumId:req.body.itemcategoriumId}, 
        	type: Categoria.sequelize.QueryTypes.INSERT
     }).then(categoria => {
 				// Send all usuarios to Client

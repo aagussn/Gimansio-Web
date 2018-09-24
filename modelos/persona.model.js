@@ -50,18 +50,18 @@ module.exports = (sequelize, Sequelize) => {
             idprofesion: {
                   type: Sequelize.STRING(20)
             },
-            idobjetivos: {
+           /* idobjetivos: {
                   type: Sequelize.STRING(20)
-            },
+            },*/
             idhorario: {
                   type: Sequelize.STRING(20)
             },
             idlogro: {
                   type: Sequelize.STRING(20)
             },
-            idinteres: {
+            /*idinteres: {
                   type: Sequelize.STRING(20)
-            },
+            },*/
             identerado: {
                   type: Sequelize.STRING(20)
             },
