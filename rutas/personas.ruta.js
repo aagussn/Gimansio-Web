@@ -43,6 +43,6 @@ module.exports = function(app) {
     app.get('/api/lstCompleta', personas.lstCompleta);
 
     // ultimo pago 
-    app.get('/api/ultimoPago', personas.listUltimoPago);8
+    app.get('/api/ultimoPago', personas.listUltimoPago);
 
 }
