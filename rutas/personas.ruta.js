@@ -31,7 +31,7 @@ module.exports = function(app) {
     app.get('/api/lstPagosAfiVigente', personas.listPagosVigentes);
 
     //me traigo la persona con la afiliacion vigente planes y sus pagos
-    app.get('/api/lstPagosTodos', personas.listTodosPagosVigentes);
+    app.get('/api/lstPagosTodos', personas.listPagosVigentes);
 
     // las personas y sus comentarios
     app.get('/api/listComentarios', personas.listPerComentarios);
@@ -43,8 +43,6 @@ module.exports = function(app) {
     app.get('/api/lstCompleta', personas.lstCompleta);
 
     // ultimo pago 
-    app.get('/api/ultimoPago', personas.listUltimoPago);
-
-    
+    app.get('/api/ultimoPago', personas.listUltimoPago);8
 
 }

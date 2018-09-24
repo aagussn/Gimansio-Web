@@ -201,6 +201,13 @@ exports.lstAfiAsis1 = (req, res) => {
         				},
         				{
         				model: db.licencia,	
+        					/*where: {  
+        						fin: {
+      							//[Op.gte]:sequelize.fn('DATE', sequelize.col('created_at')),
+              						[Op.gte]:sequelize.literal('CURRENT_DATE')
+    							}
+    						},*/
+
         					include: [
 		   						{
         						model: db.motivolicencia,	
@@ -316,7 +323,7 @@ exports.listPagosVigentes = (req, res) => {
 };
 
 //me traigo la persona todas las afiliacion, planes y sus pagos
-exports.listTodosPagosVigentes = (req, res) => {	
+exports.listTodosPagos = (req, res) => {	
 	console.log(req.query);
 	var condition =	{
 		where:
@@ -484,50 +491,45 @@ exports.lstCompleta = (req, res) => {
 //me traigo la persona con la afiliacion vigente planes y su ultimo pago
 exports.listUltimoPago = (req, res) => {	
 	console.log(req.query);
-	/*const tempSQL = sequelize.dialect.QueryGenerator.selectQuery('pagos',{
-    attributes: ['mes','anio','tipomovimiento','concepto','importe'],
-    where: {
-        tipomovimiento: 2
-        concepto:1
-
-    }})
-    .slice(0,-1); // to remove the ';' from the end of the SQL
-
-MyTable.find( {
-    where: {
-        id: {
-             $notIn: sequelize.literal('(' + tempSQL + ')'),
-        }
-    } 
-} );*/
-
-
 	var condition =	{
 		include: [
 			{
         	model: db.afiliacion ,
-        	   	where: {estado: 1 },
+        		where: {estado: 1 },
 	    		include: [
 					{
         			model: db.planes,
+        				where: {  
+        						fin: {
+	           						[Op.gte]:sequelize.literal('CURRENT_DATE')
+    							}
+    					},
         				include: [
 							{	
         					model: db.pago,
-        					where: {  
-        						fin: {
-      							//[Op.gte]:sequelize.fn('DATE', sequelize.col('created_at')),
-              						[Op.gte]:sequelize.literal('CURRENT_DATE')
-    							}
-    						}
-        					// where id: {sequelize.fn('MAX', sequelize.col('id'))} ,
+        					where: {
+        						tipomovimiento:1,
+        						[Op.and]: {concepto:1},
+        						[Op.and]:{pagoanulado:0}
+      						}
+        					
         					
 							},
-        				],	
+        				],
+
         			},
         		],	
 	    	},
     	],
-    	order:[[{model: db.pago},'updatedAt', 'DESC']],
+    	
+    	//ordenar un nivel de include
+    	//order:[[{model: db.afiliacion},'id', 'DESC']],
+
+    	//ordenar 2 nivel de include
+		//order: [[ db.afiliacion, { model: db.planes}, 'created_at', 'DESC' ]],
+    	
+    	//ordenar 3 nivel de include
+		order: [[ db.afiliacion, db.planes, { model: db.pago}, 'id', 'DESC' ] ],
 	}
 	Persona.findAll(condition)
 		.then(persona => {
@@ -567,5 +569,19 @@ function handleEntityNotFound(res) {
 
 
 
+			////******************creo temporal*************************
 
-
+		/*	const tempSQL = sequelize.dialect.QueryGenerator.selectQuery('pagos',{
+		    attributes: ['mes','anio','concepto','importe'],
+		    where: {
+		        tipomovimiento: 2,
+		        [Op.and]: {concepto:1},
+		    }})
+		    .slice(0,-1); // to remove the ';' from the end of the SQL
+		MyTable.find( {
+		    where: {
+		        id: {
+		             $notIn: sequelize.literal('(' + tempSQL + ')'),
+		        }
+		    } 
+		} );*/
