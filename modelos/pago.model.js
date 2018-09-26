@@ -17,10 +17,7 @@ module.exports = (sequelize, Sequelize) => {
       anio:{ type: Sequelize.INTEGER,  unique: 'pagounico' },
       tipomovimiento:{ type: Sequelize.INTEGER,  unique: 'pagounico' },
       concepto:{ type: Sequelize.INTEGER,  unique: 'pagounico' },
-      
-      pagoanulado: {
-        type: Sequelize.INTEGER,
-      },
+      pagoanulado: {type: Sequelize.INTEGER, unique: 'pagounico'},
   });
 	 
   Pagos.belongsTo(Mediopago);
