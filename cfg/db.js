@@ -45,7 +45,7 @@ db.persona_hist=require('../modelos/persona_hist.model.js')(sequelize, Sequelize
 db.pago_hist=require('../modelos/pago_hist.model.js')(sequelize, Sequelize);
 db.paramnum=require('../modelos/paramnum.model.js')(sequelize, Sequelize);
 db.profesion=require('../modelos/paramnum.model.js')(sequelize, Sequelize);
-db.comentarios   = require('../modelos/comentarios.model.js')(sequelize, Sequelize);
+//db.comentarios   = require('../modelos/comentarios.model.js')(sequelize, Sequelize);
 db.persona=require('../modelos/persona.model.js')(sequelize, Sequelize);
 
 

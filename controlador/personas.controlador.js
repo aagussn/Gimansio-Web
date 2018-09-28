@@ -139,8 +139,8 @@ exports.delete = (req, res) => {
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
-//me traigo con afiliacion 
-exports.lstPerAfi = (req, res) => {	
+//me traigo con afiliacion y plan
+exports.lstPerAfiPln = (req, res) => {	
 	console.log(req.query);
 	var condition =	{
 			
@@ -160,24 +160,24 @@ exports.lstPerAfi = (req, res) => {
         			include: [
 						{
         				model: db.planes,
-        			    	/*where: {  
+        			    	where: {  
         						fin: {
       							//[Op.gte]:sequelize.fn('DATE', sequelize.col('created_at')),
-              						[Op.gte]:sequelize.literal('CURRENT_DATE')
+              					[Op.gte]:sequelize.literal('CURRENT_DATE')
     							}
-    						}*/
+    						}
 
         				},
         			],	
         		},
-        		{	
+        		/*{	
         		model: db.categoria,
 					include: [
 						{
         				model: db.itemcategoria,
         			    },
         			],   		
-        		},
+        		},*/
         		
     		],
     		order:[[{model: db.afiliacion},'id', 'DESC']],
@@ -189,9 +189,67 @@ exports.lstPerAfi = (req, res) => {
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
+//me traigo la persona y sus comentarios
+exports.listPerComentarios = (req, res) => {	
+	console.log(req.query);
+	var condition =	{
+		where:
+			{
+
+			},
+		include: [
+		 	{
+        		model: db.comentarios ,	
+				include: [
+		   			{
+        				model: db.itemcomentarios ,	
+        			},
+        		]	
+    		},
+    	]
+	}
+	if (req.query.documento) {
+		condition.where.documento = req.query.documento
+	}	
+	Persona.findAll(condition)
+		.then(persona => {
+	   		res.send(persona);
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+};
+
+//me traigo la persona y sus categorias
+exports.listPerCategorias = (req, res) => {	
+	console.log(req.query);
+	var condition =	{
+		where:
+			{
+
+			},
+		include: [
+		   {
+        		model: db.categoria ,	
+				include: [
+		   			{
+        				model: db.itemcategoria,	
+        			},
+        		]	
+    		},
+      	]
+	}
+	if (req.query.documento) {
+		condition.where.documento = req.query.documento
+	}
+	Persona.findAll(condition)
+		.then(persona => {
+	   		res.send(persona);
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+};
+
+
+
 
 //me traigo con afiliacion vigente y sus asistencias
-exports.lstAfiAsis1 = (req, res) => {	
+exports.lstAfi1Asis = (req, res) => {	
 	console.log(req.query);
 	var condition =	{
 		
@@ -373,63 +431,6 @@ exports.listTodosPagos = (req, res) => {
 };
 
 
-//me traigo la persona y sus comentarios
-exports.listPerComentarios = (req, res) => {	
-	console.log(req.query);
-	var condition =	{
-		where:
-			{
-
-			},
-		include: [
-		 	{
-        		model: db.comentarios ,	
-				include: [
-		   			{
-        				model: db.itemcomentarios ,	
-        			},
-        		]	
-    		},
-    	]
-	}
-	if (req.query.documento) {
-		condition.where.documento = req.query.documento
-	}	
-	Persona.findAll(condition)
-		.then(persona => {
-	   		res.send(persona);
-	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
-};
-
-//me traigo la persona y sus categorias
-exports.listPerCategorias = (req, res) => {	
-	console.log(req.query);
-	var condition =	{
-		where:
-			{
-
-			},
-		include: [
-		   {
-        		model: db.categoria ,	
-				include: [
-		   			{
-        				model: db.itemcategoria,	
-        			},
-        		]	
-    		},
-      	]
-	}
-	if (req.query.documento) {
-		condition.where.documento = req.query.documento
-	}
-	Persona.findAll(condition)
-		.then(persona => {
-	   		res.send(persona);
-	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
-};
-
-
 //me traigo todas las  afiliacion con, sus comentarios, planes y  pagos
 exports.lstCompleta = (req, res) => {	
 	console.log(req.query);
@@ -450,19 +451,18 @@ exports.lstCompleta = (req, res) => {
         			model: db.planes,
         				include: [
 		   					{
+        					model: db.mediopago,	
+        					},
+        					{
+        					model: db.tipoplanes,	
+        					},
+		   					{
         					model: db.pago,	
 	        					include: [
 			   						{
 	        						model: db.mediopago,	
 	        						},
 	        					]		
-        					},
-        						
-        					{
-        					model: db.mediopago,	
-        					},
-        					{
-        					model: db.tipoplanes,	
         					},
         				]	
         			},
@@ -486,11 +486,22 @@ exports.lstCompleta = (req, res) => {
         			},
        			]		
        		},	
-        ]	
+       		{
+       		model: db.categoria,
+       			include: [
+		   			{
+        			model: db.itemcategoria,	
+        			},
+       			]		
+       		},	
+        ],	
+        order:[[{model: db.afiliacion},'id', 'DESC']],
 	}
+	
 	if (req.query.documento) {
 		condition.where.documento = req.query.documento
 	}
+
 
     Persona.findAll(condition)
 		.then(persona => {
@@ -498,8 +509,9 @@ exports.lstCompleta = (req, res) => {
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
+
 //me traigo la persona con la afiliacion vigente planes y su ultimo pago
-exports.listUltimoPago = (req, res) => {	
+exports.ultimoPago = (req, res) => {	
 	console.log(req.query);
 	var condition =	{
 		include: [
