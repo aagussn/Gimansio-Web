@@ -1,67 +1,94 @@
 <!doctype html>
-<html lang="en" ng-app="ingreso">
+<html lang="en" ng-app="Ingreso">
+  
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Optional JavaScript -->
-    <!--  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>-->
-  
-
-
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
-    <script src="/js/ingreso.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+     <!-- Angular Material CSS -->
+    <link rel="stylesheet" href="/css/angular-material.css">
+     <!-- Dependencias de angular y material-->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="/js/jquery-3.3.1.min.js"></script>
     <script src="/js/popper.min.js" ></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/common.js"></script>
-    
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/common.css">
-
-  <!-- Iconos -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" >
+    <script src="/js/ingreso.js"></script>
+     <!-- Iconos -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" >
     <title>ingreso</title>
   </head>
+  
   <body ng-controller="myController">
     <form class="form-signin" ng-submit="submit()">
-      <div ng-include="'/barra'"> </div>    
-      <div class="container"><br><br><br></div>
+      <div ng-include="'/barra'"></div>    
+      <div class="container"></div><br><br><br>
       <div class="container content-wrapper " align="center">
-        <img class="mb-4" src="/img/mancuerna.svg" alt="" width="90" height="90" align="center">
-        <h1 class="h2">Bienvenido a Arenas del Pinar <br><br><br> </h1>
-
+        <img class="md-4" src="/img/logo.png" alt="" width="200" height="200" align="center"><br><br>
+        <h1 class="h2">Bienvenido ingrese su documento</h1><br><br>
         <label for="inputUser " class="sr-only ">Documento</label>
-        <input type="text" id="inputUser" class="input-lg" placeholder="Documento" ng-model="Documento" required autofocus>
+        <input type="text" id="inputUser" ng-change="clear()" class="input-xl" placeholder="Documento" ng-model="Documento" required autofocus>
         <button class="btn btn-md btn-primary " type="submit" id="submit" value="Submit" alert=true">INGRESAR</button><br><br> 
 
-      
-          <div ng-switch on="bandera">
-             <div ng-switch-when="1">
-                <div class="alert alert-success alert-dismissible role="alert">Bienvenido {{persona.nombre}}   {{persona.apellido}} última cuota paga {{pago.mes}}/{{pago.anio}} </div>
-             </div>
-              
-             <div ng-switch-when="2">
-                <div class="alert alert-danger alert-dismissible role="alert">Bienvenido {{persona.nombre}}   {{persona.apellido}} última cuota paga {{pago.mes}}/{{pago.anio}} </div>
-             </div>
-             
-             <div ng-switch-when="4">
-               <div class="alert alert-info alert-dismissible role="alert">Bienvenido, el documento ingresado no pertenece a un socio</div>
-             </div>
+            {{bandera}
 
-              <div ng-switch-when="3">
-                  <div class="alert alert-warning alert-dismissible role="alert">Bienvenido, {{persona.nombre}}   {{persona.apellido}}  de momento no tienen ningún pago</div>
-              </div>
+        <div ng-switch on="bandera">
+          <div ng-switch-when="1">
+            <div class="alert alert-success alert-dismissible role="alert">Bienvenido {{persona.nombre}}   {{persona.apellido}} última cuota paga {{pago.mes}}/{{pago.anio}} </div>
           </div>
-        
-      </div>
-    </form>
+          <div ng-switch-when="2">
+            <div class="alert alert-danger alert-dismissible role="alert">Bienvenido {{persona.nombre}}   {{persona.apellido}} última cuota paga {{pago.mes}}/{{pago.anio}} </div>
+          </div>
+          <div ng-switch-when="3">
+            <div class="alert alert-warning alert-dismissible role="alert">Bienvenido, {{persona.nombre}}   {{persona.apellido}}  de momento no tienen ningún pago</div>
+          </div>
+          <div ng-switch-when="4">
+            <div class="alert alert-info alert-dismissible role="alert">Bienvenido, el documento ingresado no pertenece a un socio</div>
+          </div>
+          <div ng-switch-when="5">
+            <div class="alert alert-warning alert-dismissible role="alert">Bienvenido, {{persona.nombre}}   {{persona.apellido}}  de momento no tienen ningún pago</div>
+          </div>
+          <div ng-switch-when="6">
+            <div class="alert alert-warning alert-dismissible role="alert">Bienvenido, {{persona.nombre}}   {{persona.apellido}}  de momento no tienen ningún pago</div>
+          </div>
+          <div ng-switch-when="7">
+            <div class="alert alert-warning alert-dismissible role="alert">Bienvenido, {{persona.nombre}}   {{persona.apellido}}  de momento no tienen ningún pago</div>
+          </div>
+        </div>
+        <br><br>
+       
+        <div class="container form-row">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col" >Documento</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">importe del plan</th>
+                <th scope="col">importe pago plan</th>   
+                <th scope="col">Plan vence</th>          
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in ingreso | filter:search | orderBy : ['documento'] | limitTo: 50 "> 
+                <td >{{item.documento}}</td>
+                <td>{{item.nombre}}</td>
+                <td >{{item.importeplan}}</td>
+                <td>{{item.importepago}}</td>
+                <td>{{item.fechaFin}}</td>
+              </tr>
+            </tbody>
+          </table>  
+        </div>
 
-   
+      </div>           
+    </form>
   </body>
 </html>

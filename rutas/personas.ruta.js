@@ -59,5 +59,8 @@ module.exports = function(app) {
     app.get('/api/listTodosPagos', personas.listTodosPagos);
     // ultimo pago 
     app.get('/api/ultimoPago', personas.ultimoPago);
+    // parta control de ingreso 
+    app.get('/api/controlIngreso', personas.controlIngreso);
+
 
 }

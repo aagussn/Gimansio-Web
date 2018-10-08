@@ -1,27 +1,19 @@
-var app = angular.module('ingreso', ['ngCookies']);
+var app = angular.module('Ingreso', []);
 app.controller('myController', function($scope,$http,$timeout,$cookies){
 	
 
 
-	var chkLogin = $cookies.get('login');
-	console.log(chkLogin);
+	/*var chkLogin = $cookies.get('login');
+	//console.log(chkLogin);
 	if (chkLogin==0 || !chkLogin) {
 		console.log('bla');
 		window.location.href = "/login";
-	}
+	}*/
 	
 	//variables globales
-	var getTimezone = tz;
-	console.log(getTimezone);
-
+	var tiempo=3000;
 	var f = new Date();
-		console.log(f+ "esto es f")
-
-
-
-	var fecha=f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();
-	var mes=f.getMonth() +1;
-	var anio=f.getFullYear();
+	var fecha= Date.parse( f.getFullYear() +"-" + (f.getMonth() +1)+ "-" + f.getDate());
 	$scope.bandera=0;
 	var bandera=0;
 	console.log('valor inicial $scope.bandera: ' + $scope.bandera + " y bandera "+bandera );
@@ -29,82 +21,63 @@ app.controller('myController', function($scope,$http,$timeout,$cookies){
 
  	//Busco la persona	
 	$scope.submit = function() {
-		$scope.list = '/api/listaF1';
-		//console.log($scope.Documento);
-		// lista completa de personas
-		var lstPersonas = $http.get($scope.list);
+		var consulta = '/api/controlIngreso?documento='$scope.Documento;
+		var lstPersonas = $http.get(consulta);
 		lstPersonas.success(function(data) {
 	        if(data.length>0){
-	        	console.log("data tiene datos");
-	        	//recorro la lista buscando el afiliado
-	        	var encontre=false;
-	        	for(var a=0;a<data.length && !encontre ;a++ ){
-	        		var persona=data[a];
-	        		//busco a la persona si esta no tiene afiliacion vigente no la voy a encontrar
-	        		if(persona.documento==$scope.Documento){
-	        			console.log("encontre a la persona");
-	        			$scope.persona=persona;
-	        			encontre=true;
-	        			//busco ultimo pago 
-	        			if(persona.pagos.length>0){
-	        				console.log("tiene uno o mas pagos");
-	        				var listaPagos=persona.pagos;
-	        				var indiceUltimoPago=0;
-							var anioMax=0;
-							var mesMax=0;
-							//busco el año del ultimo pago
-							for(var b=0;b<listaPagos.length;b++){
-								var elpago=listaPagos[b];
-								if(elpago.anio>anioMax){
-									anioMax=elpago.anio;
-								}
-							}
-							//teniendo el año del ultimo pago busco el ultimo
-							for(var c=0;c<listaPagos.length;c++){
-								var elpago=listaPagos[c];
-								if(elpago.anio==anioMax){
-									if(elpago.mes>mesMax){
-										mesMax=elpago.mes;
-										indiceUltimoPago=c;	
-									}
-								}
-							}
-							//tengo id de posicion del array del ultimo pago de la persona
-							var ultimoPago=listaPagos[indiceUltimoPago];
-							$scope.pago=ultimoPago;	
-							console.log("feha pago "+ ultimoPago.updatedAt);
-							console.log("feha afi "+ persona.afiliacions[0].updatedAt);
-							console.log("fecha actual "+ anio +" "+ mes);
-							console.log("la fecha max "+anioMax+" "+ mesMax)
-	        				//que ese pago sea de la filiacion activa
-	        				if(persona.afiliacions[0].updatedAt<=ultimoPago.updatedAt){
-	        					mesPago=ultimoPago.mes;
-								anioPago=ultimoPago.anio;
-								//controlo si el pago es mayor al anio en el que estoy
-								if(anioPago>anio){
-									//si el año es mayor no controlo mes y devuelvo exito
-									console.log("el año es mayor");
-									bandera=1;
-								}else{
-									if(anioPago==anio){
-									  	console.log("el anio  es igual ");
-									  	// si entro en if la persona esta atrasada
-									  	if(mesPago<mes){
-									  		console.log("el mes  es menor ");
-									  		bandera=2;
-									  	//si entro aca la persona esta al dia	
-									  	}else{
-									  		console.log("el mes no es menor ");
-									  		bandera=1;
-									  	}
-									}else {
-										console.log("el anio  es menor ");
-										bandera=2;
-									}	
-								}	
-	        				}else{console.log('No existe pagos para la ultima afi activa');//aca termino el if donde comparo el documento
-	        					bandera=3;
-        	  				}
+	        	console.log("tiene afiliacion vigente y existe la persona");
+	        	//Me quedo con el ultimo plan
+	        	var encontrePlan=false;
+	        	for(var a=0;a<data.length && !encontrePlan ;a++ ){
+	        		//la persona
+	        		var persona=data[0];
+	        		//lista afiliaciones
+	        		var lstAfiliaciones=persona.afiliacions;
+	        		for(var b=0;b<lstAfiliaciones.length && !encontrePlan ;b++ ){
+	        			var afiliacion=lstAfiliaciones[0];
+	        			//me quedo con los planes de la afiliacion vigente
+	        			if(afiliacion.plans.length>0){
+		        			var lstPlanes=;
+		        			for(var c=0;c<lstPlanes.length && !encontrePlan ;c++ ){
+		        				plan=lstPlanes[0];
+		        				var fechaPlan=Date.parse(plan.fin);
+		        				if(plan.finn>=fecha){
+		        					if(plan.importepago>0 && plan.pagos.length>0){
+		        						if(plan.importepago==plan.importeplan){
+		        							if(pla.cuotasson==plan.cuotasvan)
+				        						//armo el elemento a mostrar
+				        						bandera=1;
+				        						 var mostar1 = JSON.stringify({
+										            documento: persona.documento,
+										            nombre: persona.nombre+ " "+persona.apellido,
+										            importeplan:plan.importeplan,
+										            importepago:plan.importepago,
+										            fechaFin: $scope.documento,
+										        });
+				        						$scope.ingreso.push(mostar1); 
+				        					
+
+
+				        				}else{
+				        					if(pla.cuotasson!=plan.cuotasvan){
+           										console.log('fecha del plan' + fechaPlan);
+
+
+				        					}else{bandera=7;}// esto es una inconsistencia de datos revisar el codigo
+
+				        				}	
+				        			}else{bandera=5;}//no tiene pagos en el plan vigentes		
+			        			}else{bandera=6;}//no tiene planes vigentes
+				        	}		
+			        	}else{ bandera=3;}//no tiene planes
+			        			
+			        				        	
+	        			
+	        		}
+	        	}
+
+
+
 
 
 	        				// inserto la asistencia de la persona 
@@ -122,16 +95,13 @@ app.controller('myController', function($scope,$http,$timeout,$cookies){
 			 						console.log('Error no ingrese asistencia');
 			 					});	
 			        		}
-	        			}else{//si la persona tiene o no pagos
-	        					console.log('Bienvenido '+persona.nombre+" "+persona.apellido+" recuarda pagar tu cuota de socio");
-	        					bandera=4;
-        	  			}
-	        		}else{console.log('No existe afiliacion para el documento ingresado');//aca termino el if donde comparo el documento
-	        				bandera=4;
-        	  		} 
-	        	}//aca termino for donde busco a la persona
-	        var tiempo=3000;
-	        switch (bandera) { 
+	        			
+        	  			
+	        		 
+	       	}else{ console.log('No esiste la persona o no tiene afiliacion activa'); bandera=4 }//la persona no tiene afiliacion activa
+	        	
+	        	
+	    	switch (bandera) { 
    		
 						   		case 1: 
 						   			$scope.bandera=bandera;
@@ -150,7 +120,7 @@ app.controller('myController', function($scope,$http,$timeout,$cookies){
 									},tiempo);	      	
 									break 
 
-						   		case 3: 
+						   		case 3: //el documento no tiene plan creado
 						   			$scope.bandera=bandera;
 									//$scope.antes=$scope.bandera;
 									$timeout(function callAtTimeout() {
@@ -159,7 +129,7 @@ app.controller('myController', function($scope,$http,$timeout,$cookies){
 									},tiempo);	
 						      		break 
 
-								case 4: 
+								case 4: //el documento no existe o la persona no tiene afiliacion vigente
 									$scope.bandera=bandera;
 									$timeout(function callAtTimeout() {
 									$scope.bandera=0;
@@ -167,33 +137,38 @@ app.controller('myController', function($scope,$http,$timeout,$cookies){
 									},tiempo);	      	
 									break 
 
+								case 5: //el documento no realizo el pago del plan vigente
+									$scope.bandera=bandera;
+									$timeout(function callAtTimeout() {
+									$scope.bandera=0;
+									$scope.$apply;;
+									},tiempo);	      	
+									break 	
+
+								case 6: //el documento no tiene plan vigente
+									$scope.bandera=bandera;
+									$timeout(function callAtTimeout() {
+									$scope.bandera=0;
+									$scope.$apply;;
+									},tiempo);	      	
+									break 	
+
+								case 7 ://incosistencia en el sistema comuniquese con un tecnico
+									$scope.bandera=bandera;
+									$timeout(function callAtTimeout() {
+									$scope.bandera=0;
+									$scope.$apply;;
+									},tiempo);	      	
+									break 		
+
 						   		default: 
 						      	console.log('la bandera no tiene valor ' + bandera); 
-							}
-
-
-	        }else{
-	        	console.log('data vacio');//fin de verificacion que el data tenga datos
-	        	bandera=4
-	        }
-	    });lstPersonas.error(function(data){
+							}							
+	    });
+			lstPersonas.error(function(data){
 	    		console.log('Error no encontre persona: ' + data);
 	    	});
-	
-
-		
-
-
 	}
-
-/*.config({
-    paths: {
-        "moment": "path/to/moment"
-    }
-});
-define(["path/to/moment-timezone-with-data"], function (moment) {
-    moment().tz("America/Los_Angeles").format();
-});*/
 });
 
 

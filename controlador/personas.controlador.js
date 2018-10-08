@@ -514,6 +514,10 @@ exports.lstCompleta = (req, res) => {
 exports.ultimoPago = (req, res) => {	
 	console.log(req.query);
 	var condition =	{
+		where:
+			{
+
+			},	
 		include: [
 			{
         	model: db.afiliacion ,
@@ -553,12 +557,59 @@ exports.ultimoPago = (req, res) => {
     	//ordenar 3 nivel de include
 		order: [[ db.afiliacion, db.planes, { model: db.pago}, 'id', 'DESC' ] ],
 	}
-	Persona.findAll(condition)
+	if (req.query.documento) {
+		condition.where.documento = req.query.documento
+	}	
+		Persona.findAll(condition)
 		.then(persona => {
 	   		res.send(persona);
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
+//me traigo la persona con la afiliacion vigente planes y su ultimo pago
+exports.controlIngreso = (req, res) => {	
+	console.log(req.query);
+	var condition =	{
+		where:
+			{
+
+			},	
+		include: [
+			{
+        	model: db.afiliacion ,
+        		where: {estado: 1 },
+	    		include: [
+					{
+        			model: db.planes,
+        				include: [
+							{	
+        					model: db.pago,
+        					},
+        				],
+
+        			},
+        		],	
+	    	},
+    	],
+    	
+    	//ordenar un nivel de include
+    	//order:[[{model: db.afiliacion},'id', 'DESC']],
+
+    	//ordenar 2 nivel de include
+		//order: [[ db.afiliacion, { model: db.planes}, 'id', 'DESC' ]],
+    	
+    	//ordenar 3 nivel de include
+		//order: [[ db.afiliacion, db.planes, { model: db.pago}, 'id', 'DESC' ] ],
+		order: [[ db.afiliacion, { model: db.planes}, 'id', 'DESC' ],[ db.afiliacion, db.planes, { model: db.pago}, 'id', 'DESC' ] ],
+	}
+	if (req.query.documento) {
+		condition.where.documento = req.query.documento
+	}	
+		Persona.findAll(condition)
+		.then(persona => {
+	   		res.send(persona);
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+};
 
 
 
