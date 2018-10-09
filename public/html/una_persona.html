@@ -79,6 +79,7 @@
       
       <md-tab label="Contacto">
         <md-content class="md-padding">
+          
           <div layout="column">
             <h1 class="md-display-2">Datos Contacto</h1>
               <div layout="row">
@@ -95,116 +96,63 @@
 
             <div layout="row">
               <!-- Objetivos -->
-              <div layout="column" flex="30" ng-controller="objetivos as vom" >              
-                <md-chips ng-model="vom.launchAPIQueryParams.types">
-                  <md-autocomplete
-                            md-selected-item="vom.selectedOption"
-                            md-search-text="vom.searchText"
-                            md-items="typeOption in vom.launchTypeOptions"
-                            md-item-text="typeOption.name"
-                            md-min-length="0"
-                            placeholder="Objetivos">
-                      <span md-highlight-text="vom.searchText">{{typeOption.name}}</span>
-                  </md-autocomplete>
-                  <md-chip-template>
-                    <span>{{$chip.name}}</span>
-                  </md-chip-template>
-                </md-chips>
-                {{objetivos}}                                            
+              <div layout="column" flex="30" >              
+                <label >Objetivos</label>
+                <md-input-container>
+                  <md-select ng-model="selectedObjetivos" multiple>
+                    <md-option ng-value="objetivo.value" ng-repeat="objetivo in objetivos">{{objetivo.name}}</md-option>
+                  </md-select>
+                </md-input-container>
               </div>            
 
-              <!-- Voy a hacerlo -->
-              <div layout="column" flex="30" ng-controller="hacerlo as vm" >              
-                <md-chips ng-model="vm.launchAPIQueryParams.types">
-                  <md-autocomplete
-                            md-selected-item="vm.selectedOption"
-                            md-search-text="vm.searchText"
-                            md-items="typeOption in vm.launchTypeOptions"
-                            md-item-text="typeOption.name"
-                            md-min-length="0"
-                            placeholder="Voy a hacerlo">
-                      <span md-highlight-text="vm.searchText">{{typeOption.name}}</span>
-                  </md-autocomplete>
-                  <md-chip-template>
-                    <span>{{$chip.name}}</span>
-                  </md-chip-template>
-                </md-chips>                                              
-              </div>
-
-              <!-- Voy a lograrlo en -->
-              <div layout="column" flex="30" ng-controller="lograrlo as vm">              
-                <md-chips ng-model="vm.launchAPIQueryParams.types">
-                  <md-autocomplete
-                            md-selected-item="vm.selectedOption"
-                            md-search-text="vm.searchText"
-                            md-items="typeOption in vm.launchTypeOptions"
-                            md-item-text="typeOption.name"
-                            md-min-length="0"
-                            placeholder="Voy a lograrlo en">
-                      <span md-highlight-text="vm.searchText">{{typeOption.name}}</span>
-                  </md-autocomplete>
-                  <md-chip-template>
-                    <span>{{$chip.name}}</span>
-                  </md-chip-template>
-                </md-chips>                                              
-              </div>
+              <!-- Hacerlo -->
+              <div layout="column" flex="30" >              
+                <label>Hacerlo</label>
+                <md-input-container>
+                  <md-select ng-model="selectedHacerlo" multiple>
+                    <md-option ng-value="hacerlo.value" ng-repeat="hacerlo in hacerlos">{{hacerlo.name}}</md-option>
+                  </md-select>
+                </md-input-container>
+              </div>            
+              <!-- Lograrlo -->
+              <div layout="column" flex="30" >              
+                <label >Lograrlo</label>
+                <md-input-container>
+                  <md-select ng-model="selectedLograrlo" multiple>
+                    <md-option ng-value="lograrlo.value" ng-repeat="lograrlo in lograrlos">{{lograrlo.name}}</md-option>
+                  </md-select>
+                </md-input-container>
+              </div>            
             </div>
-          <div layout="row">
-            
-            <!-- Me interesa -->
-            <div layout="column" flex="30" ng-controller="interesa as vm">              
-              <md-chips ng-model="vm.launchAPIQueryParams.types">
-                <md-autocomplete
-                          md-selected-item="vm.selectedOption"
-                          md-search-text="vm.searchText"
-                          md-items="typeOption in vm.launchTypeOptions"
-                          md-item-text="typeOption.name"
-                          md-min-length="0"
-                          placeholder="Me interesa">
-                    <span md-highlight-text="vm.searchText">{{typeOption.name}}</span>
-                </md-autocomplete>
-                <md-chip-template>
-                  <span>{{$chip.name}}</span>
-                </md-chip-template>
-              </md-chips>                                              
+            <div layout="row">
+              <!-- Interesa -->
+              <div layout="column" flex="30" >              
+                <label >Interesa</label>                
+                <md-input-container>
+                  <md-select ng-model="selectedInteresa" multiple>
+                    <md-option ng-value="interesa.value" ng-repeat="interesa in interesas">{{interesa.name}}</md-option>
+                  </md-select>
+                </md-input-container>
+              </div>            
+              <!-- Entere -->
+              <div layout="column" flex="30" >              
+                <label >Entere</label>                
+                <md-input-container>
+                  <md-select ng-model="selectedEntere" multiple>
+                    <md-option ng-value="entere.value" ng-repeat="entere in enteres">{{entere.name}}</md-option>
+                  </md-select>
+                </md-input-container>
+              </div>            
+              <!-- Avisan -->
+              <div layout="column" flex="30" >              
+                <label >Avisan</label>                
+                <md-input-container>
+                  <md-select ng-model="selectedAvisan" multiple>
+                    <md-option ng-value="avisan.value" ng-repeat="avisan in avisans">{{avisan.name}}</md-option>
+                  </md-select>
+                </md-input-container>
+              </div>            
             </div>
-
-            <!-- Me entere por -->
-            <div layout="column" flex="30" ng-controller="entere as vm">              
-              <md-chips ng-model="vm.launchAPIQueryParams.types">
-                <md-autocomplete
-                          md-selected-item="vm.selectedOption"
-                          md-search-text="vm.searchText"
-                          md-items="typeOption in vm.launchTypeOptions"
-                          md-item-text="typeOption.name"
-                          md-min-length="0"
-                          placeholder="Me entere por">
-                    <span md-highlight-text="vm.searchText">{{typeOption.name}}</span>
-                </md-autocomplete>
-                <md-chip-template>
-                  <span>{{$chip.name}}</span>
-                </md-chip-template>
-              </md-chips>                                              
-            </div>
-
-            <!-- Me avisan por -->
-            <div layout="column" flex="30" ng-controller="avisan as vm">              
-              <md-chips ng-model="vm.launchAPIQueryParams.types">
-                <md-autocomplete
-                          md-selected-item="vm.selectedOption"
-                          md-search-text="vm.searchText"
-                          md-items="typeOption in vm.launchTypeOptions"
-                          md-item-text="typeOption.name"
-                          md-min-length="0"
-                          placeholder="Me avisan por">
-                    <span md-highlight-text="vm.searchText">{{typeOption.name}}</span>
-                </md-autocomplete>
-                <md-chip-template>
-                  <span>{{$chip.name}}</span>
-                </md-chip-template>
-              </md-chips>                                              
-            </div>
-          </div>
           </div>
         </md-content>
       </md-tab>
