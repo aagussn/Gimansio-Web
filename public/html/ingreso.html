@@ -38,17 +38,17 @@
         <input type="text" id=" " ng-change="clear()" class="input-xl" placeholder="Documento" ng-model="Documento" required autofocus>
         <button class="btn btn-md btn-primary " type="submit" id="submit" value="Submit" alert=true">INGRESAR</button><br><br> 
 
-            {{bandera}
+            {{bandera}}
 
         <div ng-switch on="bandera">
           <div ng-switch-when="1">
-            <div class="alert alert-success alert-dismissible role="alert">Bienvenido {{persona.nombre}}   {{persona.apellido}} última cuota paga {{pago.mes}}/{{pago.anio}} </div>
+            <div class="alert alert-success alert-dismissible role="alert">Bienvenido {{msjPer.nombre}} tu plan esta vigente hasta  {{msjPer.fechaFin}}  </div>
           </div>
           <div ng-switch-when="2">
-            <div class="alert alert-danger alert-dismissible role="alert">Bienvenido {{persona.nombre}}   {{persona.apellido}} última cuota paga {{pago.mes}}/{{pago.anio}} </div>
+            <div class="alert alert-danger alert-dismissible role="alert">Bienvenido {{msjPer.nombre}} tu plan esta vigente hasta  {{msjPer.fechaFin}} resta abonar {{msjPer.importe}} de tu plan </div>
           </div>
           <div ng-switch-when="3">
-            <div class="alert alert-warning alert-dismissible role="alert">Bienvenido, {{persona.nombre}}   {{persona.apellido}}  de momento no tienen ningún pago</div>
+            <div class="alert alert-warning alert-dismissible role="alert">Bienvenido {{msjPer.nombre}}, no tiene ningun plan creado </div>
           </div>
           <div ng-switch-when="4">
             <div class="alert alert-info alert-dismissible role="alert">Bienvenido, el documento ingresado no pertenece a un socio</div>
@@ -57,7 +57,7 @@
             <div class="alert alert-warning alert-dismissible role="alert">Bienvenido, {{persona.nombre}}   {{persona.apellido}}  de momento no tienen ningún pago</div>
           </div>
           <div ng-switch-when="6">
-            <div class="alert alert-warning alert-dismissible role="alert">Bienvenido, {{persona.nombre}}   {{persona.apellido}}  de momento no tienen ningún pago</div>
+            <div class="alert alert-warning alert-dismissible role="alert">Bienvenido {{msjPer.nombre}}, su plan esta vencido comuniquese con administracion para renovarlo</div>
           </div>
           <div ng-switch-when="7">
             <div class="alert alert-warning alert-dismissible role="alert">Bienvenido, {{persona.nombre}}   {{persona.apellido}}  de momento no tienen ningún pago</div>
