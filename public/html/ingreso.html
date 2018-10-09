@@ -2,28 +2,28 @@
 <html lang="en" ng-app="Ingreso">
   
   <head>
-    <!-- Required meta tags -->
+   <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/common.css">
-     <!-- Angular Material CSS -->
-    <link rel="stylesheet" href="/css/angular-material.css">
-     <!-- Dependencias de angular y material-->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+
+    <!-- Optional JavaScript -->
+    <!--  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>-->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
+    <script src="/js/ingreso.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="/js/jquery-3.3.1.min.js"></script>
     <script src="/js/popper.min.js" ></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/common.js"></script>
-    <script src="/js/ingreso.js"></script>
-     <!-- Iconos -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" >
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+
+  <!-- Iconos -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" >
     <title>ingreso</title>
   </head>
   
@@ -35,7 +35,7 @@
         <img class="md-4" src="/img/logo.png" alt="" width="200" height="200" align="center"><br><br>
         <h1 class="h2">Bienvenido ingrese su documento</h1><br><br>
         <label for="inputUser " class="sr-only ">Documento</label>
-        <input type="text" id="inputUser" ng-change="clear()" class="input-xl" placeholder="Documento" ng-model="Documento" required autofocus>
+        <input type="text" id=" " ng-change="clear()" class="input-xl" placeholder="Documento" ng-model="Documento" required autofocus>
         <button class="btn btn-md btn-primary " type="submit" id="submit" value="Submit" alert=true">INGRESAR</button><br><br> 
 
             {{bandera}
