@@ -18,8 +18,7 @@ module.exports = function(app) {
     // Delete a personas with documento
     app.delete('/api/personas/:documento', personas.delete);
 
-
-    
+   
 
     //me traigo con afiliacion vigente y sus asistencias
     app.get('/api/lstPerAfiPln', personas.lstPerAfiPln);
@@ -36,6 +35,10 @@ module.exports = function(app) {
 
     // las personas y sus categorias
     app.get('/api/listPerCategorias', personas.listPerCategorias);
+
+    // las personas, afiliacion y licencia
+    app.get('/api/lstAfiLicencia', personas.lstAfiLicencia);
+
 
 
 

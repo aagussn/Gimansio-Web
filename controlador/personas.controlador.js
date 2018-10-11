@@ -339,6 +339,44 @@ exports.lstAfiAsis = (req, res) => {
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
+exports.lstAfiLicencia = (req, res) => {	
+	console.log(req.query);
+	var condition =	{
+		
+
+			where:
+			{
+
+			},
+
+
+			include: [
+				{
+        		model: db.afiliacion ,	
+        			include: [
+		   				{
+        				model: db.licencia,	
+        					include: [
+		   						{
+        						model: db.motivolicencia,	
+        						},
+        					]	
+	    				},
+
+        			]	
+	    		},
+	    		
+    		]
+	}
+	if (req.query.documento) {
+		condition.where.documento = req.query.documento
+	}	
+	Persona.findAll(condition)
+		.then(persona => {
+	   		res.send(persona);
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+};
+
 //me traigo la persona con la afiliacion vigente, planes  vigentes y sus pagos
 exports.listPagosVigentes = (req, res) => {	
 	console.log(req.query);
