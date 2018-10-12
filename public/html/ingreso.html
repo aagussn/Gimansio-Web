@@ -6,17 +6,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Optional JavaScript -->
-    <!--  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>-->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
+
+    <!-- Angular Material CSS -->
+    <link rel="stylesheet" href="/css/angular-material.css">
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Dependencias de angular y material-->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-cookies.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+
+
     <script src="/js/ingreso.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="/js/jquery-3.3.1.min.js"></script>
     <script src="/js/popper.min.js" ></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/common.js"></script>
-
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -27,18 +37,17 @@
     <title>ingreso</title>
   </head>
   
-  <body ng-controller="myController">
+  <body ng-controller="myController" layout = "column" ng-cloak>
     <form class="form-signin" ng-submit="submit()">
-      <div ng-include="'/barra'"></div>    
-      <div class="container"></div><br><br><br>
+      <div class="container"></div><br>
       <div class="container content-wrapper " align="center">
-        <img class="md-4" src="/img/logo.png" alt="" width="200" height="200" align="center"><br><br>
-        <h1 class="h2">Bienvenido ingrese su documento</h1><br><br>
+        <img class="md-4" src="/img/logo.png" alt="" width="300" height="300" align="center"><br><br><br><br>
+        <h1 class="h2">Bienvenido</h1><br>
+        
         <label for="inputUser " class="sr-only ">Documento</label>
         <input type="text" id=" " ng-change="clear()" class="input-xl" placeholder="Documento" ng-model="Documento" required autofocus>
-        <button class="btn btn-md btn-primary " type="submit" id="submit" value="Submit" alert=true">INGRESAR</button><br><br> 
+        <button class="btn btn-md btn-primary " type="submit" id="submit" value="Submit" alert=true">INGRESAR</button><br><br><br><br><br><br> 
 
-            {{bandera}}
 
         <div ng-switch on="bandera">
           <div ng-switch-when="1">
@@ -63,9 +72,18 @@
             <div class="alert alert-warning alert-dismissible role="alert">Bienvenido, {{persona.nombre}}   {{persona.apellido}}  de momento no tienen ningún pago</div>
           </div>
         </div>
-        <br><br>
+        
        
-        <div class="container form-row">
+        <md-switch ng-model = "mostrar1" aria-label = "verIngresos">
+            <div ng-if=mostrar1>
+              <h5>Ingresos de la mañana</h5>
+            </div> 
+            <div ng-if=!mostrar1>
+              <h5>Ingresos de la tarde</h5>
+            </div> 
+         </md-switch><br>
+
+        <div class="container form-row" ng-if=mostrar1>
           <table class="table">
             <thead>
               <tr>
@@ -77,7 +95,30 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="item in ingreso | filter:search | orderBy : ['documento'] | limitTo: 50 "> 
+              <tr ng-repeat="item in ingreoManianals | filter:search | orderBy : ['documento'] | limitTo: 50 "> 
+                <td >{{item.documento}} </td>
+                <td>{{item.nombre}}</td>
+                <td >{{item.importeplan}}</td>
+                <td>{{item.importepago}}</td>
+                <td>{{item.fechaFin}}</td>
+              </tr>
+            </tbody>
+          </table>  
+        </div>
+
+          <div class="container form-row" ng-if=!mostrar1>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col" >Documento</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">importe del plan</th>
+                <th scope="col">importe pago plan</th>   
+                <th scope="col">Plan vence</th>          
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in ingreoTardels | filter:search | orderBy : ['documento'] | limitTo: 50 "> 
                 <td >{{item.documento}}</td>
                 <td>{{item.nombre}}</td>
                 <td >{{item.importeplan}}</td>
@@ -87,6 +128,8 @@
             </tbody>
           </table>  
         </div>
+
+
 
       </div>           
     </form>

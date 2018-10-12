@@ -1,14 +1,14 @@
-var app = angular.module('Ingreso', []);
-app.controller('myController', function($scope,$http,$timeout){
+var app = angular.module('Ingreso', ['ngCookies','ngMaterial']);
+app.controller('myController', function($scope,$http,$timeout,$cookies){
 	
 
 
-	/*var chkLogin = $cookies.get('login');
+	var chkLogin = $cookies.get('login');
 	//console.log(chkLogin);
 	if (chkLogin==0 || !chkLogin) {
 		console.log('bla');
 		window.location.href = "/login";
-	}*/
+	}
 	
 	//variables globales
 	var tiempo=4000;
@@ -17,6 +17,7 @@ app.controller('myController', function($scope,$http,$timeout){
 	$scope.bandera=0;
 	var bandera=0;
 	$scope.ingreso = [];
+	$scope.mostrar1 =true;
 	console.log('valor inicial $scope.bandera: ' + $scope.bandera + " y bandera "+bandera +" "+ $scope.Documento );
 	
 
