@@ -91,8 +91,6 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope)
 
         });
 
-        $q.all([request]);
-
         var selectedObjetivos = [];
         var selectedHacerlo   = [];
         var selectedLograrlo  = [];
@@ -131,14 +129,30 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope)
             }
         });
 
-        $q.all([request]);
-
         $scope.selectedObjetivos = selectedObjetivos;
         $scope.selectedHacerlo   = selectedHacerlo;
         $scope.selectedLograrlo  = selectedLograrlo;
         $scope.selectedInteresa  = selectedInteresa;
         $scope.selectedEntere    = selectedEntere;
         $scope.selectedAvisan    = selectedAvisan;
+
+        // Voy a buscar los comentarios de la persona
+        var request = $http.get('/api/listPerComentarios?documento='+ documento).then(function(perComentario) {
+            $scope.comentarios = perComentario.data[0].comentarios;
+            console.log($scope.comentarios);
+        });
+
+        // Voy a buscar los pagos de la persona
+        var request = $http.get('/api/listTodosPagos?documento='+ documento).then(function(perPago) {
+            $scope.afiliaciones = perPago.data[0].afiliacions;
+            console.log($scope.afiliaciones);
+        });
+
+        // Voy a buscar los pagos de la persona
+        var request = $http.get('/api/lstAfiLicencia?documento='+ documento).then(function(perLicencia) {
+            $scope.afiLicencias = perLicencia.data[0].afiliacions;
+            console.log($scope.afiLicencias);
+        });
 
         $scope.unaPersona = 1;
 	};

@@ -99,7 +99,7 @@
               <div layout="column" flex="30" >              
                 <label >Objetivos</label>
                 <md-input-container>
-                  <md-select ng-model="selectedObjetivos" multiple>
+                  <md-select ng-model="selectedObjetivos" aria-label="1" multiple>
                     <md-option ng-value="objetivo.value" ng-repeat="objetivo in objetivos">{{objetivo.name}}</md-option>
                   </md-select>
                 </md-input-container>
@@ -109,7 +109,7 @@
               <div layout="column" flex="30" >              
                 <label>Hacerlo</label>
                 <md-input-container>
-                  <md-select ng-model="selectedHacerlo" multiple>
+                  <md-select ng-model="selectedHacerlo" aria-label="2" multiple>
                     <md-option ng-value="hacerlo.value" ng-repeat="hacerlo in hacerlos">{{hacerlo.name}}</md-option>
                   </md-select>
                 </md-input-container>
@@ -118,7 +118,7 @@
               <div layout="column" flex="30" >              
                 <label >Lograrlo</label>
                 <md-input-container>
-                  <md-select ng-model="selectedLograrlo" multiple>
+                  <md-select ng-model="selectedLograrlo" aria-label="3" multiple>
                     <md-option ng-value="lograrlo.value" ng-repeat="lograrlo in lograrlos">{{lograrlo.name}}</md-option>
                   </md-select>
                 </md-input-container>
@@ -129,7 +129,7 @@
               <div layout="column" flex="30" >              
                 <label >Interesa</label>                
                 <md-input-container>
-                  <md-select ng-model="selectedInteresa" multiple>
+                  <md-select ng-model="selectedInteresa" aria-label="4" multiple>
                     <md-option ng-value="interesa.value" ng-repeat="interesa in interesas">{{interesa.name}}</md-option>
                   </md-select>
                 </md-input-container>
@@ -138,7 +138,7 @@
               <div layout="column" flex="30" >              
                 <label >Entere</label>                
                 <md-input-container>
-                  <md-select ng-model="selectedEntere" multiple>
+                  <md-select ng-model="selectedEntere" aria-label="5" multiple>
                     <md-option ng-value="entere.value" ng-repeat="entere in enteres">{{entere.name}}</md-option>
                   </md-select>
                 </md-input-container>
@@ -147,7 +147,7 @@
               <div layout="column" flex="30" >              
                 <label >Avisan</label>                
                 <md-input-container>
-                  <md-select ng-model="selectedAvisan" multiple>
+                  <md-select ng-model="selectedAvisan" aria-label="6" multiple>
                     <md-option ng-value="avisan.value" ng-repeat="avisan in avisans">{{avisan.name}}</md-option>
                   </md-select>
                 </md-input-container>
@@ -160,16 +160,70 @@
       <md-tab label="Comentarios">
         <md-content class="md-padding">
           <h1 class="md-display-2">Comentarios</h1>
-          <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+          <md-list flex>
+            <md-list-item class="md-3-line md-long-text" ng-repeat="comentario in comentarios">
+              <div class="md-list-item-text">
+                <h3>{{comentario.titulo}}</h3> 
+                <h4>{{comentario.itemcomentario.descripcion}}</h4>
+                <p>{{comentario.comentario}}</p>
+              </div>
+            </md-list-item>
+          </md-list>
         </md-content>
       </md-tab>
       
       <md-tab label="Pagos">
         <md-content class="md-padding">
           <h1 class="md-display-2">Pagos</h1>
-          <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+          <md-list flex>
+            <div ng-repeat="afiliacion in afiliaciones">
+              <md-subheader class="md-no-sticky" >Afiliacion: {{afiliacion.id}}</md-subheader>
+              <div ng-repeat="plan in afiliacion.plans">
+                
+                <md-list-item class="md-3-line md-long-text">
+                  <div class="md-list-item-text">
+                    <p><strong>Plan {{plan.id}} Desde: {{plan.inicio}} - Hasta: {{plan.fin}} Duracion: {{plan.duracion}}
+                    Importe plan: {{plan.importeplan}} - Pago: {{plan.importepago}}
+                    Cuotas: {{plan.cuotasson}} - Van: {{plan.cuotasvan}}
+                    Medio de pago: {{plan.mediopago.descripcion}}</strong></p>
+                  </div>
+                </md-list-item>
+
+                <div ng-repeat="pago in plan.pagos">
+                  <md-list-item class="md-3-line md-long-text" >
+                    <div class="md-list-item-text">
+                      <p>Pago {{pago.id}} 
+                      Importe: {{pago.importe}}
+                      Mes: {{pago.mes}} - Anio: {{pago.anio}}
+                      Tipo de movimiento: {{pago.tipomovimiento}} - Concepto: {{pago.concepto}} - Anulado: {{pago.pagoanulado}} </p>
+                    </div>
+                  </md-list-item>                  
+                </div>
+              </div>
+            </div>
+          </md-list>
         </md-content>
       </md-tab>      
+
+      <md-tab label="Licencias">
+        <md-content class="md-padding">
+          <h1 class="md-display-2">Licencias</h1>
+          <md-list flex>
+            <div ng-repeat="afiLicencia in afiLicencias">
+              <md-subheader class="md-no-sticky" >Afiliacion: {{afiLicencia.id}}</md-subheader>
+              <div ng-repeat="licencia in afiLicencia.licencia">
+                <md-list-item class="md-3-line md-long-text" >
+                  <div class="md-list-item-text">
+                    <h3>Id: {{licencia.id}} {{licencia.descripcion}} </h3> 
+                    <h4>Fecha: {{licencia.inicio}} {{licencia.fin}}</h4>
+                    <p>{{licencia.motivolicencium.descripcion}}</p>
+                  </div>
+                </md-list-item>
+              </div>
+            </div>
+          </md-list>
+        </md-content>
+      </md-tab>
 
     </md-tabs>
   </md-content>
