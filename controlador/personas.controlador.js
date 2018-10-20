@@ -656,15 +656,12 @@ exports.controlIngreso = (req, res) => {
 
 //me traigo con afiliacion vigente y sus asistencias de la hora 00 hasat las 12 del medidida
 exports.lstIngresoPorFecha = (req, res) => {	
-
-	console.log("ESTOS SON MIS PARAMETROS:  ");
+	/*console.log("ESTOS SON MIS PARAMETROS:  ");
 	console.log(req.query.createdAtInicio);
-	console.log(req.query.createdAtFin);
+	console.log(req.query.createdAtFin);*/
 
 	var createdAtInicio=req.query.createdAtInicio;
 	var createdAtFin=req.query.createdAtFin;
-
-
 	var condition =	{
 		include: [
 			{
@@ -674,27 +671,26 @@ exports.lstIngresoPorFecha = (req, res) => {
 					{
         				model: db.asistencia,	
         				where: {
-        						createdAt: {
+        						/*createdAt: {
 	           						[Op.gte]:{createdAtInicio} //mayor que
     							},
         						[Op.and]:{
 	           							createdAt:{ 
 	           								[Op.lt]:{ createdAtFin }// menor que
     									}
-    							},
+    							},*/
+    							createdAt: { [Op.between]:[createdAtInicio, createdAtFin ]   }
+
       						}
         			},
         		]	
 	    	},
     	]
 	}
-
 	/*if (req.query.createdAtInicio && req.query.createdAtFin ) {
 		condition.include[0].include[0].where.createdAt > req.query.createdAtInicio
 		condition.include[0].include[0].and.createdAt < req.query.createdAtFin
-
 	}*/
-
 	Persona.findAll(condition)
 		.then(persona => {
 	   		res.send(persona);

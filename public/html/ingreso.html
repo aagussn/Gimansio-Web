@@ -90,18 +90,16 @@
               <tr>
                 <th scope="col" >Documento</th>
                 <th scope="col">Nombre</th>
-                <th scope="col">importe del plan</th>
-                <th scope="col">importe pago plan</th>   
-                <th scope="col">Plan vence</th>          
+                <th scope="col">tiene deuda</th>
+                <th scope="col">fecha</th>   
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="item in ingreoManianals | filter:search | orderBy : ['Documento'] | limitTo: 50 "> 
-                <td >{{item.documento}} </td>
-                <td>{{item.nombre}}</td>
-                <td >{{item.importeplan}}</td>
-                <td>{{item.importepago}}</td>
-                <td>{{item.fechaFin}}</td>
+                <td >{{item.persona.documento}} </td>
+                <td>{{item.persona.nombre}}</td>
+                <td >{{item.afiliacions[0].asistencia[0].tipodeuda}}</td>
+                <td >{{item.afiliacions[0].asistencia[0].createdAt}}</td>
               </tr>
             </tbody>
           </table>  
@@ -111,20 +109,18 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col" >Documento</th>
+                 <th scope="col" >Documento</th>
                 <th scope="col">Nombre</th>
-                <th scope="col">importe del plan</th>
-                <th scope="col">importe pago plan</th>   
-                <th scope="col">Plan vence</th>          
+                <th scope="col">tiene deuda</th>
+                <th scope="col">fecha</th>           
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="item in ingreoTardels | filter:search | orderBy : ['Documento'] | limitTo: 50 "> 
-                <td >{{item.documento}}</td>
-                <td>{{item.nombre}}</td>
-                <td >{{item.importeplan}}</td>
-                <td>{{item.importepago}}</td>
-                <td>{{item.fechaFin}}</td>
+              <td >{{item.persona.documento}} </td>
+                <td>{{item.persona.nombre}}</td>
+                <td >{{item.afiliacions[0].asistencia[0].tipodeuda}}</td>
+                <td >{{item.afiliacions[0].asistencia[0].createdAt}}</td>
               </tr>
             </tbody>
           </table>  

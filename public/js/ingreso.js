@@ -1,5 +1,5 @@
 var app = angular.module('Ingreso', ['ngCookies','ngMaterial']);
-app.controller('myController', function($scope,$http,$timeout,$cookies){
+app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 	
 
 
@@ -10,7 +10,7 @@ app.controller('myController', function($scope,$http,$timeout,$cookies){
 		window.location.href = "/login";
 	}
 	
-	//prubas fecha
+		//prubas fecha
 	 	//console.log("prueba fecha ");
 	 	var fechaCompleta = new Date(); //fecha del dia 
 		//console.log("fechaCompleta " + fechaCompleta);
@@ -81,11 +81,14 @@ app.controller('myController', function($scope,$http,$timeout,$cookies){
 	 	var deuda= -1 ;   // 0=pago   1=impago deuda   2=no tine plan  
 		$scope.bandera=0;
 		var bandera=0;
-		$scope.ingreso = [];
+		$scope.ingreoManianals = [];
+		$scope.ingreoTardels = [];
+
 		$scope.mostrar1 =true;
 		console.log('valor inicial $scope.bandera: ' + $scope.bandera + " y bandera "+bandera +" "+ $scope.Documento );
 	
-
+		$scope.ingreoManianals=getIngresoMat();
+		$scope.ingreoTardels=getIngresoDesp();
  	//Busco la persona	
 	$scope.submit = function() {
 		if($scope.Documento===undefined){
@@ -94,8 +97,8 @@ app.controller('myController', function($scope,$http,$timeout,$cookies){
 		}else{
 			var documentoPer=$scope.Documento;
 			//var consulta = $http.get('/api/controlIngreso?documento='+documentoPer);
-		    var consulta = $http.get("/api/controlIngreso?documento="+documentoPer).then(function(data) {
-			        console.log(data);
+		    var request= $http.get("/api/controlIngreso?documento="+documentoPer).then(function(data) {
+			console.log(data);
 
 			//consulta.success(function(data) {
 			    if(data.data.length>0){
@@ -255,33 +258,53 @@ app.controller('myController', function($scope,$http,$timeout,$cookies){
 		}//el documento no es null
 	}
 
-	function getIngresoaMat(){
+	function getIngresoMat(){
 
-		$scope.ingresoM = [];
+		//$scope.ingreoManianals = [];
  		var createdAtInicio=inicioDia;
  		var createdAtFin=mediodia;
-		var request = $http.get('/api/lstIngresoMatutino?'+createdAtInicio+'&'+createdAtFin).then(function(personas) { 
-			$scope.ingresoM = personas.data;
-			console.log(personas.data);
+		var request = $http.get('/api/lstIngresoPorFecha?createdAtInicio='+createdAtInicio+'&createdAtFin='+createdAtFin).then(function(personas) { 
+			var documento= personas.data[0].documento;
+			var nombre=personas.data[0].nombre;
+			var tienedauda=personas.data[0].afiliacions[0].asistencia[0].tipodeuda;
+			var fecha=personas.data[0].afiliacions[0].asistencia[0].createdAt;
+			var persona ={documento:documento,nombre:nombre,tienedauda:tienedauda,fecha:fecha};
+
+
+			$scope.ingreoManianals.push(persona);
+			console.log(personas.data[0]);
+			console.log(personas.data[0].documento);
+			console.log(personas.data[0].afiliacions[0].asistencia[0]);
+
+
+				$q.all([request]);
+
 		});
 
-		$q.all([request]);
-		$scope.cargando = 0;
+		
 	}
 	
 
-	function getIngresoaDesp(){
+	function getIngresoDesp(){
 
-		$scope.ingresoD = [];
+		//$scope.ingreoTardels = [];
  		var createdAtInicio=mediodia;
  		var createdAtFin=finDia;
-		var request = $http.get('/api/lstIngresoMatutino?'+createdAtInicio+'&'+createdAtFin).then(function(personas) { 
-			$scope.ingresoM = personas.data;
-			console.log(personas.data);
+		var request = $http.get('/api/lstIngresoPorFecha?createdAtInicio='+createdAtInicio+'&createdAtFin='+createdAtFin).then(function(personas) { 
+			var documento= personas.data[0].documento;
+			var nombre=personas.data[0].nombre;
+			var tienedauda=personas.data[0].afiliacions[0].asistencia[0].tipodeuda;
+			var fecha=personas.data[0].afiliacions[0].asistencia[0].createdAt;
+			var persona ={documento:documento,nombre:nombre,tienedauda:tienedauda,fecha:fecha};
+
+
+			$scope.ingreoTardels.push(persona);
+			console.log(personas.data[0]);
+			console.log(personas.data[0].documento);
+			console.log(personas.data[0].afiliacions[0].asistencia[0]);
+
 		});
 
-		$q.all([request]);
-		$scope.cargando = 0;
 	}
 });
 
