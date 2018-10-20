@@ -157,6 +157,27 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope)
         $scope.unaPersona = 1;
 	};
 
+    $scope.actPersonales = function(){
+        var parameter = JSON.stringify({
+            nombre     : $scope.persona.nombre,
+            apellido   : $scope.persona.apellido,
+            sexo       : $scope.persona.sexo,            
+            email      : $scope.persona.email,
+            telefono   : $scope.persona.telefono,
+            emergencia : $scope.persona.emergencia,
+            fechaN     : $scope.persona.fechaN,
+            idprofesion  : $scope.persona.profesion,
+            direccion  : $scope.persona.direccion
+        });
+
+        var request = $http.put('/api/personas/'+ documento, parameter).then(function(respuesta) {
+            console.log(respuesta);
+            getPersonas();
+            getUnaPersona($scope.persona);
+        });
+
+    }
+
 });
 
 app.config(function($mdThemingProvider){

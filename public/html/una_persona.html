@@ -71,7 +71,7 @@
                   <input ng-model="persona.direccion">
                 </md-input-container>                                
               </div>  
-              <md-button class="md-raised md-primary">Actualizar</md-button>
+              <md-button class="md-raised md-primary" ng-click="actPersonales()">Actualizar</md-button>
             </md-card-content>
           </md-card>
         </md-content>
@@ -177,19 +177,11 @@
           <h1 class="md-display-2">Pagos</h1>
           <md-list flex>
             <div ng-repeat="afiliacion in afiliaciones">
-              <md-subheader class="md-no-sticky" >Afiliacion: {{afiliacion.id}}</md-subheader>
-              <div ng-repeat="plan in afiliacion.plans">
-                
-                <md-list-item class="md-3-line md-long-text">
-                  <div class="md-list-item-text">
-                    <p><strong>Plan {{plan.id}} Desde: {{plan.inicio}} - Hasta: {{plan.fin}} Duracion: {{plan.duracion}}
-                    Importe plan: {{plan.importeplan}} - Pago: {{plan.importepago}}
-                    Cuotas: {{plan.cuotasson}} - Van: {{plan.cuotasvan}}
-                    Medio de pago: {{plan.mediopago.descripcion}}</strong></p>
-                  </div>
-                </md-list-item>
-
-                <div ng-repeat="pago in plan.pagos">
+              <!-- <md-subheader class="md-no-sticky" > <strong> Afiliacion: {{afiliacion.id}} <strong></md-subheader> -->
+              <md-toolbar ng-click="miPlan=!miPlan"> <div class="md-toolbar-tools"><span><i class="fas fa-caret-down" ng-show="!miPlan"></i> <i class="fas fa-caret-up" ng-show="miPlan"></i> Afiliacion: {{afiliacion.id}} </span></div> </md-toolbar>
+              <div ng-repeat="plan in afiliacion.plans" ng-show="miPlan">
+                <md-subheader class="md-no-sticky" ng-click="miPago=!miPago"><i class="fas fa-caret-down" ng-show="!miPago"></i> <i class="fas fa-caret-up" ng-show="miPago"></i> Plan {{plan.id}} Desde: {{plan.inicio}} - Hasta: <strong>{{plan.fin}}</strong> Duracion: {{plan.duracion}} Importe plan: {{plan.importeplan}} - Pago: <strong>{{plan.importepago}}</strong> Cuotas: {{plan.cuotasson}} - Van: <strong>{{plan.cuotasvan}}</strong> Medio de pago: {{plan.mediopago.descripcion}}</md-subheader>
+                <div ng-repeat="pago in plan.pagos" ng-show="miPago">
                   <md-list-item class="md-3-line md-long-text" >
                     <div class="md-list-item-text">
                       <p>Pago {{pago.id}} 
