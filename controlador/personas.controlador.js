@@ -622,6 +622,11 @@ exports.controlIngreso = (req, res) => {
         				include: [
 							{	
         					model: db.pago,
+        					where: {
+        						tipomovimiento:1,
+        						[Op.and]: {concepto:1},
+        						[Op.and]:{pagoanulado:0}
+      						}
         					},
         				],
 

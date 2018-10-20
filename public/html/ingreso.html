@@ -30,6 +30,8 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+
     <link rel="stylesheet" href="/css/common.css">
 
   <!-- Iconos -->
@@ -40,13 +42,13 @@
   <body ng-controller="myController" layout = "column" ng-cloak>
     <form class="form-signin" ng-submit="submit()">
       <div class="container"></div><br>
-      <div class="container content-wrapper " align="center">
-        <img class="md-4" src="/img/logo.png" alt="" width="300" height="300" align="center"><br><br><br><br>
-        <h1 class="h2">Bienvenido</h1><br>
+      <div class="container container-fluid" align="center">
+        <img class="d-md-flex" src="/img/logo.png" alt="" width="200" height="200" ><br>
+        <h3>Bienvenido</h3><br>
         
         <label for="inputUser " class="sr-only ">Documento</label>
         <input type="text" id=" " ng-change="clear()" class="input-xl" placeholder="Documento" ng-model="Documento" required autofocus>
-        <button class="btn btn-md btn-primary " type="submit" id="submit" value="Submit" alert=true">INGRESAR</button><br><br><br><br><br><br> 
+        <button class="btn btn-md btn-primary " type="submit" id="submit" value="Submit" alert=true">INGRESAR</button><br><br><br><br>
 
 
         <div ng-switch on="bandera">
@@ -76,14 +78,13 @@
        
         <md-switch ng-model = "mostrar1" aria-label = "verIngresos">
             <div ng-if=mostrar1>
-              <h5>Ingresos de la mañana</h5>
+              <h6>Ingresos de la mañana</h6>
             </div> 
             <div ng-if=!mostrar1>
-              <h5>Ingresos de la tarde</h5>
+              <h6>Ingresos de la tarde</h6>
             </div> 
          </md-switch><br>
-
-        <div class="container form-row" ng-if=mostrar1>
+         <div class="container form-row d-md-flex" ng-if=mostrar1 >
           <table class="table">
             <thead>
               <tr>
@@ -95,7 +96,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="item in ingreoManianals | filter:search | orderBy : ['documento'] | limitTo: 50 "> 
+              <tr ng-repeat="item in ingreoManianals | filter:search | orderBy : ['Documento'] | limitTo: 50 "> 
                 <td >{{item.documento}} </td>
                 <td>{{item.nombre}}</td>
                 <td >{{item.importeplan}}</td>
@@ -106,7 +107,7 @@
           </table>  
         </div>
 
-          <div class="container form-row" ng-if=!mostrar1>
+          <div class="container form-row md-4" ng-if=!mostrar1>
           <table class="table">
             <thead>
               <tr>
@@ -118,7 +119,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="item in ingreoTardels | filter:search | orderBy : ['documento'] | limitTo: 50 "> 
+              <tr ng-repeat="item in ingreoTardels | filter:search | orderBy : ['Documento'] | limitTo: 50 "> 
                 <td >{{item.documento}}</td>
                 <td>{{item.nombre}}</td>
                 <td >{{item.importeplan}}</td>
@@ -130,8 +131,7 @@
         </div>
 
 
-
-      </div>           
+      </div>   
     </form>
   </body>
 </html>

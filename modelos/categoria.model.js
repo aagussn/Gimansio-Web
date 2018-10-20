@@ -9,6 +9,8 @@ module.exports = (sequelize, Sequelize) => {
         	primaryKey: true,
         	autoIncrement: true,
       	},	 
+      	itemcategoriumId:{ type: Sequelize.INTEGER,  unique: 'categounico' },
+      	personaDocumento: {type: Sequelize.INTEGER, unique: 'categounico'},
      });
 	
 	Categoria.belongsTo(itemCategoria);

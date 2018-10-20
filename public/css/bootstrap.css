@@ -2022,7 +2022,7 @@ select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.for
   -ms-flex-align: center;
   align-items: center;
   padding-left: 0;
-  margin-right: 0.75rem;
+  margin-right: 0.10rem;
 }
 
 .form-check-inline .form-check-input {
