@@ -260,7 +260,6 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 
 	function getIngresoMat(){
 
-		//$scope.ingreoManianals = [];
  		var createdAtInicio=inicioDia;
  		var createdAtFin=mediodia;
 		var request = $http.get('/api/lstIngresoPorFecha?createdAtInicio='+createdAtInicio+'&createdAtFin='+createdAtFin).then(function(personas) { 
@@ -268,26 +267,16 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 			var nombre=personas.data[0].nombre;
 			var tienedauda=personas.data[0].afiliacions[0].asistencia[0].tipodeuda;
 			var fecha=personas.data[0].afiliacions[0].asistencia[0].createdAt;
-			var persona ={documento:documento,nombre:nombre,tienedauda:tienedauda,fecha:fecha};
-
-
-			$scope.ingreoManianals.push(persona);
-			console.log(personas.data[0]);
-			console.log(personas.data[0].documento);
-			console.log(personas.data[0].afiliacions[0].asistencia[0]);
-
-
-				$q.all([request]);
-
+			var persona1 ={documento:documento,nombre:nombre,tienedauda:tienedauda,fecha:fecha};
+			console.log(persona1);
+			$scope.ingreoManianals.push(persona1);
+			
 		});
-
-		
 	}
 	
 
 	function getIngresoDesp(){
 
-		//$scope.ingreoTardels = [];
  		var createdAtInicio=mediodia;
  		var createdAtFin=finDia;
 		var request = $http.get('/api/lstIngresoPorFecha?createdAtInicio='+createdAtInicio+'&createdAtFin='+createdAtFin).then(function(personas) { 
@@ -295,16 +284,9 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 			var nombre=personas.data[0].nombre;
 			var tienedauda=personas.data[0].afiliacions[0].asistencia[0].tipodeuda;
 			var fecha=personas.data[0].afiliacions[0].asistencia[0].createdAt;
-			var persona ={documento:documento,nombre:nombre,tienedauda:tienedauda,fecha:fecha};
-
-
-			$scope.ingreoTardels.push(persona);
-			console.log(personas.data[0]);
-			console.log(personas.data[0].documento);
-			console.log(personas.data[0].afiliacions[0].asistencia[0]);
-
+			var persona2 ={documento:documento,nombre:nombre,tienedauda:tienedauda,fecha:fecha};
+			$scope.ingreoTardels.push(persona2);
 		});
-
 	}
 });
 

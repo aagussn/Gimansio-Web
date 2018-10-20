@@ -96,10 +96,10 @@
             </thead>
             <tbody>
               <tr ng-repeat="item in ingreoManianals | filter:search | orderBy : ['Documento'] | limitTo: 50 "> 
-                <td >{{item.persona.documento}} </td>
-                <td>{{item.persona.nombre}}</td>
-                <td >{{item.afiliacions[0].asistencia[0].tipodeuda}}</td>
-                <td >{{item.afiliacions[0].asistencia[0].createdAt}}</td>
+                <td >{{item.documento}} </td>
+                <td>{{item.nombre}}</td>
+                <td >{{item.tipodeuda}}</td>
+                <td >{{item.createdAt}}</td>
               </tr>
             </tbody>
           </table>  
@@ -117,10 +117,10 @@
             </thead>
             <tbody>
               <tr ng-repeat="item in ingreoTardels | filter:search | orderBy : ['Documento'] | limitTo: 50 "> 
-              <td >{{item.persona.documento}} </td>
-                <td>{{item.persona.nombre}}</td>
-                <td >{{item.afiliacions[0].asistencia[0].tipodeuda}}</td>
-                <td >{{item.afiliacions[0].asistencia[0].createdAt}}</td>
+                <td >{{item.documento}} </td>
+                <td>{{item.nombre}}</td>
+                <td >{{item.tipodeuda}}</td>
+                <td >{{item.createdAt}}</td>
               </tr>
             </tbody>
           </table>  
