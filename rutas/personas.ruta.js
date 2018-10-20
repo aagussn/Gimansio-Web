@@ -64,6 +64,8 @@ module.exports = function(app) {
     app.get('/api/ultimoPago', personas.ultimoPago);
     // parta control de ingreso 
     app.get('/api/controlIngreso', personas.controlIngreso);
+     // lista de ingreso por turno
+    app.get('/api/lstIngresoPorFecha', personas.lstIngresoPorFecha);
 
 
 }
