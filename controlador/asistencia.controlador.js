@@ -19,7 +19,7 @@ exports.create = (req, res) => {
   	//var pDocumento=req.body.personaDocumento;
   	//var consulta='INSERT into afiliacions (id,estado,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT,"pEstado", NOW(), NOW(),"pDocumento")';
 	Asistencia.sequelize.query('INSERT into asistencia (id,tipodeuda,createdAt,updatedAt,afiliacionId) VALUES (DEFAULT,:pTipodeuda, NOW(), NOW(),:pAfiliacionId)',
-    { replacements: {pAfiliacionId: req.body.afiliacionId,pTipodeuda: req.body.tipodeuda}, 
+    { replacements: {pAfiliacionId: req.body.afiliacionId ,pTipodeuda: req.body.tipodeuda}, 
        	type: Asistencia.sequelize.QueryTypes.INSERT
     }).then(asistencia => {
 				// Send all usuarios to Client 

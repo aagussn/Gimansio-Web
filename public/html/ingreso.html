@@ -47,13 +47,15 @@
         <h3>Bienvenido</h3><br>
         
         <label for="inputUser " class="sr-only ">Documento</label>
-        <input type="text" id=" " ng-change="clear()" class="input-xl" placeholder="Documento" ng-model="Documento" required autofocus>
-        <button class="btn btn-md btn-primary " type="submit" id="submit" value="Submit" alert=true">INGRESAR</button><br><br><br><br>
+        <input type="text" id="documento"  class="input-xl" placeholder="Documento" ng-model="Documento" required autofocus>
+
+
+        <button class="btn btn-md btn-primary" type="submit" id="submit" value="Submit" alert=true">INGRESAR</button><br><br><br><br>
 
 
         <div ng-switch on="bandera">
           <div ng-switch-when="1">
-            <div class="alert alert-success alert-dismissible role="alert">Bienvenido {{msjPer.nombre}} tu plan esta vigente hasta  {{msjPer.fechaFin}}  </div>
+            <div class="alert alert-success alert-dismissible role="alert">Bienvenido {{msjPer.nombre}} tu plan esta vigente hasta  {{msjplan.fin}}  </div>
           </div>
           <div ng-switch-when="2">
             <div class="alert alert-danger alert-dismissible role="alert">Bienvenido {{msjPer.nombre}} tu plan esta vigente hasta  {{msjPer.fechaFin}} resta abonar {{msjPer.importe}} de tu plan </div>
@@ -65,13 +67,13 @@
             <div class="alert alert-info alert-dismissible role="alert">Bienvenido, el documento ingresado no pertenece a un socio</div>
           </div>
           <div ng-switch-when="5">
-            <div class="alert alert-warning alert-dismissible role="alert">Bienvenido, {{persona.nombre}}   {{persona.apellido}}  de momento no tienen ningún pago</div>
+            <div class="alert alert-warning alert-dismissible role="alert">Bienvenido, {{msjPer.nombre}}   {{msjPer.apellido}}  recuerde realizar su primer pago del plan</div>
           </div>
           <div ng-switch-when="6">
             <div class="alert alert-warning alert-dismissible role="alert">Bienvenido {{msjPer.nombre}}, su plan esta vencido comuniquese con administracion para renovarlo</div>
           </div>
           <div ng-switch-when="7">
-            <div class="alert alert-warning alert-dismissible role="alert">Bienvenido, {{persona.nombre}}   {{persona.apellido}}  de momento no tienen ningún pago</div>
+            <div class="alert alert-warning alert-dismissible role="alert">Bienvenido, {{msjPer.nombre}}   {{msjPer.apellido}} ocurrio una incosistencia</div>
           </div>
         </div>
         

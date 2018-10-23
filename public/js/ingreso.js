@@ -20,7 +20,8 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 		var hora=fechaCompleta.getHours();
 		var minutos=fechaCompleta.getMinutes();
 		var segundos=fechaCompleta.getSeconds();
-		var fecha= Date.parse( fechaCompleta.getFullYear() +"-" + (fechaCompleta.getMonth())+ "-" + fechaCompleta.getDate());
+		//var fecha= Date.parse( fechaCompleta.getFullYear() +"-" + (fechaCompleta.getMonth())+ "-" + fechaCompleta.getDate());
+		var fecha = new Date(anio,(mes),dia,hora,minutos,segundos) ;
 		//la diferencia de peses, es la resta
 		var lstMesesDiferencia=[0,2592000000,5270400000,7948800000,10540800000,13219200000,15811200000,18489600000,20908800000,23587200000,26265600000,28857600000,31536000000 ];
 		var meses31=[1,3,5,7,8,10,12];
@@ -105,79 +106,81 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 			        console.log("tiene afiliacion vigente y existe la persona");
 			        //Me quedo con el ultimo plan
 			        var encontrePlan=false;
-			        for(var a=0;a<data.length && !encontrePlan ;a++ ){
+			        for(var a=0;a<data.data.length && !encontrePlan ;a++ ){
 			        	//la persona
-			        	var persona=data[a];
+			        	var persona=data.data[a];
 			        	console.log("asigne a la persona");
 			        	//lista afiliaciones
 				        if(persona.afiliacions.length>0){
 				        	var lstAfiliaciones=persona.afiliacions;
-				        	//creo lo que voy a insertar, resta actualizar solo el tipo de deuda dependiendo de la situacion del afiliado
-							personaAsistencia = JSON.stringify({
-												afiliacionId: afiliacion.id,
-												tipoduda:deuda,
-												});
-							$scope.msjPer=persona;
-							
-
-				        	console.log("asigne la lista de afiliaciones");
+				        	console.log("lista afiliaciones" );
 				        	for(var b=0;b<lstAfiliaciones.length && !encontrePlan ;b++ ){
 				        		var afiliacion=lstAfiliaciones[b];
+				        		//creo lo que voy a insertar, resta actualizar solo el tipo de deuda dependiendo de la situacion del afiliado
+								personaAsistencia = {
+												afiliacionId: afiliacion.id,
+												tipodeuda:deuda,
+											};
+								$scope.msjPer=persona;
 				        		//me quedo con los planes de la afiliacion vigente
 				        		if(afiliacion.plans.length>0){
 					        		var lstPlanes=afiliacion.plans;
-					        		console.log("asigne lista de planes");
+					        		console.log("tengo lista de planes");
 					        		for(var c=0;c<lstPlanes.length && !encontrePlan ;c++ ){
 					        			var plan=lstPlanes[c];
-					        			var fechaPlan=Date.parse(plan.fin);
-					        			if(plan.fin>=fecha){
+					        			$scope.msjplan=plan;
+					       				console.log("tengo el plan");
+					       				var lstfechaPLan =dividirCadena(plan.fin, "-",0);
+					       				if(lstfechaPLan>=fecha){
 					        				console.log("plan vigente");
 					        				if(plan.importepago>0 && plan.pagos.length>0){
-					        					console.log(" pago algo del plan");
-					        					if(plan.importepago==plan.importeplan && pla.cuotasson==plan.cuotasvan){
-					        						console.log(" pago total del plan");
+					        					console.log("pago algo del plan");
+					        					if(plan.importepago==plan.importeplan && plan.cuotasson==plan.cuotasvan){
+					        						console.log("total del plan pago");
 					        						//marco como pago vigente, todo ok
 							        				bandera=1;
-							        				personaAsistencia.deuda=0;
+							        				personaAsistencia.tipodeuda=0;
 							        				encontrePlan=true;
 							        			}else{
-							        				if(plan.importepago<plan.importeplan && pla.cuotasson>plan.cuotasvan){
+							        				if(plan.importepago<plan.importeplan && plan.cuotasson>plan.cuotasvan){
 							        					console.log("no pago total del plan");
 							        					//verificar si es correcto el impago o tiene margen para pagar
 							        					var lstPagos=plan.pagos;	
 							        					for(var d=0;d<lstPagos.length && !encontrePlan ;d++ ){
 							        						var pago=lstPagos[d];
-							        						if(plan.createdAt-pago.updatedAt>=lstMesesDiferencia[plan.cuotasvan]){
+							        							//console.log("plan.inicio " +dividirCadena(plan.inicio,"-",0));
+							        							//console.log("pago.createdAt" +dividirCadena(pago.createdAt,"-",1));
+																var fechaUltimoPago=dividirCadena(pago.createdAt,"-",1)
+							        							console.log(fecha-fechaUltimoPago +"  " +lstMesesDiferencia[plan.cuotasvan]);
+							        						if(fecha-fechaUltimoPago>=lstMesesDiferencia[1]){
+							        							console.log("hace mas de un mes q no paga");
 							        							bandera=2;
 							        							encontrePlan=true;
-							        							personaAsistencia.deuda=1;
+							        							personaAsistencia.tipodeuda=1;
 
 							        						}else{
+							        							console.log("b");
 							        							bandera=1;
-							        							personaAsistencia.deuda=0;
+							        							personaAsistencia.tipodeuda=0;
 							        							encontrePlan=true;
 							        						}
 							        					}
-													}else{bandera=7;}// esto es una inconsistencia de datos revisar el codigo
+													}else{bandera=7; encontrePlan=true;}// esto es una inconsistencia de datos revisar el codigo
 							        			}
-									       	}else{bandera=5; personaAsistencia.deuda=1; }//existe el plan pero no tiene pagos	
-								      	}else{bandera=6; personaAsistencia.deuda=2;}//no tiene plan vigentes		
+									       	}else{bandera=5; personaAsistencia.tipodeuda=1; encontrePlan=true; }//existe el plan pero no tiene pagos	
+								      	}else{bandera=6; personaAsistencia.tipodeuda=2; encontrePlan=true;}//no tiene plan vigentes		
 							       	
 								      
 								      	//aca tengo todos los  datos armo e json para mostarr en pantalla
 								      	if(bandera==1 || bandera==5 || bandera==2 || bandera==6 || bandera==3 ){
 								      		
 								      		// inserto la asistencia de la persona 
-											//parameter = JSON.stringify({personaDocumento: persona.documento});
-											var laAsistencia = $http.post('/api/asistencia',personaAsistencia);
-						 					// ejecuto el insert asistencia
-						 					laAsistencia.success(function(data3) {
-			           							console.log('Inserte la asisencia' + data3);
+								      		var insAsis = JSON.stringify({personaAsistencia});
+								      		console.log('asisencia INS ' + insAsis +" "+bandera );
+											var laAsistencia= $http.post('/api/asistencia',personaAsistencia).then(function(asistencia) {
+			           							console.log('Inserte la asisencia' + asistencia);
 						 					});
-						 					laAsistencia.error(function(data2){
-						 						console.log('Error no ingrese asistencia');
-						 					});	
-						        			
+
 					        			}	
 							       	}//aca termino el ultimo for*********************************************************************hasta aca tengo toda las variables *********************************************
 								}else{bandera=3;}//no tiene planes
@@ -185,8 +188,7 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 			   			}else{ bandera=4;}//no tiene afiliacion vigente   
 			   			        		 
 			       	}
-			        	
-			        	
+			        
 			   
 				}else{bandera=4;}//DATO NO estado VACIO
 					switch (bandera) { 
@@ -196,6 +198,7 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 											//$scope.antes=$scope.bandera;
 											$timeout(function callAtTimeout() {
 											$scope.bandera=0;
+											$scope.Documento = null ;
 											$scope.$apply;;
 											},tiempo);		
 								      		break 
@@ -204,6 +207,7 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 											$scope.bandera=bandera;
 											$timeout(function callAtTimeout() {
 											$scope.bandera=0;
+											$scope.Documento = null ;
 											$scope.$apply;;
 											},tiempo);	      	
 											break 
@@ -213,6 +217,7 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 											//$scope.antes=$scope.bandera;
 											$timeout(function callAtTimeout() {
 											$scope.bandera=0;
+											$scope.Documento = null ;
 											$scope.$apply;;
 											},tiempo);	
 								      		break 
@@ -221,6 +226,7 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 											$scope.bandera=bandera;
 											$timeout(function callAtTimeout() {
 											$scope.bandera=0;
+											$scope.Documento = null ;
 											$scope.$apply;;
 											},tiempo);	      	
 											break 
@@ -229,6 +235,7 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 											$scope.bandera=bandera;
 											$timeout(function callAtTimeout() {
 											$scope.bandera=0;
+											$scope.Documento =null;
 											$scope.$apply;;
 											},tiempo);	      	
 											break 	
@@ -237,6 +244,7 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 											$scope.bandera=bandera;
 											$timeout(function callAtTimeout() {
 											$scope.bandera=0;
+											$scope.Documento = null ;
 											$scope.$apply;;
 											},tiempo);	      	
 											break 	
@@ -245,12 +253,14 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 											$scope.bandera=bandera;
 											$timeout(function callAtTimeout() {
 											$scope.bandera=0;
+											$scope.Documento = null ;
 											$scope.$apply;;
 											},tiempo);	      	
 											break 		
 
 								   		default: 
 											$scope.bandera=bandera;
+											$scope.Documento = null ;
 								      		console.log('la bandera no tiene valor ' + bandera); 
 					}
 
@@ -288,6 +298,34 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 			$scope.ingreoTardels.push(persona2);
 		});
 	}
+
+	function  dividirCadena(cadenaADividir,separador,opcion) {
+   		
+		if(opcion==1){
+			var arrayDeCadenas = cadenaADividir.split("T");
+			//console.log( "la cadena  "+arrayDeCadenas[0])
+			var arrayDeCadenas2 = arrayDeCadenas[0].split(separador);
+			var anio1=arrayDeCadenas2[0];
+      		var mes1=arrayDeCadenas2[1];
+      		var dia1=arrayDeCadenas2[2];
+
+      		//console.log(anio1 + " "+mes1 +" "+dia1)
+      		var devuelvo = new Date(anio1,mes1,dia1,"00","00","00")
+
+		}else{
+			var arrayDeCadenas = cadenaADividir.split(separador);
+   			var anio1=arrayDeCadenas[0];
+      		var mes1=arrayDeCadenas[1];
+      		var dia1=arrayDeCadenas[2];
+      		var devuelvo = new Date(anio1,mes1,dia1,"00","00","00")
+
+      		}
+
+      	return devuelvo;
+
+		}
+
+   
 });
 
 
