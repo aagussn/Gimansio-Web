@@ -58,7 +58,7 @@
             <div class="alert alert-success alert-dismissible role="alert">Bienvenido {{msjPer.nombre}} tu plan esta vigente hasta  {{msjplan.fin}}  </div>
           </div>
           <div ng-switch-when="2">
-            <div class="alert alert-danger alert-dismissible role="alert">Bienvenido {{msjPer.nombre}} tu plan esta vigente hasta  {{msjPer.fechaFin}} resta abonar {{msjPer.importe}} de tu plan </div>
+            <div class="alert alert-danger alert-dismissible role="alert">Bienvenido {{msjPer.nombre}}  {{msjPer.apellido}} su plan está vigente hasta {{msjplan.fin}}, resta abonar ${{faltaPagar}}</div>
           </div>
           <div ng-switch-when="3">
             <div class="alert alert-warning alert-dismissible role="alert">Bienvenido {{msjPer.nombre}}, no tiene ningun plan creado </div>

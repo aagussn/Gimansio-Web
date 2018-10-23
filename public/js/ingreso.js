@@ -64,17 +64,17 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 		}else{
 			console.log("es menor");
 		}
+*/
 
-
-		var a =  new Date(2017,9,10,hora,minutos,segundos) ; //fecha del plan 
-		var b =  new Date(anio,9,17,hora,16,segundos) ; //fecha del pago 
-		var c =  new Date(anio,mes,10,hora,minutos,segundos) ; //fecha del pago 
+		var a =  new Date(anio,8,20,00,00,00) ; //fecha del plan 
+		var b =  new Date(anio,9,17,00,00,00) ; //fecha del pago 
+		var c =  new Date(anio,mes,dia,00,00,00) ; //fecha del pago 
 		console.log("a " + a);
 		console.log("b " + b);
 		console.log("c " + c);
 		restaA=c - a;
 		restaB=c - b; 
-		console.log("c-a= " +restaA + "  c-b= " + restaB );*/
+		console.log("c-a= " +restaA + "  c-b= " + restaB );
 		
 
 		var tiempo =5000;
@@ -151,15 +151,15 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 							        							//console.log("plan.inicio " +dividirCadena(plan.inicio,"-",0));
 							        							//console.log("pago.createdAt" +dividirCadena(pago.createdAt,"-",1));
 																var fechaUltimoPago=dividirCadena(pago.createdAt,"-",1)
-							        							console.log(fecha-fechaUltimoPago +"  " +lstMesesDiferencia[plan.cuotasvan]);
 							        						if(fecha-fechaUltimoPago>=lstMesesDiferencia[1]){
 							        							console.log("hace mas de un mes q no paga");
+							        							$scope.faltaPagar=plan.importeplan-plan.importepago;
 							        							bandera=2;
 							        							encontrePlan=true;
 							        							personaAsistencia.tipodeuda=1;
 
 							        						}else{
-							        							console.log("b");
+							        							console.log("no hace mas de un mes q pago");
 							        							bandera=1;
 							        							personaAsistencia.tipodeuda=0;
 							        							encontrePlan=true;
@@ -310,14 +310,14 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
       		var dia1=arrayDeCadenas2[2];
 
       		//console.log(anio1 + " "+mes1 +" "+dia1)
-      		var devuelvo = new Date(anio1,mes1,dia1,"00","00","00")
+      		var devuelvo = new Date(anio1,(mes1-1),dia1,"00","00","00")
 
 		}else{
 			var arrayDeCadenas = cadenaADividir.split(separador);
    			var anio1=arrayDeCadenas[0];
       		var mes1=arrayDeCadenas[1];
       		var dia1=arrayDeCadenas[2];
-      		var devuelvo = new Date(anio1,mes1,dia1,"00","00","00")
+      		var devuelvo = new Date(anio1,(mes1-1),dia1,"00","00","00")
 
       		}
 
