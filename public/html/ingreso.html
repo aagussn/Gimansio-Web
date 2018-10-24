@@ -55,10 +55,17 @@
 
         <div ng-switch on="bandera">
           <div ng-switch-when="1">
+<<<<<<< HEAD
             <div class="alert alert-success alert-dismissible role="alert">Bienvenido {{msjPer.nombre}} {{msjPer.apellido}}, tu plan esta vigente hasta  {{msjplan.fin}}  </div>
           </div>
           <div ng-switch-when="2">
             <div class="alert alert-danger alert-dismissible role="alert">Bienvenido {{msjPer.nombre}} {{msjPer.apellido}}, tu plan está vigente hasta {{msjplan.fin}}, resta abonar ${{faltaPagar}}</div>
+=======
+            <div class="alert alert-success alert-dismissible role="alert">Bienvenido {{msjPer.nombre}} tu plan esta vigente hasta  {{msjplan.fin}}  </div>
+          </div>
+          <div ng-switch-when="2">
+            <div class="alert alert-danger alert-dismissible role="alert">Bienvenido {{msjPer.nombre}}  {{msjPer.apellido}} su plan está vigente hasta {{msjplan.fin}}, resta abonar ${{faltaPagar}}</div>
+>>>>>>> fdeb4fd24ad427c5d729db7770368f24b926eb13
           </div>
           <div ng-switch-when="3">
             <div class="alert alert-warning alert-dismissible role="alert">Bienvenido {{msjPer.nombre}} {{msjPer.apellido}}, no tiene ningun plan creado </div>
@@ -67,13 +74,21 @@
             <div class="alert alert-info alert-dismissible role="alert">Bienvenido {{msjPer.nombre}}   {{msjPer.apellido}}, el documento ingresado no pertenece a un socio</div>
           </div>
           <div ng-switch-when="5">
+<<<<<<< HEAD
             <div class="alert alert-warning alert-dismissible role="alert">Bienvenido {{msjPer.nombre}}  {{msjPer.apellido}}, recuerde realizar su primer pago del plan</div>
+=======
+            <div class="alert alert-warning alert-dismissible role="alert">Bienvenido, {{msjPer.nombre}}   {{msjPer.apellido}}  recuerde realizar su primer pago del plan</div>
+>>>>>>> fdeb4fd24ad427c5d729db7770368f24b926eb13
           </div>
           <div ng-switch-when="6">
             <div class="alert alert-warning alert-dismissible role="alert">Bienvenido{{msjPer.nombre}}   {{msjPer.apellido}}, su plan esta vencido comuniquese con administracion para renovarlo</div>
           </div>
           <div ng-switch-when="7">
+<<<<<<< HEAD
             <div class="alert alert-warning alert-dismissible role="alert">Bienvenido {{msjPer.nombre}}  {{msjPer.apellido}}, ocurrio una incosistencia</div>
+=======
+            <div class="alert alert-warning alert-dismissible role="alert">Bienvenido, {{msjPer.nombre}}   {{msjPer.apellido}} ocurrio una incosistencia</div>
+>>>>>>> fdeb4fd24ad427c5d729db7770368f24b926eb13
           </div>
         </div>
         

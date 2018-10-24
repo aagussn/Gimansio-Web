@@ -18,6 +18,10 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 		var hora=fechaCompleta.getHours();
 		var minutos=fechaCompleta.getMinutes();
 		var segundos=fechaCompleta.getSeconds();
+<<<<<<< HEAD
+=======
+		//var fecha= Date.parse( fechaCompleta.getFullYear() +"-" + (fechaCompleta.getMonth())+ "-" + fechaCompleta.getDate());
+>>>>>>> fdeb4fd24ad427c5d729db7770368f24b926eb13
 		var fecha = new Date(anio,(mes),dia,hora,minutos,segundos) ;
 		//la diferencia de peses, es la resta
 		var lstMesesDiferencia=[0,2592000000,5270400000,7948800000,10540800000,13219200000,15811200000,18489600000,20908800000,23587200000,26265600000,28857600000,31536000000 ];
@@ -63,6 +67,7 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 		}else{
 			console.log("es menor");
 		}
+*/
 
 		var a =  new Date(anio,8,20,00,00,00) ; //fecha del plan 
 		var b =  new Date(anio,9,17,00,00,00) ; //fecha del pago 
@@ -73,7 +78,11 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 		restaA=c - a;
 		restaB=c - b; 
 		console.log("c-a= " +restaA + "  c-b= " + restaB );
+<<<<<<< HEAD
 		*/
+=======
+		
+>>>>>>> fdeb4fd24ad427c5d729db7770368f24b926eb13
 
 		
 		//console.log('valor inicial $scope.bandera: ' + $scope.bandera + " y bandera "+bandera +" "+ $scope.Documento );
@@ -112,8 +121,11 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 												tipodeuda:deuda,
 											};
 								$scope.msjPer=persona;
+<<<<<<< HEAD
 													        		console.log(afiliacion.plans.length);
 
+=======
+>>>>>>> fdeb4fd24ad427c5d729db7770368f24b926eb13
 				        		//me quedo con los planes de la afiliacion vigente
 				        		if(afiliacion.plans.length>0){
 					        		var lstPlanes=afiliacion.plans;
@@ -167,9 +179,16 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 								      	if(bandera==1 || bandera==5 || bandera==2 || bandera==6 || bandera==3 ){
 								      		
 								      		// inserto la asistencia de la persona 
+<<<<<<< HEAD
 								      		var insAsis = JSON.stringify(personaAsistencia);
 											var laAsistencia= $http.post('/api/asistencia',insAsis).then(function(asistencia) {
 			           							console.log('Inserte la asisencia');
+=======
+								      		var insAsis = JSON.stringify({personaAsistencia});
+								      		console.log('asisencia INS ' + insAsis +" "+bandera );
+											var laAsistencia= $http.post('/api/asistencia',personaAsistencia).then(function(asistencia) {
+			           							console.log('Inserte la asisencia' + asistencia);
+>>>>>>> fdeb4fd24ad427c5d729db7770368f24b926eb13
 						 					});
 
 					        			}	
@@ -315,6 +334,10 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
    		
 		if(opcion==1){
 			var arrayDeCadenas = cadenaADividir.split("T");
+<<<<<<< HEAD
+=======
+			//console.log( "la cadena  "+arrayDeCadenas[0])
+>>>>>>> fdeb4fd24ad427c5d729db7770368f24b926eb13
 			var arrayDeCadenas2 = arrayDeCadenas[0].split(separador);
 			var anio1=arrayDeCadenas2[0];
       		var mes1=arrayDeCadenas2[1];
@@ -324,6 +347,7 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
       		var devuelvo = new Date(anio1,(mes1-1),dia1,"00","00","00")
 
 		}else{
+<<<<<<< HEAD
 			if(opcion==2){
 			var arrayDeCadenas = cadenaADividir.split("T");
 			var arrayDeCadenas2 = arrayDeCadenas[0].split(separador);
@@ -345,6 +369,15 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
       			var devuelvo = new Date(anio1,(mes1-1),dia1,"00","00","00")
 			}
       	}
+=======
+			var arrayDeCadenas = cadenaADividir.split(separador);
+   			var anio1=arrayDeCadenas[0];
+      		var mes1=arrayDeCadenas[1];
+      		var dia1=arrayDeCadenas[2];
+      		var devuelvo = new Date(anio1,(mes1-1),dia1,"00","00","00")
+
+      		}
+>>>>>>> fdeb4fd24ad427c5d729db7770368f24b926eb13
 
       	return devuelvo;
 
