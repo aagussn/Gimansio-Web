@@ -62,6 +62,18 @@ exports.delete = (req, res) => {
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
+// Delete a Usuario by Id     ****** no puedo borrar verificar por que******
+exports.deleteCI = (req, res) => {
+	const documento = req.params.documento;
+	//write(req.params.documento);
+	Categoria.destroy({
+	  where: { personaDocumento: documento }
+	}).then(() => {
+	  res.status(200).send('deleted successfully a usuario with documento = ' + documento);
+	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+};
+
+
 //veo el tipo de categoria
 exports.categoriaTipo = (req, res) => {
 		var condition =	{

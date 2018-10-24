@@ -11,9 +11,11 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope)
         return {abbrev: sexo};
      });
 
-    $scope.profesiones = ('Estudiante Empleado Desocupado').split(' ').map(function(sexo) {
-        return {abbrev: sexo};
-     });
+    $scope.profesiones = [
+    {value: 1, abbrev: 'Estudiante'},
+    {value: 2, abbrev: 'Empleado'},
+    {value: 3, abbrev: 'Desocupado'}
+    ];
 
 	getPersonas();
 
@@ -65,7 +67,7 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope)
 
             for (var i = 0 ; i < categorias.length; i++) {
                 
-                var  insert = {name: categorias[i].descripcion, value: categorias[i].id };
+                var  insert = {name: categorias[i].descripcion, id: categorias[i].id };
 
                 switch(categorias[i].tipo) {
                     case 1:
@@ -159,15 +161,15 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope)
 
     $scope.actPersonales = function(){
         var parameter = JSON.stringify({
-            nombre     : $scope.persona.nombre,
-            apellido   : $scope.persona.apellido,
-            sexo       : $scope.persona.sexo,            
-            email      : $scope.persona.email,
-            telefono   : $scope.persona.telefono,
-            emergencia : $scope.persona.emergencia,
-            fechaN     : $scope.persona.fechaN,
-            idprofesion  : $scope.persona.profesion,
-            direccion  : $scope.persona.direccion
+            nombre       : $scope.persona.nombre,
+            apellido     : $scope.persona.apellido,
+            sexo         : $scope.persona.sexo,            
+            email        : $scope.persona.email,
+            telefono     : $scope.persona.telefono,
+            emergencia   : $scope.persona.emergencia,
+            fechaN       : $scope.persona.fechaN,
+            idprofesion  : $scope.persona.idprofesion,
+            direccion    : $scope.persona.direccion
         });
 
         var request = $http.put('/api/personas/'+ documento, parameter).then(function(respuesta) {
@@ -175,8 +177,38 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope)
             getPersonas();
             getUnaPersona($scope.persona);
         });
+    };
 
-    }
+    $scope.actContacto = function(){
+        var parameter = JSON.stringify({
+            contactofamilia       : $scope.persona.contactofamilia,
+            nombrecontacto        : $scope.persona.nombrecontacto
+        });
+
+        var request = $http.put('/api/personas/'+ documento, parameter).then(function(respuesta) {
+            console.log(respuesta);
+            //getPersonas();
+            //getUnaPersona($scope.persona);
+        });
+
+        selectedObjetivos = $scope.selectedObjetivos;
+
+        console.log(selectedObjetivos);
+
+        // Actualizo los combo de intereses
+        for (var i = 0 ; i < $scope.selectedObjetivos.length; i++) {
+            var parameter = JSON.stringify({
+                personaDocumento : $scope.persona.documento,
+                itemcategoriumId : $scope.selectedObjetivos[i]
+            });
+
+            console.log(parameter);
+
+            var request = $http.post('/api/categoria', parameter).then(function(respuesta) {
+                console.log(respuesta);
+            });
+        }
+    }    
 
 });
 

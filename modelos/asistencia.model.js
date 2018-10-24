@@ -11,6 +11,8 @@ module.exports = (sequelize, Sequelize) => {
       tipodeuda: {
         type: Sequelize.INTEGER
       },
+    
+
            
 
 	});
