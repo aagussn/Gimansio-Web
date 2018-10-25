@@ -12,50 +12,20 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 	
 		//variables 
 	 	var fechaCompleta = new Date(); //fecha del dia 
-		var anio= fechaCompleta.getFullYear();
-		var mes=fechaCompleta.getMonth();
-		var dia=fechaCompleta.getDate();
-		var hora=fechaCompleta.getHours();
-		var minutos=fechaCompleta.getMinutes();
-		var segundos=fechaCompleta.getSeconds();
-<<<<<<< HEAD
-=======
-		//var fecha= Date.parse( fechaCompleta.getFullYear() +"-" + (fechaCompleta.getMonth())+ "-" + fechaCompleta.getDate());
->>>>>>> fdeb4fd24ad427c5d729db7770368f24b926eb13
-		var fecha = new Date(anio,(mes),dia,hora,minutos,segundos) ;
+		var fecha = mostararFecha(fechaCompleta,2);
 		//la diferencia de peses, es la resta
 		var lstMesesDiferencia=[0,2592000000,5270400000,7948800000,10540800000,13219200000,15811200000,18489600000,20908800000,23587200000,26265600000,28857600000,31536000000 ];
-		var meses31=[1,3,5,7,8,10,12];
 		var tiempo =5000;
 		var personaAsistencia=0;
 	 	var deuda= -1 ;   // 0=pago   1=impago deuda   2=no tine plan  
 		$scope.bandera=0;
 		var bandera=0;
-		
 		$scope.mostrar1 =true;
+		var inicioDia=mostararFecha(fechaCompleta,3);
+		var mediodia=mostararFecha(fechaCompleta,4);
+		var finDia=mostararFecha(fechaCompleta,5);
 
-		var inicioDia=anio+"-"+(mes+1)+"-"+dia+ " 00:00:00";
-		var mediodia=anio+"-"+(mes+1)+"-"+dia+ " 13:00:00";
-		var finDia=0;
-		for(var a=0;a<7;a++){
-			m=meses31[a];
-			if(m==mes){
-				if(dia==31){
-					
-					finDia=anio+"-"+(mes+2)+"-"+ 1 + " 00:00:00";
-				}else{
-					finDia=anio+"-"+(mes+1)+"-"+ (dia+1) + " 00:00:00";
-				}	
-			}else{
-			}
-		}
-		if(mes==2){
-			finDia=anio+"-"+(mes+2)+"-"+ 1 + " 00:00:00";
-		}else{
-			
-			finDia=anio+"-"+(mes+1)+"-"+ (dia+1) + " 00:00:00";
 
-		}
 		/*var pru=anio+"-"+(mes+1)+"-"+dia+ " 12:00:01";
 		console.log("inicioDia "+ inicioDia );
 		console.log("mediodia "+ mediodia );
@@ -67,8 +37,6 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 		}else{
 			console.log("es menor");
 		}
-*/
-
 		var a =  new Date(anio,8,20,00,00,00) ; //fecha del plan 
 		var b =  new Date(anio,9,17,00,00,00) ; //fecha del pago 
 		var c =  new Date(anio,mes,dia,00,00,00) ; //fecha del pago 
@@ -78,13 +46,7 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 		restaA=c - a;
 		restaB=c - b; 
 		console.log("c-a= " +restaA + "  c-b= " + restaB );
-<<<<<<< HEAD
-		*/
-=======
-		
->>>>>>> fdeb4fd24ad427c5d729db7770368f24b926eb13
-
-		
+		*/		
 		//console.log('valor inicial $scope.bandera: ' + $scope.bandera + " y bandera "+bandera +" "+ $scope.Documento );
 	
 	$scope.ingreoManianals=getIngresoMat();
@@ -121,11 +83,7 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 												tipodeuda:deuda,
 											};
 								$scope.msjPer=persona;
-<<<<<<< HEAD
-													        		console.log(afiliacion.plans.length);
 
-=======
->>>>>>> fdeb4fd24ad427c5d729db7770368f24b926eb13
 				        		//me quedo con los planes de la afiliacion vigente
 				        		if(afiliacion.plans.length>0){
 					        		var lstPlanes=afiliacion.plans;
@@ -156,14 +114,14 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 							        							//console.log("pago.createdAt" +dividirCadena(pago.createdAt,"-",1));
 																var fechaUltimoPago=dividirCadena(pago.createdAt,"-",1)
 							        						if(fecha-fechaUltimoPago>=lstMesesDiferencia[1]){
-							        							console.log("hace mas de un mes q no paga");
+							        							console.log("hace mas de un mes q  paga");
 							        							$scope.faltaPagar=plan.importeplan-plan.importepago;
 							        							bandera=2;
 							        							encontrePlan=true;
 							        							personaAsistencia.tipodeuda=1;
 
 							        						}else{
-							        							console.log("no hace mas de un mes q pago");
+							        							console.log(" hace menos de un mes q pago");
 							        							bandera=1;
 							        							personaAsistencia.tipodeuda=0;
 							        							encontrePlan=true;
@@ -179,17 +137,12 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 								      	if(bandera==1 || bandera==5 || bandera==2 || bandera==6 || bandera==3 ){
 								      		
 								      		// inserto la asistencia de la persona 
-<<<<<<< HEAD
 								      		var insAsis = JSON.stringify(personaAsistencia);
 											var laAsistencia= $http.post('/api/asistencia',insAsis).then(function(asistencia) {
 			           							console.log('Inserte la asisencia');
-=======
-								      		var insAsis = JSON.stringify({personaAsistencia});
-								      		console.log('asisencia INS ' + insAsis +" "+bandera );
-											var laAsistencia= $http.post('/api/asistencia',personaAsistencia).then(function(asistencia) {
-			           							console.log('Inserte la asisencia' + asistencia);
->>>>>>> fdeb4fd24ad427c5d729db7770368f24b926eb13
-						 					});
+			           						});
+			           						$scope.ingreoManianals=getIngresoMat();
+												$scope.ingreoTardels=getIngresoDesp();
 
 					        			}	
 							       	}//aca termino el ultimo for*********************************************************************hasta aca tengo toda las variables *********************************************
@@ -279,109 +232,131 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 	}
 
 	function getIngresoMat(){
+				console.log(' ingresos matutino'); 
 
  		var createdAtInicio=inicioDia;
  		var createdAtFin=mediodia;
 		var request = $http.get('/api/lstIngresoPorFecha?createdAtInicio='+createdAtInicio+'&createdAtFin='+createdAtFin).then(function(personas) { 
 		$scope.ingreoManianals = [];
 
-			if(personas.data.length>0){
-				var lstAsist=personas.data[0].afiliacions[0].asistencia.length;
-				for(var a=0; a<lstAsist; a++){
-				var documento= personas.data[0].documento;
-				var nombre=personas.data[0].nombre;
-				var tienedauda=personas.data[0].afiliacions[0].asistencia[a].tipodeuda;
-				var fecha=personas.data[0].afiliacions[0].asistencia[a].createdAt;
-				var persona1 ={documento:documento,nombre:nombre,tienedauda:tienedauda,fecha:fecha};
-				console.log(persona1);
-				$scope.ingreoManianals.push(persona1);
+			if(personas.data.length>0){	
+				for(var a=0; a<personas.data.length; a++){
+					var lstAsist=personas.data[a].afiliacions[0].asistencia.length;
+					var documento= personas.data[a].documento;
+					var nombre=personas.data[0].nombre;
+					for(var b=0; b<lstAsist; b++){
+						var tienedauda=personas.data[a].afiliacions[0].asistencia[b].tipodeuda;
+						var fech=new Date(personas.data[a].afiliacions[0].asistencia[b].createdAt);
+						var fecha =mostararFecha(fech,1);
+						var persona1 ={documento:documento,nombre:nombre,tienedauda:tienedauda,fecha:fecha};
+						//console.log(persona2);
+						$scope.ingreoManianals.push(persona1);
+					}
 				}
 			}else{
-				console.log('No hay ingresos matutino');
+				console.log('No hay ingresos matutino'); 
 			}
 		});
 	}
 	
 
 	function getIngresoDesp(){
+		
 
  		var createdAtInicio=mediodia;
  		var createdAtFin=finDia;
 		var request1 = $http.get('/api/lstIngresoPorFecha?createdAtInicio='+createdAtInicio+'&createdAtFin='+createdAtFin).then(function(personas) { 
 		$scope.ingreoTardels = [];
 
-		if(personas.data.length>0){	
-				var lstAsist=personas.data[0].afiliacions[0].asistencia.length;
-				console.log("ada "+lstAsist);
-			for(var a=0; a<lstAsist; a++){
-				console.log(a);
-				var documento= personas.data[0].documento;
-				var nombre=personas.data[0].nombre;
-				var tienedauda=personas.data[0].afiliacions[0].asistencia[a].tipodeuda;
-				var fech=personas.data[0].afiliacions[0].asistencia[a].createdAt;
-				var fecha =dividirCadena(fech,"-",2);
-				var persona2 ={documento:documento,nombre:nombre,tienedauda:tienedauda,fecha:fecha};
-				console.log(persona2);
-				$scope.ingreoTardels.push(persona2);
-				}
-			}else{
-				console.log('No hay ingresos despertino'); 
+			if(personas.data.length>0){	
+					for(var a=0; a<personas.data.length; a++){
+						var lstAsist=personas.data[a].afiliacions[0].asistencia.length;
+						var documento= personas.data[a].documento;
+						var nombre=personas.data[a].nombre;
+						for(var b=0; b<lstAsist; b++){
+							var tienedauda=personas.data[a].afiliacions[0].asistencia[b].tipodeuda;
+							var fech=new Date(personas.data[a].afiliacions[0].asistencia[b].createdAt);
+							var fecha =mostararFecha(fech,1);
+							var persona1 ={documento:documento,nombre:nombre,tienedauda:tienedauda,fecha:fecha};
+							//console.log(persona2);
+							$scope.ingreoTardels.push(persona1);
+						}
+					}
+				}else{
+					console.log('No hay ingresos despertino'); 
 			}
 		});
 	}
 
 	function  dividirCadena(cadenaADividir,separador,opcion) {
-   		
 		if(opcion==1){
 			var arrayDeCadenas = cadenaADividir.split("T");
-<<<<<<< HEAD
-=======
-			//console.log( "la cadena  "+arrayDeCadenas[0])
->>>>>>> fdeb4fd24ad427c5d729db7770368f24b926eb13
 			var arrayDeCadenas2 = arrayDeCadenas[0].split(separador);
 			var anio1=arrayDeCadenas2[0];
       		var mes1=arrayDeCadenas2[1];
       		var dia1=arrayDeCadenas2[2];
-
       		//console.log(anio1 + " "+mes1 +" "+dia1)
-      		var devuelvo = new Date(anio1,(mes1-1),dia1,"00","00","00")
+      		var devuelvo = new Date(anio1,(mes1-1),dia1,"00","00","00");
 
 		}else{
-<<<<<<< HEAD
-			if(opcion==2){
-			var arrayDeCadenas = cadenaADividir.split("T");
-			var arrayDeCadenas2 = arrayDeCadenas[0].split(separador);
-			var arrayDeCadenas3 = arrayDeCadenas[1].split(":");
-
-			var anio1=arrayDeCadenas2[0];
-      		var mes1=arrayDeCadenas2[1];
-      		var dia1=arrayDeCadenas2[2];
-      		var hora1=arrayDeCadenas3[0];
-      		var minutos1=arrayDeCadenas3[1];
-      		var segundos1=arrayDeCadenas3[2];
-
-			}else{
 				var arrayDeCadenas = cadenaADividir.split(separador);
 	   			var anio1=arrayDeCadenas[0];
 	      		var mes1=arrayDeCadenas[1];
 	      		var dia1=arrayDeCadenas[2];
 	      		var arrayDeCadenas = cadenaADividir.split(separador);
-      			var devuelvo = new Date(anio1,(mes1-1),dia1,"00","00","00")
-			}
-      	}
-=======
-			var arrayDeCadenas = cadenaADividir.split(separador);
-   			var anio1=arrayDeCadenas[0];
-      		var mes1=arrayDeCadenas[1];
-      		var dia1=arrayDeCadenas[2];
-      		var devuelvo = new Date(anio1,(mes1-1),dia1,"00","00","00")
-
-      		}
->>>>>>> fdeb4fd24ad427c5d729db7770368f24b926eb13
-
+      			var devuelvo = new Date (anio1,(mes1-1),dia1,"00","00","00");
+	   	}
       	return devuelvo;
+	}
 
-		}
+	function  mostararFecha(cadenaADividir,opcion) {
+			var meses31=[1,3,5,7,8,10,12];
+			var anio= cadenaADividir.getFullYear();
+			var mes=cadenaADividir.getMonth();
+			var dia=cadenaADividir.getDate();
+			var hora=cadenaADividir.getHours();
+			var minutos=cadenaADividir.getMinutes();
+			var segundos=cadenaADividir.getSeconds();
+      		var devuelvo = anio+"-"+(mes)+"-"+dia+ " "+ hora+":"+ minutos+":"+segundos;
+
+	      	if(opcion==1){
+				var devuelvo = anio+"-"+(mes)+"-"+dia+ " "+ hora+":"+ minutos+":"+segundos;
+	      	}	
+			if(opcion==2){
+				var devuelvo = new Date(anio,(mes),dia,hora,minutos,segundos) ;
+	      	}	
+	      	if(opcion==3){
+				//inicioDia
+				var devuelvo=anio+"-"+(mes+1)+"-"+dia+ " 00:00:00";
+	      	}	
+	      	if(opcion==4){
+				//mediodia
+				var devuelvo=anio+"-"+(mes+1)+"-"+dia+ " 13:00:00";
+	      	}
+	      	if(opcion==5){
+				//finDia
+				var devuelvo=0;
+				for(var a=0;a<7;a++){
+					m=meses31[a];
+					if(m==mes){
+						if(dia==31){
+							devuelvo=anio+"-"+(mes+2)+"-"+ 1 + " 00:00:00";
+						}else{
+							devuelvo=anio+"-"+(mes+1)+"-"+ (dia+1) + " 00:00:00";
+						}	
+					}else{
+					}
+				}
+				if(mes==2){
+					devuelvo=anio+"-"+(mes+2)+"-"+ 1 + " 00:00:00";
+				}else{
+					devuelvo=anio+"-"+(mes+1)+"-"+ (dia+1) + " 00:00:00";
+				}	
+	      	}
+	      	return devuelvo;
+    }
+
+		
 
    
 });
