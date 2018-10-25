@@ -13,6 +13,8 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 		//variables 
 	 	var fechaCompleta = new Date(); //fecha del dia 
 		var fecha = mostararFecha(fechaCompleta,2);
+				console.log(fecha);
+
 		//la diferencia de peses, es la resta
 		var lstMesesDiferencia=[0,2592000000,5270400000,7948800000,10540800000,13219200000,15811200000,18489600000,20908800000,23587200000,26265600000,28857600000,31536000000 ];
 		var tiempo =5000;
@@ -142,7 +144,8 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 			           							console.log('Inserte la asisencia');
 			           						});
 			           						$scope.ingreoManianals=getIngresoMat();
-												$scope.ingreoTardels=getIngresoDesp();
+											$scope.ingreoTardels=getIngresoDesp();
+											$scope.$apply;
 
 					        			}	
 							       	}//aca termino el ultimo for*********************************************************************hasta aca tengo toda las variables *********************************************

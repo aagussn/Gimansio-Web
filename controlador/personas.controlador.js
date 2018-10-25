@@ -253,7 +253,8 @@ exports.lstAfi1Asis = (req, res) => {
 	console.log(req.query);
 	var condition =	{
 		
-				where:
+
+			where:
 			{
 
 			},
@@ -269,23 +270,21 @@ exports.lstAfi1Asis = (req, res) => {
         				},
         				{
         				model: db.licencia,	
-        					/*where: {  
-        						fin: {
-      							//[Op.gte]:sequelize.fn('DATE', sequelize.col('created_at')),
-              						[Op.gte]:sequelize.literal('CURRENT_DATE')
-    							}
-    						},*/
-
         					include: [
 		   						{
         						model: db.motivolicencia,	
         						},
         					]	
 	    				},
+
         			]	
 	    		},
-    		]
+	    		
+    		],
+    	order: [  [{ model: db.afiliacion},'id', 'DESC' ]  ,   [ db.afiliacion, { model: db.asistencia}, 'id', 'DESC' ] ,[ db.afiliacion, { model: db.licencia}, 'id', 'DESC' ]    ],
+
 	}
+	
 
 	if (req.query.documento) {
 		condition.where.documento = req.query.documento
@@ -328,7 +327,9 @@ exports.lstAfiAsis = (req, res) => {
         			]	
 	    		},
 	    		
-    		]
+    		],
+    	order: [  [{ model: db.afiliacion},'id', 'DESC' ]  ,   [ db.afiliacion, { model: db.asistencia}, 'id', 'DESC' ] ,[ db.afiliacion, { model: db.licencia}, 'id', 'DESC' ]    ],
+
 	}
 	if (req.query.documento) {
 		condition.where.documento = req.query.documento
