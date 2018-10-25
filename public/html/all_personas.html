@@ -1,16 +1,20 @@
 <div ng-switch on="cargando" >
 
   <md-progress-circular md-mode="indeterminate" ng-switch-when="1"></md-progress-circular>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+          <h2 ng-show="!busco">Personas</h2>
+          <h2 ng-show="busco">  <input  class="md-primary" ng-model="busqueda"> </h2>
+          <span flex></span>
+          <md-button class="md-icon-button" ng-click="busco=!busco" aria-label="1">
+            <i class="fas fa-search" ></i>
+          </md-button>
+        </div>
+      </md-toolbar>
 
-  <md-toolbar class="md-theme-light">
-    <h2 class="md-toolbar-tools">
-      <span>Personas</span>
-    </h2>
-  </md-toolbar>
-
-  <md-content class="full-heigth">
+  <md-content class="full-height">
     <md-list style="height: {{hgt}}px !important;">
-      <md-list-item class="md-3-line" ng-repeat="item in personas" data-ng-click="BindSelPersona(item)" layout="row">
+      <md-list-item class="md-3-line" ng-repeat="item in personas | filter : busqueda" data-ng-click="BindSelPersona(item)" layout="row">
         <div class="md-list-item-text" layout="column">
           <h3>Nombre: {{item.nombre}} {{item.apellido}}</h3>
           <h4>CI: {{item.documento}}</h4>

@@ -90,6 +90,11 @@ require('./rutas/mediopago.ruta.js')(app);
       res.sendFile(path.join(__dirname + '/public/html/una_persona.html'));
     });
 
+    // Ruta datos de dialogo comentario
+    app.get('/insertComentario', function (req, res) {
+      res.sendFile(path.join(__dirname + '/public/html/insertComentario.html'));
+    });    
+
 try {
 var server = app.listen(port, function() {
   console.log('Aplicacion ejecutandose en puerto: ' + port);

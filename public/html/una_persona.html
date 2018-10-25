@@ -99,10 +99,9 @@
               <div layout="column" flex="30" >              
                 <label >Objetivos</label>
                 <md-input-container>
-                  <md-select ng-model="selectedObjetivos" aria-label="1" multiple ng-model-options="{trackBy: '$value.id'}">
-                    <md-option ng-value="objetivo.id" ng-repeat="objetivo in objetivos track by objetivo.id">{{objetivo.name}}</md-option>
+                  <md-select ng-model="selectedObjetivos" aria-label="1" multiple ng-change="cambioObjetivo(selectedObjetivos)">
+                    <md-option ng-value="objetivo.id" ng-repeat="objetivo in objetivos">{{objetivo.name}}</md-option>
                   </md-select>
-                  {{selectedObjetivos}}
                 </md-input-container>
               </div>            
 
@@ -110,8 +109,8 @@
               <div layout="column" flex="30" >              
                 <label>Hacerlo</label>
                 <md-input-container>
-                  <md-select ng-model="selectedHacerlo" aria-label="2" multiple>
-                    <md-option ng-value="hacerlo.value" ng-repeat="hacerlo in hacerlos">{{hacerlo.name}}</md-option>
+                  <md-select ng-model="selectedHacerlo" aria-label="2" multiple ng-change="cambioHacerlo(selectedHacerlo)">
+                    <md-option ng-value="hacerlo.id" ng-repeat="hacerlo in hacerlos">{{hacerlo.name}}</md-option>
                   </md-select>
                 </md-input-container>
               </div>            
@@ -119,8 +118,8 @@
               <div layout="column" flex="30" >              
                 <label >Lograrlo</label>
                 <md-input-container>
-                  <md-select ng-model="selectedLograrlo" aria-label="3" multiple>
-                    <md-option ng-value="lograrlo.value" ng-repeat="lograrlo in lograrlos">{{lograrlo.name}}</md-option>
+                  <md-select ng-model="selectedLograrlo" aria-label="3" multiple ng-change="cambioLograrlo(selectedLograrlo)">
+                    <md-option ng-value="lograrlo.id" ng-repeat="lograrlo in lograrlos">{{lograrlo.name}}</md-option>
                   </md-select>
                 </md-input-container>
               </div>            
@@ -130,8 +129,8 @@
               <div layout="column" flex="30" >              
                 <label >Interesa</label>                
                 <md-input-container>
-                  <md-select ng-model="selectedInteresa" aria-label="4" multiple>
-                    <md-option ng-value="interesa.value" ng-repeat="interesa in interesas">{{interesa.name}}</md-option>
+                  <md-select ng-model="selectedInteresa" aria-label="4" multiple ng-change="cambioInteresa(selectedInteresa)">
+                    <md-option ng-value="interesa.id" ng-repeat="interesa in interesas">{{interesa.name}}</md-option>
                   </md-select>
                 </md-input-container>
               </div>            
@@ -139,8 +138,8 @@
               <div layout="column" flex="30" >              
                 <label >Entere</label>                
                 <md-input-container>
-                  <md-select ng-model="selectedEntere" aria-label="5" multiple>
-                    <md-option ng-value="entere.value" ng-repeat="entere in enteres">{{entere.name}}</md-option>
+                  <md-select ng-model="selectedEntere" aria-label="5" multiple ng-change="cambioEntere(selectedEntere)"> 
+                    <md-option ng-value="entere.id" ng-repeat="entere in enteres">{{entere.name}}</md-option>
                   </md-select>
                 </md-input-container>
               </div>            
@@ -148,8 +147,8 @@
               <div layout="column" flex="30" >              
                 <label >Avisan</label>                
                 <md-input-container>
-                  <md-select ng-model="selectedAvisan" aria-label="6" multiple>
-                    <md-option ng-value="avisan.value" ng-repeat="avisan in avisans">{{avisan.name}}</md-option>
+                  <md-select ng-model="selectedAvisan" aria-label="6" multiple ng-change="cambioAvisan(selectedAvisan)">
+                    <md-option ng-value="avisan.id" ng-repeat="avisan in avisans">{{avisan.name}}</md-option>
                   </md-select>
                 </md-input-container>
               </div>            
@@ -162,6 +161,7 @@
       <md-tab label="Comentarios">
         <md-content class="md-padding">
           <h1 class="md-display-2">Comentarios</h1>
+          <md-button class="md-primary md-raised" ng-click="showAdvanced($event)">Agregar Comentario</md-button>
           <md-list flex>
             <md-list-item class="md-3-line md-long-text" ng-repeat="comentario in comentarios">
               <div class="md-list-item-text">
