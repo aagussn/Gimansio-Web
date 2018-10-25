@@ -2,6 +2,19 @@ var app = angular.module('Gimnasio-Web', ['ngMaterial', 'ngMessages']);
 
 app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope, $mdDialog) {
 	
+    $scope.busco = false;    
+    var aux = false;
+    var busqueda = '';
+
+    $scope.cambioBusco = function(busco){
+        $scope.busco = !busco;
+        aux = $scope.busco;
+    };
+
+    $scope.cambioBusqueda = function(bus){
+        busqueda = bus;
+    };    
+
 	$scope.hgt = $window.innerHeight * 0.89;
 	
 	$scope.cargando = 1;
@@ -21,9 +34,20 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope,
 
 	// Funcion para seleccionar una persona
 	$scope.BindSelPersona = function (persona){
-        $scope.busqueda = '';
-        $scope.busco = false;	
-        	
+        //$scope.busqueda = null;
+        //$scope.busco = null;	
+        
+        
+        if (aux) {
+            $scope.busco = false;
+            $scope.$apply;
+        }
+
+        if(busqueda.length>0){
+            $scope.busqueda = '';
+            $scope.$apply;
+        }
+
         $mdToast.show(
 			$mdToast.simple()
 			.textContent('Usted selecciono: ' + persona.nombre)
