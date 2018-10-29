@@ -16,7 +16,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       inicio: { type: Sequelize.DATEONLY,  unique: 'licenciaunica' },
       fin: { type: Sequelize.DATEONLY,  unique: 'licenciaunica' },
-	 
+	    afiliacionId : {type: Sequelize.INTEGER,  unique: 'licenciaunica' },
   
 
 /*ejemplo 

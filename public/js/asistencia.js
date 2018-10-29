@@ -1,70 +1,77 @@
 var app = angular.module('asistencia', ['ngCookies']);
-
 app.controller('myController', function($scope, $http, $cookies) {
     
-    var chkLogin = $cookies.get('login');
-    console.log(chkLogin);
+   var chkLogin = $cookies.get('login');
+    //console.log(chkLogin);
     if (chkLogin==0 || !chkLogin) {
         console.log('bla');
         window.location.href = "/login";
     }
-
-    $scope.data = [];
     
-    var listaPrincipal = $http.get('/api/lista');  
-   
-    //Lista de personas
-    listaPrincipal.success(function(data) {
+    //variables fecha del dia
+    var f = new Date(); 
+    var fechaDia=mostararFecha(f,2);
+
+    $scope.lstInsasit = [];
+
+    var request= $http.get("/api/lstAfi1Asis").then(function(asistenciasLs) {
         //verifico que la lista no este vacia
-        if(data.length>0){
-           // console.log("el data no esta vacio");
+        if(asistenciasLs.data.length>0){
+            var lstAsistencias=asistenciasLs.data;
+            console.log("resultado de consulta " +lstAsistencias.length);
             //agrego los datos que quiero a la lista resultante
-            for(var a=0;a<data.length;a++){
-                var persona=data[a];
+            for(var a=0;a<lstAsistencias.length;a++){
+                var persona=lstAsistencias[a];
+                console.log("tengo persona " + persona.documento);
                 // busco las afiliacion activa y me quedo con la fecha
                 for(var b=0;b<persona.afiliacions.length;b++){
                    // console.log("tiene afiliacion");
                     var laAfiliacion=persona.afiliacions[b];
+                    console.log("tengo afiliacion");
                     if(laAfiliacion.estado==1){
-                        //busco las asistencias mayores a la fecha de afiliacion activa
-                        for(var c=0;c<persona.asistencia.length;c++){
-                            //console.log("tiene asistencias");
-                            var laAsistencia=persona.asistencia[c];
-                            if(laAsistencia.updatedAt>laAfiliacion.updatedAt){
-                               // console.log("las asistencias son de la afiliacion activa");
-                               var auxFecha = laAsistencia.updatedAt.toString();
-                               var fechaMostar=auxFecha.slice(0, 10)+ " " + auxFecha.slice(11, 16);
-                               console.log(fechaMostar);
-
-                                var datoValido = {
-                                    documento:persona.documento,
-                                    nombre:persona.nombre, 
-                                    apellido:persona.apellido, 
-                                    fecha:fechaMostar
-                                };
-                                //console.log(datoValido);
-                                $scope.data.push(datoValido);    
-                            }
-                        }        
-                    }    
+                        console.log("afiliacion activa");
+                        var cantidadAsistencias=laAfiliacion.asistencia.length;
+                        //verifico que tenga asistencias
+                        if(cantidadAsistencias>0){
+                            console.log("asistencias de afiliacion, son: " + cantidadAsistencias);
+                            //busco las asistencias mayores a la fecha de afiliacion activa
+                            var encontreUltima=false;
+                            for(var c=0; c<cantidadAsistencias && !encontreUltima ;c++){
+                                var laAsistencia=laAfiliacion.asistencia[c];
+                                console.log("tengo la asistencia" );
+                                //encontreUltima=true;
+                                    //convierto fecha para comparar
+                                    var fechaAsist = mostararFecha(laAsistencia.updatedAt,2);
+                                    var fechaMostar = mostararFecha(fechaAsist,1);
+                                    var datoValido = {
+                                        idAsis:laAsistencia.id,
+                                        documento:persona.documento,
+                                        nombre:persona.nombre, 
+                                        apellido:persona.apellido, 
+                                        tienedauda:laAsistencia.tipodeuda,
+                                        fecha:fechaMostar,
+                                    };
+                                    //lstCompleta.push(datoValido); 
+                                    $scope.lstInsasit.push(datoValido);    
+                                        
+                                   
+                            }     
+                        }//fin verifico si tene asistencias
+                    } //fin si tendo afiliacion en estado 1   
                 }
-            }  console.log($scope.data.length);
+            }
         }else{
-            console.log('Data personas NO EXISTE ' + data.length);
+            console.log('Data personas NO EXISTE ' + asistenciasLs.data.length);
         }
-    }); listaPrincipal.error(function(data){
-        console.log('Error: ' + data); 
-        });
+    });
 
-    // Orden de la tabla
-    $scope.sortType     = 'documento'; // set the default sort type
-    $scope.sortReverse  = false;  // set the default sort order
+    
 
     $scope.setCookie = function (cookie) {
-        $cookies.put('asistenciascookie', cookie);
-        window.location.href = "/asistencia";
-    }
-
+        $cookies.put('inasistenciacookie', cookie);
+        window.location.href = "/inasistencia";
+    }             
+  
     $scope.updPersona = function (cookie) {
         var now = new Date();
         var exp = new Date(now);
@@ -72,4 +79,73 @@ app.controller('myController', function($scope, $http, $cookies) {
         $cookies.put('updPersona', cookie, {'expires': exp});
         window.location.href = "/afiliacion";
     }
+
+    function  mostararFecha(cadenaADividir1,opcion) {
+            var cadenaADividir=new Date(cadenaADividir1);
+           // console.log(cadenaADividir);
+
+            var meses31=[1,3,5,7,8,10,12];
+            var anio= cadenaADividir.getFullYear();
+            var mes=cadenaADividir.getMonth();
+            var dia=cadenaADividir.getDate();
+            var hora=cadenaADividir.getHours();
+            var minutos=cadenaADividir.getMinutes();
+            var segundos=cadenaADividir.getSeconds();
+            //var devuelvo = anio+"-"+(mes)+"-"+dia+ " "+ hora+":"+ minutos+":"+segundos;
+
+            if(opcion==1){
+                var devuelvo = anio+"-"+(mes+1)+"-"+dia+ " "+ hora+":"+ minutos+":"+segundos;
+                //console.log("opcion 1 " + devuelvo);
+            }   
+            if(opcion==2){
+                var devuelvo = new Date(anio,(mes),dia,hora,minutos,segundos) ;
+               // console.log("opcion 2 " + devuelvo);
+            }   
+            if(opcion==3){
+                //inicioDia
+                var devuelvo=anio+"-"+(mes+1)+"-"+dia+ " 00:00:00";
+               //console.log("opcion 3 " + devuelvo);
+            }   
+            if(opcion==4){
+                //mediodia
+                var devuelvo=anio+"-"+(mes+1)+"-"+dia+ " 13:00:00";
+                //console.log("opcion 4 " + devuelvo);
+            }
+            if(opcion==5){
+                //finDia
+                var devuelvo=0;
+                for(var a=0;a<7;a++){
+                    m=meses31[a];
+                    if(m==mes){
+                        if(dia==31){
+                            devuelvo=anio+"-"+(mes+2)+"-"+ 1 + " 00:00:00";
+                        }else{
+                            devuelvo=anio+"-"+(mes+1)+"-"+ (dia+1) + " 00:00:00";
+                        }   
+                    }else{
+                    }
+                }
+                if(mes==2){
+                    devuelvo=anio+"-"+(mes+2)+"-"+ 1 + " 00:00:00";
+                    //console.log("opcion 5 " + devuelvo);
+                }else{
+                    devuelvo=anio+"-"+(mes+1)+"-"+ (dia+1) + " 00:00:00";
+                    //console.log("opcion 5 " + devuelvo);
+                }   
+            }
+
+             if(opcion==6){
+                //para calculo fecha de licencia
+                var devuelvo = new Date(anio,mes,dia,"00","00","00") ;
+                //console.log("opcion 6 " + dia+" "+mes);
+            }
+
+
+            return devuelvo;
+    }
+
+    // Orden de la tabla
+    $scope.sortType     = 'documento'; // set the default sort type
+    $scope.sortReverse  = false;  // set the default sort order
+
 });

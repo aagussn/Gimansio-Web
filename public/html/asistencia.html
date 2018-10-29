@@ -27,27 +27,35 @@
       <input class="col-sm-3" type="text" ng-model="search.apellido" placeholder="Apellido">
       <input class="col-sm-3" type="text" ng-model="search.fecha" placeholder="Fecha u hora">
     </div>
-    <div class="container form-row">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col" > <a href="#" ng-click="sortType = 'documento'"> Documento </a></th>
-            <th scope="col"> <a href="#" ng-click="sortType = 'nombre'"> Nombre</a></th>
-            <th scope="col"><a href="#" ng-click="sortType = 'apellido'">Apellido</a></th>
-            <th scope="col"><a href="#" ng-click="sortType = 'fecha'">Fecha</a></th>
-            
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="item in data | filter:search:strict | orderBy:sortType:false | limitTo: 20 ">
-            <th scope="row"><a href="#" ng-click="updPersona(item.documento)">{{item.documento}}</a>.</th>            <td>{{item.nombre}}</td>
-            <td>{{item.apellido}}</td>
-            <td>{{item.fecha}}</td>
+    <div class="container form-row d-md-flex">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col" >Documento</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">tiene deuda</th>
+                <th scope="col">fecha</th>   
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in lstInsasit | filter:busqueda  | orderBy : -fecha | limitTo: 50 "  ng-class="{'table-success': item.tienedauda=='0', 'table-danger': item.tienedauda>'0'}"> 
+                <td >{{item.documento}} </td>
+                <td>{{item.nombre}}</td>
+                <td>{{item.apellido}}</td>
+                <td>
+                  <label for="tienedauda" ng-show="item.tienedauda=='0'">Al dia</label>
+                  <label for="tienedauda" ng-show="item.tienedauda=='1'">Debe</label>
+                  <label for="tienedauda" ng-show="item.tienedauda=='2'">No tiene plan</label>
+                </td>
 
-          </tr>
-        </tbody>
-      </table>  
-    </div>
+                <td>{{item.fecha}}</td>
+              </tr>
+            </tbody>
+          </table>  
+        </div>
+  
+
   </div>
 </div>  
 

@@ -42,7 +42,8 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
                                 encontreUltima=true;
                                     //convierto fecha para comparar
                                     var fechaAsist = mostararFecha(laAsistencia.updatedAt,2);
-                                   // console.log("tengo la asistencia " +fechaAsist);
+                                    //console.log(fechaDia);
+                                    //console.log("tengo la asistencia " +fechaAsist);
                                     //si resto la fecha de entrada menos la fecha actual y estoy dentro detach()l mismo año para una semana el resultado es -7000000
                                     //si resto la fecha de entrada menos la fecha actual y se cambia añ año siguiente para una semana el resultado es -8876000000                                
                                     //console.log((fechaDia-fechaAsist)+" la fecha " + fechaDia );
@@ -51,18 +52,24 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
                                         console.log("hace mas de una semana que no va");
                                         //verifico si no tiene licencia activa
                                         var lstLicencias=laAfiliacion.licencia;
+                                        var licencia=0;
                                         for(var d=0; d<lstLicencias.length;d++){
                                             var laLicencia=lstLicencias[d];
-                                            var iniLicencia=mostararFecha(laLicencia.inicio,1);
-                                            var finLicencia=mostararFecha(laLicencia.fin,2);
-                                            console.log(" pruebo fecha "+iniLicencia);
-                                            //console.log(finLicencia);
-
+                                            var iniLicencia=mostararFecha(laLicencia.inicio,6);
+                                            var finLicencia=mostararFecha(laLicencia.fin,6);
+                                            //console.log(" licencia inicio "+iniLicencia + " licencia fin "+ finLicencia);
+                                            console.log("variable licnecia " +licencia );
+                                            console.log((fechaAsist>iniLicencia)+" inicio " );
+                                            console.log((fechaAsist<finLicencia)+" fin " );
                                             if(fechaAsist>iniLicencia && fechaAsist<finLicencia){
-                                                console.log("esta de licencia" );
+                                                licencia=+1;
+                                                console.log("esta de licencia " +licencia );
+
                                             }else{
                                                 console.log(" no esta de licencia" );
-                                                if(fechaAsist>1){
+                                                }
+                                            }
+                                            if(licencia==0){
                                                     var fechaMostar = mostararFecha(fechaAsist,1);
                                                     var datoValido = {
                                                     idAsis:laAsistencia.id,
@@ -73,11 +80,11 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
                                                     fecha:fechaMostar,
                                                 };
                                                 //lstCompleta.push(datoValido); 
-                                                $scope.lstInsasit.push(datoValido);     
-                                                }
+                                                $scope.lstInsasit.push(datoValido);    
                                             }
-                                        }       
-                                    }
+
+                                               
+                                    }else{ console.log("vino en la semana " );}
                                    
                             }     
                         }//fin verifico si tene asistencias
@@ -106,7 +113,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
 
     function  mostararFecha(cadenaADividir1,opcion) {
             var cadenaADividir=new Date(cadenaADividir1);
-            console.log(cadenaADividir);
+           // console.log(cadenaADividir);
 
             var meses31=[1,3,5,7,8,10,12];
             var anio= cadenaADividir.getFullYear();
@@ -122,7 +129,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
                 //console.log("opcion 1 " + devuelvo);
             }   
             if(opcion==2){
-                var devuelvo = new Date(anio,(mes+1),dia,hora,minutos,segundos) ;
+                var devuelvo = new Date(anio,(mes),dia,hora,minutos,segundos) ;
                // console.log("opcion 2 " + devuelvo);
             }   
             if(opcion==3){
@@ -157,6 +164,14 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
                     //console.log("opcion 5 " + devuelvo);
                 }   
             }
+
+             if(opcion==6){
+                //para calculo fecha de licencia
+                var devuelvo = new Date(anio,mes,dia,"00","00","00") ;
+                //console.log("opcion 6 " + dia+" "+mes);
+            }
+
+
             return devuelvo;
     }
 

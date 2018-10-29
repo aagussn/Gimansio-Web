@@ -37,7 +37,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="item in lstInsasit | filter:busqueda  | orderBy : ['fecha'] | limitTo: 50 "  ng-class="{'table-success': item.tienedauda=='0', 'table-danger': item.tienedauda>'0'}"> 
+              <tr ng-repeat="item in lstInsasit | filter:busqueda  | orderBy : -fecha | limitTo: 50 "  ng-class="{'table-success': item.tienedauda=='0', 'table-danger': item.tienedauda>'0'}"> 
                 <td >{{item.documento}} </td>
                 <td>{{item.nombre}}</td>
                 <td>{{item.apellido}}</td>
