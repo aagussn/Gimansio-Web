@@ -458,7 +458,8 @@ exports.listTodosPagos = (req, res) => {
         				
         			]	
 	    	},
-    	]
+    	],
+		order: [[ db.afiliacion, { model: db.planes}, 'id', 'DESC' ],[ db.afiliacion, db.planes, { model: db.pago}, 'id', 'DESC' ] ],
 	}
 	if (req.query.documento) {
 		condition.where.documento = req.query.documento
