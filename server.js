@@ -94,6 +94,16 @@ require('./rutas/mediopago.ruta.js')(app);
     app.get('/insertComentario', function (req, res) {
       res.sendFile(path.join(__dirname + '/public/html/insertComentario.html'));
     });    
+    
+    // Ruta datos de insertar pago
+    app.get('/insertPago', function (req, res) {
+      res.sendFile(path.join(__dirname + '/public/html/insertPago.html'));
+    });
+
+    // Ruta datos de insertar plan
+    app.get('/insertPlan', function (req, res) {
+      res.sendFile(path.join(__dirname + '/public/html/insertPlan.html'));
+    });    
 
 try {
 var server = app.listen(port, function() {

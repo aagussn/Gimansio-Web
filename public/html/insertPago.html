@@ -1,0 +1,38 @@
+<md-dialog aria-label="Insertar pago">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Insertar pago</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()" aria-label="1">
+          <i class="fas fa-times" ></i>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content flex>
+      <div class="md-dialog-content">
+        <h4><span>Importe restante: {{plan.importeplan - plan.importepago - importe}}</span></h4>
+        <div layout="row">
+          <md-input-container ><label>Cuota</label><input ng-model="cuota" disabled></md-input-container>
+          <md-input-container ><label>Importe</label><input ng-model="importe" required type="number"></md-input-container>
+          <md-input-container >
+              <label>Medio de pago</label>
+              <md-select ng-model="mediopago" required>
+                <md-option ng-repeat="medio in mediospagos" value="{{medio.id}}">{{medio.descripcion}}</md-option>
+              </md-select>
+              </md-input-container>
+        </div>
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <md-button ng-click="cancel()" class="md-warn">
+       Cancelar
+      </md-button>
+      <md-button ng-click="answer({cuota, importe, mediopago})">
+        Aceptar
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

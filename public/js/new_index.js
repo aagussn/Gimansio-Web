@@ -15,7 +15,7 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope,
         busqueda = bus;
     };    
 
-	$scope.hgt = $window.innerHeight * 0.89;
+	$scope.hgt = $window.innerHeight * 0.81;
 	
 	$scope.cargando = 1;
 	$scope.unaPersona = 0;
@@ -174,19 +174,20 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope,
         $scope.cambioEntere(selectedEntere);
         $scope.cambioAvisan(selectedAvisan);
 
-        // Voy a buscar los com entarios de la persona
+        // Voy a buscar los comentarios de la persona
         var request = $http.get('/api/listPerComentarios?documento='+ documento).then(function(perComentario) {
             $scope.comentarios = perComentario.data[0].comentarios;
             console.log($scope.comentarios);
         });
 
-        // Voy a buscar los pagos de la persona
+        // Voy a buscar las afiliaciones con sus pagos de la persona
         var request = $http.get('/api/listTodosPagos?documento='+ documento).then(function(perPago) {
             $scope.afiliaciones = perPago.data[0].afiliacions;
             console.log($scope.afiliaciones);
+            $scope.planActivo = perPago.data[0].afiliacions[0].plans[0];
         });
 
-        // Voy a buscar los pagos de la persona
+        // Voy a buscar las licencias de la persona
         var request = $http.get('/api/lstAfiLicencia?documento='+ documento).then(function(perLicencia) {
             $scope.afiLicencias = perLicencia.data[0].afiliacions;
             console.log($scope.afiLicencias);
@@ -385,7 +386,164 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope,
             });
         };
 
-    }
+    };
+
+    $scope.showPago = function(ev) {
+        // Voy a buscar los valores que tengo hasta ahora
+        // Voy a buscar los valores del codigo de comentarios
+        var request = $http.get('/api/mediopago').then(function(mediospagos) { 
+            console.log(mediospagos.data);
+
+            $mdDialog.show({
+                controller: PagoController,
+                templateUrl: 'insertPago',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose:true,
+                fullscreen: $scope.customFullscreen,
+                locals: {
+                    planActivo: $scope.planActivo,
+                    mediospagos: mediospagos.data
+                }
+            })
+            .then(function() {
+                getUnaPersona($scope.persona);
+            });
+        });
+            
+    };
+
+    function PagoController($scope, $mdDialog, planActivo, mediospagos) {
+        $scope.plan = planActivo;
+        $scope.cuota = planActivo.cuotasvan + 1;
+        $scope.importe = (planActivo.importeplan - planActivo.importepago) / (planActivo.cuotasson - planActivo.cuotasvan);
+        $scope.mediospagos = mediospagos;
+
+        $scope.hide = function() {
+          $mdDialog.hide();
+        };
+
+        $scope.cancel = function() {
+          $mdDialog.cancel();
+        };
+
+        $scope.answer = function(answer) {
+            $mdDialog.hide(answer);
+            
+            let importePago = planActivo.importepago + answer.importe;
+
+            if (importePago >= planActivo.importeplan){
+                // Tengo que actualizar las cuotas por el total
+                var parameter = JSON.stringify({
+                    cuotasvan: planActivo.cuotasson,
+                    importepago: importePago
+                });
+            } else {
+                var parameter = JSON.stringify({
+                    cuotasvan: answer.cuota,
+                    importepago: importePago
+                });
+            }
+            
+            
+            console.log(parameter);
+            // Actualizo los datos del plan
+            var request = $http.put('/api/planes/' + planActivo.id, parameter).then(function(respuesta) {
+                console.log(respuesta);
+            });
+
+            let d = new Date();
+            let mes = d.getMonth()+1;
+            let anio= d.getFullYear();
+
+            // Inserto el pago
+            var parameter = JSON.stringify({
+                mes:  mes,
+                anio: anio,
+                importe: answer.importe,
+                tipomovimiento: 1,
+                concepto: 1,
+                pagoanulado: 0,
+                planId: planActivo.id,
+                mediopagoId: answer.mediopago
+            }); 
+
+            console.log(parameter);
+
+            var request = $http.post('/api/pago' , parameter).then(function(respuesta) {
+                console.log(respuesta);
+            });           
+        };
+
+    };
+
+    $scope.newPlan = function(ev) {
+        // Voy a buscar los valores del codigo de comentarios
+        var request = $http.get('/api/mediopago').then(function(mediospagos) { 
+            console.log(mediospagos.data);
+            var request = $http.get('/api/tipoplan').then(function(tipoplanes) { 
+                console.log(tipoplanes.data);
+
+                $mdDialog.show({
+                    controller: PlanController,
+                    templateUrl: 'insertPlan',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose:true,
+                    fullscreen: $scope.customFullscreen,
+                    locals: {
+                        tipoplanes: tipoplanes.data,
+                        mediospagos: mediospagos.data,
+                        afi: $scope.afiliaciones[0].id
+                    }
+                })
+                .then(function() {
+                    getUnaPersona($scope.persona);
+                });
+            });
+        });
+            
+    };
+
+    function PlanController($scope, $mdDialog, tipoplanes, mediospagos, afi) {
+
+        $scope.tipoplanes = tipoplanes;
+        $scope.mediospagos = mediospagos;
+        $scope.afi = afi;
+
+
+        $scope.hide = function() {
+          $mdDialog.hide();
+        };
+
+        $scope.cancel = function() {
+          $mdDialog.cancel();
+        };
+
+        $scope.answer = function(answer) {
+            $mdDialog.hide(answer);
+/*
+            // Inserto el pago
+            var parameter = JSON.stringify({
+                mes:  mes,
+                anio: anio,
+                importe: answer.importe,
+                tipomovimiento: 1,
+                concepto: 1,
+                pagoanulado: 0,
+                planId: planActivo.id,
+                mediopagoId: answer.mediopago
+            }); 
+
+            console.log(parameter);
+
+            var request = $http.post('/api/pago' , parameter).then(function(respuesta) {
+                console.log(respuesta);
+            });           
+            */
+        };
+
+    };
 
     $scope.cambioObjetivo = function(objetivos){
         $scope.objs = objetivos;

@@ -163,13 +163,16 @@
           <h1 class="md-display-2">Comentarios</h1>
           <md-button class="md-primary md-raised" ng-click="showAdvanced($event)">Agregar Comentario</md-button>
           <md-list flex>
-            <md-list-item class="md-3-line md-long-text" ng-repeat="comentario in comentarios">
-              <div class="md-list-item-text">
-                <h3>{{comentario.titulo}}</h3> 
-                <h4>{{comentario.itemcomentario.descripcion}}</h4>
-                <p>{{comentario.comentario}}</p>
+            <div ng-repeat="comentario in comentarios | orderBy: '-id'">
+                <md-divider ></md-divider>
+                <md-list-item class="md-3-line md-long-text" >
+                  <div class="md-list-item-text">
+                    <h3>{{comentario.titulo}}<h3>
+                    <h4>{{comentario.itemcomentario.descripcion}}</h4>
+                    <p>{{comentario.comentario}}</p>
+                  </div>
+                </md-list-item>
               </div>
-            </md-list-item>
           </md-list>
         </md-content>
       </md-tab>
@@ -177,13 +180,29 @@
       <md-tab label="Pagos">
         <md-content class="md-padding">
           <h1 class="md-display-2">Pagos</h1>
+
+          <md-card>
+              <md-card-title>
+                <md-card-title-text>
+                  <span class="md-headline">Ultimo plan: {{planActivo.id}}</span>
+                  <span class="md-subhead">Duracion: {{planActivo.inicio}} / {{planActivo.fin}}
+                                      <br>Importe: {{planActivo.importepago | currency}} / {{planActivo.importeplan | currency}}
+                                      <br>Cuotas: {{planActivo.cuotasvan}} / {{planActivo.cuotasson}}</span>
+                </md-card-title-text>
+              </md-card-title>
+              <md-card-actions layout="row" layout-align="end center">
+                <md-button class="md-primary" ng-click="showPago($event)">Pagar</md-button>
+                <md-button ng-click="newPlan($event)">Crear nuevo plan</md-button>
+              </md-card-actions>
+            </md-card>
+
+          
           <md-list flex>
-            <div ng-repeat="afiliacion in afiliaciones">
-              <!-- <md-subheader class="md-no-sticky" > <strong> Afiliacion: {{afiliacion.id}} <strong></md-subheader> -->
-              <md-toolbar ng-click="miPlan=!miPlan"> <div class="md-toolbar-tools"><span><i class="fas fa-caret-down" ng-show="!miPlan"></i> <i class="fas fa-caret-up" ng-show="miPlan"></i> Afiliacion: {{afiliacion.id}} </span></div> </md-toolbar>
-              <div ng-repeat="plan in afiliacion.plans" ng-show="miPlan">
+            <div ng-repeat="afiliacion in afiliaciones | orderBy: '-id'">
+              <md-toolbar ng-click="miPlan=!miPlan"> <div class="md-toolbar-tools md-hue-2"><span><i class="fas fa-caret-down" ng-show="!miPlan"></i> <i class="fas fa-caret-up" ng-show="miPlan"></i> Afiliacion: {{afiliacion.id}} </span></div> </md-toolbar>
+              <div ng-repeat="plan in afiliacion.plans | orderBy: '-id'" ng-show="miPlan">
                 <md-subheader class="md-no-sticky" ng-click="miPago=!miPago"><i class="fas fa-caret-down" ng-show="!miPago"></i> <i class="fas fa-caret-up" ng-show="miPago"></i> Plan {{plan.id}} Desde: {{plan.inicio}} - Hasta: <strong>{{plan.fin}}</strong> Duracion: {{plan.duracion}} Importe plan: {{plan.importeplan}} - Pago: <strong>{{plan.importepago}}</strong> Cuotas: {{plan.cuotasson}} - Van: <strong>{{plan.cuotasvan}}</strong> Medio de pago: {{plan.mediopago.descripcion}}</md-subheader>
-                <div ng-repeat="pago in plan.pagos" ng-show="miPago">
+                <div ng-repeat="pago in plan.pagos | orderBy: '-id'" ng-show="miPago">
                   <md-list-item class="md-3-line md-long-text" >
                     <div class="md-list-item-text">
                       <p>Pago {{pago.id}} 

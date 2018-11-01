@@ -1,26 +1,47 @@
-<div ng-switch on="cargando" >
-
+<div ng-switch on="cargando">
   <md-progress-circular md-mode="indeterminate" ng-switch-when="1"></md-progress-circular>
-    <md-toolbar>
-      <div class="md-toolbar-tools">
-          <h2 ng-show="!busco">Personas</h2>
-          <h2 ng-show="busco">  <input  class="md-primary" ng-model="busqueda" ng-change="cambioBusqueda(busqueda)"> </h2>
-          <span flex></span>
-          <md-button class="md-icon-button" ng-click="cambioBusco(busco)" aria-label="1">
-            <i class="fas fa-search" ></i>
-          </md-button>
-        </div>
-      </md-toolbar>
-
-  <md-content class="full-height">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2 ng-show="!busco">Personas</h2>
+      <h2 ng-show="busco"> <input class="md-primary" ng-model="busqueda" ng-change="cambioBusqueda(busqueda)"> </h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cambioBusco(busco)" aria-label="1">
+        <i class="fas fa-search"></i>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-content class="full-height" ng-switch-when="0">
     <md-list style="height: {{hgt}}px !important;">
-      <md-list-item class="md-3-line" ng-repeat="item in personas | filter:busqueda" data-ng-click="BindSelPersona(item)" layout="row">
+      <md-list-item class="md-3-line" ng-repeat="item in personas | filter:busqueda" data-ng-click="BindSelPersona(item)"
+        layout="row">
         <div class="md-list-item-text" layout="column">
           <h3>Nombre: {{item.nombre}} {{item.apellido}}</h3>
           <h4>CI: {{item.documento}}</h4>
         </div>
       </md-list-item>
     </md-list>
+    <div flex style="float: right; position: fixed;">
+    <md-fab-speed-dial md-open="false" md-direction="right" ng-class="'md-fling'" >
+        <md-fab-trigger>
+          <md-button aria-label="menu" class="md-fab md-warn">
+            <md-icon class="material-icons">menu</md-icon>
+          </md-button>
+        </md-fab-trigger>
+        <md-fab-actions>
+          <md-button aria-label="cloud" class="md-fab md-raised md-mini">
+            <md-icon class="material-icons" aria-label="cloud">home</md-icon>
+          </md-button>
+          <md-button aria-label="cloud" class="md-fab md-raised md-mini">
+              <md-icon class="material-icons" aria-label="cloud">group_add</md-icon>
+            </md-button>
+          <md-button aria-label="Facebook" class="md-fab md-raised md-mini">
+            <md-icon class="material-icons" aria-label="Facebook">add_circle_outline</md-icon>
+          </md-button>
+          <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini">
+            <md-icon class="material-icons" aria-label="Google Hangout">remove_circle_outline</md-icon>
+          </md-button>
+        </md-fab-actions>
+      </md-fab-speed-dial>
+    </div>
   </md-content>
-
 </div>
