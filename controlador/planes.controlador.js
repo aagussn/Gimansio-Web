@@ -82,7 +82,7 @@ exports.findById = (req, res) => {
 // Update a pago
 exports.update = (req, res) => {
 	const id = req.params.id;
-	Plan.update( { importeplan: req.body.importeplan,duracion: req.body.duracion,inicio: req.body.inicio,fin: req.body.fin,tipoplanId: req.body.tipoplanId,mediopagoId: req.body.mediopagoId},
+	Plan.update( { importeplan: req.body.importeplan,importepago: req.body.importepago,cuotasson: req.body.cuotasson,cuotasvan: req.body.cuotasvan,duracion: req.body.duracion,inicio: req.body.inicio,fin: req.body.fin,tipoplanId: req.body.tipoplanId,mediopagoId: req.body.mediopagoId},
 					 { where: {id: req.params.id} }
 				   ).then(() => {
 					 res.status(200).send("updated successfully de la plan del  plan");
