@@ -222,17 +222,18 @@
         <md-content class="md-padding">
           <h1 class="md-display-2">Licencias</h1>
           <md-list flex>
-            <div ng-repeat="afiLicencia in afiLicencias">
-              <md-subheader class="md-no-sticky" >Afiliacion: {{afiLicencia.id}}</md-subheader>
-              <div ng-repeat="licencia in afiLicencia.licencia">
-                <md-list-item class="md-3-line md-long-text" >
-                  <div class="md-list-item-text">
-                    <h3>Id: {{licencia.id}} {{licencia.descripcion}} </h3> 
-                    <h4>Fecha: {{licencia.inicio}} {{licencia.fin}}</h4>
-                    <p>{{licencia.motivolicencium.descripcion}}</p>
-                  </div>
-                </md-list-item>
-              </div>
+            <md-button class="md-primary md-raised" ng-click="newLicencia($event)">Insertar Licencia</md-button>
+            <div ng-repeat="afiLicencia in afiLicencias | orderBy: '-id'">
+                <md-toolbar ng-click="miLicPlan=!miLicPlan"> <div class="md-toolbar-tools md-hue-2"><span><i class="fas fa-caret-down" ng-show="!miLicPlan"></i> <i class="fas fa-caret-up" ng-show="miLicPlan"></i> Afiliacion: {{afiLicencia.id}} </span></div> </md-toolbar>
+                <div ng-repeat="licencia in afiLicencia.licencia | orderBy: '-id'" ng-show="miLicPlan">
+                  <md-list-item class="md-3-line md-long-text" >
+                    <div class="md-list-item-text">
+                      <h3>Tipo: {{licencia.motivolicencium.descripcion}} </h3> 
+                      <h4>Duracion: {{licencia.inicio}} / {{licencia.fin}}</h4>
+                      <p>Descripcion: {{licencia.descripcion}}</p>
+                    </div>
+                  </md-list-item>
+                </div>
             </div>
           </md-list>
         </md-content>

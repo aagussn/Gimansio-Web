@@ -105,6 +105,11 @@ require('./rutas/mediopago.ruta.js')(app);
       res.sendFile(path.join(__dirname + '/public/html/insertPlan.html'));
     });    
 
+    // Ruta datos de insertar licencia
+    app.get('/insertLicencia', function (req, res) {
+      res.sendFile(path.join(__dirname + '/public/html/insertLicencia.html'));
+    });     
+
 try {
 var server = app.listen(port, function() {
   console.log('Aplicacion ejecutandose en puerto: ' + port);

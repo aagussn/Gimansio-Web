@@ -81,7 +81,7 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope,
         $scope.interesas  = [];
         $scope.enteres    = [];
         $scope.avisans    = [];
-
+        $scope.planActivo = null;
         $scope.unaPersona = 0;        
 		
 		// Tengo que ir a buscar los datos a la BD
@@ -522,7 +522,7 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope,
 
         $scope.answer = function(answer) {
             $mdDialog.hide(answer);
-/*
+
             // Inserto el pago
             var parameter = JSON.stringify({
                 mes:  mes,
@@ -540,7 +540,68 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope,
             var request = $http.post('/api/pago' , parameter).then(function(respuesta) {
                 console.log(respuesta);
             });           
-            */
+            
+        };
+
+    };
+
+    $scope.newLicencia = function(ev) {
+        // Voy a buscar los valores de tipos de licencia
+        var request = $http.get('/api/motivolicencia').then(function(tiposlic) { 
+            console.log(tiposlic.data);
+            
+            $mdDialog.show({
+                controller: LicenciaController,
+                templateUrl: 'insertLicencia',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose:true,
+                fullscreen: $scope.customFullscreen,
+                locals: {
+                    tiposlic: tiposlic.data,
+                    afi: $scope.afiliaciones[0].id
+                }
+            })
+            .then(function() {
+                getUnaPersona($scope.persona);
+            });
+
+        });
+            
+    };
+
+    function LicenciaController($scope, $mdDialog, tiposlic, afi) {
+
+        $scope.tipos = tiposlic;
+        $scope.afi = afi;
+
+
+        $scope.hide = function() {
+          $mdDialog.hide();
+        };
+
+        $scope.cancel = function() {
+          $mdDialog.cancel();
+        };
+
+        $scope.answer = function(answer) {
+            $mdDialog.hide(answer);
+
+            // Inserto la licencia
+            var parameter = JSON.stringify({
+                descripcion:  answer.comentario,
+                inicio: answer.desde,
+                fin: answer.hasta,
+                motivolicenciumId: answer.itemcomentarioId,
+                afiliacionId: afi
+            }); 
+
+            console.log(parameter);
+
+            var request = $http.post('/api/licencia' , parameter).then(function(respuesta) {
+                console.log(respuesta);
+            });           
+            
         };
 
     };
