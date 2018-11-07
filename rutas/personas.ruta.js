@@ -20,7 +20,7 @@ module.exports = function(app) {
 
    
 
-    //me traigo con afiliacion vigente y sus asistencias
+    //me traigo con afiliacion vigente y sus planes
     app.get('/api/lstPerAfiPln', personas.lstPerAfiPln);
 
     // lista completa 
