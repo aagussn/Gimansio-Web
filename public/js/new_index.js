@@ -48,13 +48,17 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope,
             $scope.$apply;
         }
 
-        $mdToast.show(
-			$mdToast.simple()
-			.textContent('Usted selecciono: ' + persona.nombre)
-			); 
-		console.log('selecciono una linea');
+        if (persona) {
+            $mdToast.show(
+                $mdToast.simple()
+                .textContent('Usted selecciono: ' + persona.nombre)
+                ); 
+            console.log('selecciono una linea');
+        } else {
+            console.log('creando una persona');
+        }
+
 		getUnaPersona(persona);
-        
 
 	}
 
@@ -86,8 +90,6 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope,
 		
 		// Tengo que ir a buscar los datos a la BD
 		$scope.persona = angular.copy(persona);
-        
-        documento = $scope.persona.documento;
 
         // Voy a buscar los intereses/categorias cargados en la bd
         var request = $http.get('/api/itemcategoria').then(function(itemsCategoria) { 
@@ -128,73 +130,107 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope,
         var selectedInteresa  = [];
         var selectedEntere    = [];
         var selectedAvisan    = [];        
+        
+        if (persona) {
+            documento = $scope.persona.documento;
 
-        // Voy a buscar los datos cargados de la persona
-        var request = $http.get('/api/listPerCategorias?documento='+ documento).then(function(perCategoria) {
-            var categorias = perCategoria.data[0].categoria;
+            // Voy a buscar los datos cargados de la persona
+            var request = $http.get('/api/listPerCategorias?documento='+ documento).then(function(perCategoria) {
+                
+                if (perCategoria.data[0]) {
+                    var categorias = perCategoria.data[0].categoria;
 
-            for (var i = 0 ; i < categorias.length; i++) {
+                    for (var i = 0 ; i < categorias.length; i++) {
 
-                var insert = categorias[i].itemcategorium.id ;
+                        var insert = categorias[i].itemcategorium.id ;
 
-                switch(categorias[i].itemcategorium.tipo) {
-                    case 1:
-                        selectedObjetivos.push(insert);
-                        break;
-                    case 2:
-                        selectedHacerlo.push(insert);
-                        break;
-                    case 3:
-                        selectedLograrlo.push(insert);
-                        break;
-                    case 4:
-                        selectedInteresa.push(insert);
-                        break;
-                    case 5:
-                        selectedEntere.push(insert);
-                        break;                                                
-                    case 6:
-                        selectedAvisan.push(insert);
-                        break;                        
+                        switch(categorias[i].itemcategorium.tipo) {
+                            case 1:
+                                selectedObjetivos.push(insert);
+                                break;
+                            case 2:
+                                selectedHacerlo.push(insert);
+                                break;
+                            case 3:
+                                selectedLograrlo.push(insert);
+                                break;
+                            case 4:
+                                selectedInteresa.push(insert);
+                                break;
+                            case 5:
+                                selectedEntere.push(insert);
+                                break;                                                
+                            case 6:
+                                selectedAvisan.push(insert);
+                                break;                        
+                        }
+                    }
                 }
-            }
-        });
+            });
 
-        $scope.selectedObjetivos = selectedObjetivos;
-        $scope.selectedHacerlo   = selectedHacerlo;
-        $scope.selectedLograrlo  = selectedLograrlo;
-        $scope.selectedInteresa  = selectedInteresa;
-        $scope.selectedEntere    = selectedEntere;
-        $scope.selectedAvisan    = selectedAvisan;
+            $scope.selectedObjetivos = selectedObjetivos;
+            $scope.selectedHacerlo   = selectedHacerlo;
+            $scope.selectedLograrlo  = selectedLograrlo;
+            $scope.selectedInteresa  = selectedInteresa;
+            $scope.selectedEntere    = selectedEntere;
+            $scope.selectedAvisan    = selectedAvisan;
 
-        $scope.cambioObjetivo(selectedObjetivos);
-        $scope.cambioHacerlo(selectedHacerlo);
-        $scope.cambioLograrlo(selectedLograrlo);
-        $scope.cambioInteresa(selectedInteresa);
-        $scope.cambioEntere(selectedEntere);
-        $scope.cambioAvisan(selectedAvisan);
+            $scope.cambioObjetivo(selectedObjetivos);
+            $scope.cambioHacerlo(selectedHacerlo);
+            $scope.cambioLograrlo(selectedLograrlo);
+            $scope.cambioInteresa(selectedInteresa);
+            $scope.cambioEntere(selectedEntere);
+            $scope.cambioAvisan(selectedAvisan);
 
-        // Voy a buscar los comentarios de la persona
-        var request = $http.get('/api/listPerComentarios?documento='+ documento).then(function(perComentario) {
-            $scope.comentarios = perComentario.data[0].comentarios;
-            console.log($scope.comentarios);
-        });
+            // Voy a buscar los comentarios de la persona
+            var request = $http.get('/api/listPerComentarios?documento='+ documento).then(function(perComentario) {
+                if (perComentario.data[0]){
+                    $scope.comentarios = perComentario.data[0].comentarios;
+                    console.log($scope.comentarios);
+                }
+                
+            });
 
-        // Voy a buscar las afiliaciones con sus pagos de la persona
-        var request = $http.get('/api/listTodosPagos?documento='+ documento).then(function(perPago) {
-            $scope.afiliaciones = perPago.data[0].afiliacions;
-            console.log($scope.afiliaciones);
-            $scope.planActivo = perPago.data[0].afiliacions[0].plans[0];
-        });
+            // Voy a buscar las afiliaciones con sus pagos de la persona
+            var request = $http.get('/api/listTodosPagos?documento='+ documento).then(function(perPago) {
+                if ( perPago.data[0] ) {
+                    $scope.afiliaciones = perPago.data[0].afiliacions;
+                    console.log($scope.afiliaciones);
+                    $scope.planActivo = perPago.data[0].afiliacions[0].plans[0];
+                }
+            });
 
-        // Voy a buscar las licencias de la persona
-        var request = $http.get('/api/lstAfiLicencia?documento='+ documento).then(function(perLicencia) {
-            $scope.afiLicencias = perLicencia.data[0].afiliacions;
-            console.log($scope.afiLicencias);
-        });
-
+            // Voy a buscar las licencias de la persona
+            var request = $http.get('/api/lstAfiLicencia?documento='+ documento).then(function(perLicencia) {
+                if (perLicencia.data[0]) {
+                    $scope.afiLicencias = perLicencia.data[0].afiliacions;
+                    console.log($scope.afiLicencias);
+                }
+            });
+        }
         $scope.unaPersona = 1;
 	};
+
+    // Funcion para insertar CI una persona
+	$scope.insertPersona = function (documento) {
+        var parameter = JSON.stringify({
+            documento       : documento,
+        });
+
+        var request = $http.post('/api/personas/', parameter).then(function(respuesta) {
+            console.log(respuesta);
+            getPersonas();
+
+            var request = $http.get('/api/personas/' + documento).then(function(persona) {
+                $scope.persona = persona;
+                getUnaPersona(persona);
+            });
+            
+        });
+
+	}
+    // ------------------------------------------------
+    // Actualizacion de datos
 
     $scope.actPersonales = function(){
         var parameter = JSON.stringify({
@@ -334,6 +370,8 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope,
         }
     }
 
+    // ------------------------------------------------
+    // Modales para insertar
     $scope.showAdvanced = function(ev) {
         // Voy a buscar los valores del codigo de comentarios
         var request = $http.get('/api/itemcomentarios').then(function(itemcomentarios) { 
@@ -510,8 +548,24 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope,
         $scope.tipoplanes = tipoplanes;
         $scope.mediospagos = mediospagos;
         $scope.afi = afi;
+        let d = new Date();
+        $scope.inicio = d;
 
+        $scope.cambioPlan = function(id) {
+            
+            if (id) {
+                var duracion_aux = tipoplanes.filter(function(item){
+                    return item.id == id;
+                })[0];
 
+                $scope.duracion = duracion_aux.duracion;
+
+                let aux = $scope.inicio;
+                let otro = new Date();
+                otro.setDate(aux.getDate() + duracion_aux.duracion * 30);
+                $scope.fin = otro;
+            };
+        };
         $scope.hide = function() {
           $mdDialog.hide();
         };
@@ -523,21 +577,23 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope,
         $scope.answer = function(answer) {
             $mdDialog.hide(answer);
 
-            // Inserto el pago
+            // Inserto el plan
             var parameter = JSON.stringify({
-                mes:  mes,
-                anio: anio,
-                importe: answer.importe,
-                tipomovimiento: 1,
-                concepto: 1,
-                pagoanulado: 0,
-                planId: planActivo.id,
-                mediopagoId: answer.mediopago
+                importeplan: answer.importe,
+                importepago: 0,
+                duracion: answer.duracion,
+                inicio: answer.inicio,
+                fin: answer.fin,
+                cuotasson: answer.cuotas,
+                cuotasvan: 0,
+                tipoplanId: answer.tipoplan,
+                mediopagoId: answer.mediopago,
+                afiliacionId: afi
             }); 
 
             console.log(parameter);
 
-            var request = $http.post('/api/pago' , parameter).then(function(respuesta) {
+            var request = $http.post('/api/planes' , parameter).then(function(respuesta) {
                 console.log(respuesta);
             });           
             
@@ -606,6 +662,50 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope,
 
     };
 
+    // ------------------------------------------------
+    // Eliminar    
+    $scope.deleteComentario = function(id){
+        var request =  $http.delete('/api/comentarios/'+ id).then(function(respuesta) {
+            console.log(respuesta);
+            getPersonas();
+            getUnaPersona($scope.persona);
+        });
+    };
+
+    $scope.deletePago = function(pago,plan){
+        // Actualizar total del plan
+        var request =  $http.delete('/api/pago/'+ id).then(function(respuesta) {
+            console.log(respuesta);
+            getPersonas();
+            getUnaPersona($scope.persona);
+        });
+
+        // Inserto pago anulación con signo contrario
+        var request =  $http.delete('/api/pago/'+ id).then(function(respuesta) {
+            console.log(respuesta);
+            getPersonas();
+            getUnaPersona($scope.persona);
+        });
+    };
+
+    $scope.deletePlan = function(id){
+        var request =  $http.delete('/api/planes/'+ id).then(function(respuesta) {
+            console.log(respuesta);
+            getPersonas();
+            getUnaPersona($scope.persona);
+        });
+    };
+
+    $scope.deleteLicencia = function(id){
+        var request =  $http.delete('/api/licencia/'+ id).then(function(respuesta) {
+            console.log(respuesta);
+            getPersonas();
+            getUnaPersona($scope.persona);
+        });
+    };
+
+    // ------------------------------------------------
+    // Actualizacion datos en la pantalla    
     $scope.cambioObjetivo = function(objetivos){
         $scope.objs = objetivos;
     };
@@ -629,11 +729,23 @@ app.controller('Main', function($scope,$http, $mdToast, $q, $window, $rootScope,
     $scope.cambioAvisan = function(avisa){
         $scope.avi = avisa;
     };                    
-    
 
 });
 
 app.config(function($mdThemingProvider){
-	$mdThemingProvider.theme('default');
+    $mdThemingProvider.theme('default');
+
+    var xoMap = $mdThemingProvider.extendPalette('purple', {
+        '500': '833A96'
+    });
+
+    $mdThemingProvider.definePalette('XO-Main', xoMap);
+
+    $mdThemingProvider.theme('forest')
+        .primaryPalette('XO-Main')
+        .accentPalette('light-blue', {
+            "default": "500",
+            "hue-1": "50"
+        });
 });
 
