@@ -1,4 +1,3 @@
-
 const db = require('../cfg/db.js');
 const Persona_hist  = db.persona_hist;
  

@@ -1,5 +1,7 @@
 const db = require('../cfg/db.js');
 const Pago = db.pago;
+const Plan = db.planes;
+
  
 // Post a pago
 exports.create = (req, res) => {	
@@ -78,14 +80,135 @@ exports.findById = (req, res) => {
  
 // Update a pago
 exports.update = (req, res) => {
-	const id = req.params.id;
-	Pago.update( { pagoanulado: req.body.pagoanulado},
-					 { where: {id: req.params.id} }
-				   ).then(() => {
-					 res.status(200).send("updated successfully de la pago del  pago");
-				   }).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+	const idPago = req.body.id;
+	const idPlan=req.body.planId
+
+
+		buscoUltimoPago()
+		.then(function(response){
+			return updPago(response,idPago)
+			})
+			.then(function(response){
+				return buscoElPago(idPago)
+			})
+			.then(function(response){ 
+				return buscoPLan(response,idPlan)
+			})
+			.then(function(response){ 
+				return updPLan(idPlan,response)
+			})
+			.then(function(response){ 
+				return buscoElPago(idPago)
+			})
+			.then(function(response){ 
+				return insPago(response)
+			})
+			res.status(200).send("termine las promesas")
 };
+
+
+	//busco el ultimo id de pago y  le id del ultimo pago y sumo 1
+	var buscoUltimoPago=function(){
+		return new Promise(function(resolve,reject){
+			var condition =	{
+				limit:1,
+				order:[['id', 'DESC']],
+			};
+			Pago.findAll(condition)
+			.then(function(response){
+			//	console.log(response[0].id);
+				var UltimoIdPg=response[0].id +1;
+				return resolve(UltimoIdPg);	
+			}).catch(function(e){
+				reject("Fallo al buscar ultimo Pago")
+			});
+		});
+	}
+	//busco el pago que anulo
+	var buscoElPago=function(idPago){
+		return new Promise(function(resolve,reject){
+			var condition =	{
+				where: {id: idPago}, 
+			};
+			var resultado=null;
+			Pago.findAll(condition)
+			.then(function(response){
+				//console.log(response[0].dataValues);
+				return resolve(response[0].dataValues);	
+			}).catch(function(e){
+				reject("Fallo al buscar el Pago")
+			});
+		});
+	}	
+	// busco el plan al cual voy a anularle un pago
+	var buscoPLan= function (elPago,idPlan){
+		return new Promise(function(resolve,reject){
+			Plan.findById(idPlan).then(function(response){
+				//console.log(response.dataValues);
+				//console.log(elPago);
+				var elPlan= response.dataValues;
+				var importeQueAnulo=elPago.importe;
+				var importeFinal=elPlan.importepago-importeQueAnulo;
+				var cuotaFinal=(elPlan.cuotasvan - 1);
+				console.log(elPlan.cuotasvan);
+
+				//console.log(importeQueAnulo+" << importe que anulo "+importeFinal+" <<importe final");
+				var datoslst=[importeFinal,cuotaFinal];
+				return resolve(datoslst);	
+			}).catch(function(e){
+				reject("Fallo al buscar el Plan")
+			});
+		});
+	}
+	// actualizo el  plan al cual voy a anularle un pago
+	var updPLan=function(idPlan,elPLan){	
+		return new Promise(function(resolve,reject){
+			console.log(" aca entro al upd");
+			//console.log(elPLan[0]); 	console.log(elPLan[1]);
+			Plan.update({ importepago: elPLan[0],cuotasvan: elPLan[1]},
+				{where: {id:idPlan}}
+				).then(() => {
+					resolve(true);
+				}).catch(function(e){
+					reject("Fallo al upd  plan")
+				});
+		});
+	}	
+	// actualizo el pago que anulo
+	var updPago=function(resultados,idPago){	
+		return new Promise(function(resolve,reject){
+			Pago.update({ pagoanulado:resultados},
+				{where: {id:idPago}}
+					)
+					.then(() => {
+					resolve(true);
+					}).catch(function(e){
+						reject("Fallo al upd  Pago")
+					});
+		});
+	}	
+	// inserto anulacion
+	var insPago=function(elPago){	
+		return new Promise(function(resolve,reject){
+			//console.log(elPago);
+			Pago.sequelize.query('INSERT into pagos (id,importe,mes,anio,tipomovimiento,concepto,pagoanulado,createdAt,updatedAt,mediopagoId,planId) VALUES (DEFAULT,:pImporte,:pMes,:pAnio,:pTipomovimiento,:pConcepto,:pPagoanulado, NOW(), NOW(),:pMediopagoId,:pPlanId)',
+    	{ replacements: {pPlanId: elPago.id,pImporte:elPago.importe,pMes:elPago.mes,pAnio:elPago.anio,pTipomovimiento:2,pConcepto:elPago.concepto,pMediopagoId:elPago.mediopagoId,pPagoanulado:0,pPlanId:elPago.planId }, 
+       	type: Pago.sequelize.QueryTypes.INSERT
+    	}).then(pago => {
+				console.log("pago exitoso ins");
+				console.log(pago);
+				resolve(true);
+			}).catch(function(e){
+				reject("Fallo al ins  Pago")
+			});
+		});
+}
+
  
+
+
+
+
 // Delete a pago by Id
 exports.delete = (req, res) => {
 	const id = req.params.id;

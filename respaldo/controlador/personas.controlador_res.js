@@ -143,7 +143,16 @@ exports.delete = (req, res) => {
 exports.lstPerAfiPln = (req, res) => {	
 	console.log(req.query);
 	var condition =	{
-
+			
+	/*funciona
+			include: [
+				{
+        		model: db.afiliacion ,	
+        		},
+    		],
+    		order:[[{model: db.afiliacion},'id', 'DESC']],
+	*/    
+	//prueba 
 			include: [
 				{
 
