@@ -60,3 +60,14 @@ typings/
 # next.js build output
 .next
 cfg/db.js
+respaldo/controlador/tipoplanes.controlador.js
+respaldo/controlador/profesion.controlador.js
+respaldo/controlador/planes.controlador.js
+respaldo/controlador/personas_hist.controlador.js
+respaldo/controlador/personas.controlador_res.js
+respaldo/controlador/personas.controlador.js
+respaldo/controlador/paramnum.controlador.js
+respaldo/controlador/pago_hist.controlador.js
+respaldo/controlador/pago.controlador.js
+respaldo/controlador/motivolicencia.controlador.js
+respaldo/controlador/mediopago.controlador.js

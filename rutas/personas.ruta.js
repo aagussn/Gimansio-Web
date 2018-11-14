@@ -5,6 +5,9 @@ module.exports = function(app) {
   
     // Create a new personas
     app.post('/api/personas', personas.create);
+
+    // Create a new personas y afililacion
+    app.post('/api/insPersonaAfi', personas.insPersonaAfi);
  
     // Retrieve all personas
     app.get('/api/personas', personas.findAll);

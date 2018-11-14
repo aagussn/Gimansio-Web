@@ -1,5 +1,6 @@
 const db = require('../cfg/db.js');
 const Persona = db.persona;
+const Afiliacion = db.afiliacion;
 const sequelize = db.sequelize;
 const Sequelize = db.Sequelize;
 const Op = Sequelize.Op
@@ -21,10 +22,8 @@ exports.create = (req, res) => {
 		contactofamilia: req.body.contactofamilia,
 		nombrecontacto: req.body.nombrecontacto,
 		idprofesion: req.body.idprofesion,
-		// idobjetivos:req.body.idobjetivos,
 		idhorario: req.body.idhorario,
 		idlogro: req.body.idlogro,
-		// idinteres: req.body.idinteres,
 		identerado: req.body.identerado,
 		idaviso: req.body.idaviso
 
@@ -34,6 +33,126 @@ exports.create = (req, res) => {
 	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 
 };
+
+// Post a Usuario y afiliacion
+exports.insPersonaAfi = (req, res) => {
+	var persona=new Object();			
+	persona.documento= req.body.documento;
+	persona.nombre= req.body.nombre;
+	persona.apellido= req.body.apellido;
+	persona.telefono= req.body.telefono;
+	persona.sexo= req.body.sexo;
+	persona.email= req.body.email;
+	persona.fechaN= req.body.fechaN;
+	persona.emergencia= req.body.emergencia;
+	persona.direccion= req.body.direccion;
+	persona.contactofamilia= req.body.contactofamilia;
+	persona.nombrecontacto= req.body.nombrecontacto;
+	persona.idprofesion= req.body.idprofesion;
+	persona.idhorario= req.body.idhorario;
+	persona.idlogro= req.body.idlogro;
+	persona.identerado= req.body.identerado;
+	persona.idaviso= req.body.idaviso;
+	
+
+	buscoPersona(persona)
+		.then(function(response){
+			return inspersona(persona,response)
+			})
+			.then(function(response){
+				return insAfiliacion(response)
+			})
+			res.status(200).send("termine las promesas")
+
+};
+
+//busco la persona y devuelto true o false 
+var buscoPersona=function(persona){
+	return new Promise(function(resolve,reject){
+		var condition =	{
+			where: {documento: persona.documento}, 
+		};
+		Persona.findAll(condition)
+			.then(function(response){
+				var existe=false;
+				//console.log(response.length);
+				if(response.length>0){
+					existe=true;
+				}
+			return resolve(existe);	
+		}).catch(function(e){
+			reject("Fallo al buscar persona")
+		});
+	});
+}
+
+// inserto perona
+var inspersona=function(laPersona,pExiste){	
+	return new Promise(function(resolve,reject){
+		var hiceIns=false;
+		//console.log(pExiste);
+		if(!pExiste){
+			// creo una persona
+			Persona.create({
+			documento: laPersona.documento,
+			nombre: laPersona.nombre,
+			apellido: laPersona.apellido,
+			telefono: laPersona.telefono,
+			sexo: laPersona.sexo,
+			email: laPersona.email,
+			fechaN: laPersona.fechaN,
+			emergencia: laPersona.emergencia,
+			direccion: laPersona.direccion,
+			contactofamilia: laPersona.contactofamilia,
+			nombrecontacto: laPersona.nombrecontacto,
+			idprofesion: laPersona.idprofesion,
+			idhorario: laPersona.idhorario,
+			idlogro: laPersona.idlogro,
+			identerado: laPersona.identerado,
+			idaviso: laPersona.idaviso
+			}).then(persona => {
+				console.log("ins persona exitoso ");
+				//console.log(persona);
+				hiceIns=true;
+				var respuesta=[laPersona,hiceIns];
+				return resolve(respuesta);
+			}).catch(function(e){
+				reject("Fallo al ins  Pago")
+			});
+		}
+		
+	});
+}
+
+// inserto afiliacion
+var insAfiliacion=function(laRespuesta){	
+	return new Promise(function(resolve,reject){
+		var laPersona=laRespuesta[0];
+		var hagoIns=laRespuesta[1];
+		if(hagoIns){
+									console.log("zzzzzzzzz" + hagoIns);
+
+			Afiliacion.sequelize.query('INSERT into afiliacions (id,estado,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT,1, NOW(), NOW(),:pDocumento)',
+			{replacements: {pDocumento: laPersona.documento}, 
+				type: Afiliacion.sequelize.QueryTypes.INSERT
+			}).then(afiliacion => {
+				console.log(Afiliacion);
+				console.log("afi exitoso ins " + afiliacion );
+				return resolve(true);
+			}).catch(function(e){
+				reject("Fallo al ins afi")
+				return resolve(false);
+
+			});
+		}
+	});
+}
+
+
+
+
+
+
 
 // FETCH all Persona
 exports.findAll = (req, res) => {
@@ -102,7 +221,7 @@ exports.findById = (req, res) => {
 // Update a persona
 exports.update = (req, res) => {
 	const id = req.params.documento;
-	Persona.update({ //afiliacionId: req.body.afiliacionId,
+	Persona.update({ 
 		nombre: req.body.nombre,
 		apellido: req.body.apellido,
 		telefono: req.body.telefono,
@@ -114,10 +233,8 @@ exports.update = (req, res) => {
 		contactofamilia: req.body.contactofamilia,
 		nombrecontacto: req.body.nombrecontacto,
 		idprofesion: req.body.idprofesion,
-		//idobjetivos:req.body.idobjetivos,
 		idhorario: req.body.idhorario,
 		idlogro: req.body.idlogro,
-		//idinteres: req.body.idinteres,
 		identerado: req.body.identerado,
 		idaviso: req.body.idaviso
 	}, {

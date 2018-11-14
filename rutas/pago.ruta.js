@@ -13,7 +13,9 @@ module.exports = function(app) {
     app.get('/api/pago/:id', pago.findById);
  
     // Update a pago with Id
+    //app.put('/api/pago/:id', pago.update);
     app.put('/api/pago/', pago.update);
+
  
     // Delete a pago with Id
     app.delete('/api/pago/:id', pago.delete);
