@@ -81,8 +81,11 @@ exports.findById = (req, res) => {
 // Update a pago
 exports.update = (req, res) => {
 	const idPago = req.body.id;
-	const idPlan=req.body.planId
-
+	const idPlan=req.body.planId;
+	var bandera=false;
+	if(req.body.bandera){
+		bandera=true;
+	}
 
 		buscoUltimoPago()
 		.then(function(response){
@@ -92,7 +95,7 @@ exports.update = (req, res) => {
 				return buscoElPago(idPago)
 			})
 			.then(function(response){ 
-				return buscoPLan(response,idPlan)
+				return buscoPLan(response,idPlan,bandera)
 			})
 			.then(function(response){ 
 				return updPLan(idPlan,response)
@@ -102,6 +105,44 @@ exports.update = (req, res) => {
 			})
 			.then(function(response){ 
 				return insPago(response)
+			})
+			res.status(200).send("termine las promesas")
+};
+
+
+
+
+// inserto  pago y actualizo plan
+exports.insPagoUpdPlan = (req, res) => {
+	const idPlan=req.body.planId;
+	var pago=new Object();			
+	//pago.id= req.body.id;
+	pago.importe= req.body.importe;
+	pago.mes= req.body.mes;
+	pago.anio= req.body.anio;
+	pago.tipomovimiento= req.body.tipomovimiento;
+	pago.concepto= req.body.concepto;
+	pago.pagoanulado= req.body.pagoanulado;
+	pago.planId= req.body.planId;
+	pago.createdAt= req.body.createdAt;
+	pago.updatedAt= req.body.updatedAt;
+	pago.mediopagoId= req.body.mediopagoId;
+	
+	//console.log(req.body.flag);
+	var bandera=false;
+	if(req.body.flag==1){
+		bandera=true;
+		//console.log("bandera es + " + bandera);
+
+	}
+	
+
+	buscoPLan(pago,idPlan,bandera)
+		.then(function(response){
+			return updPLan(idPlan,response)
+			})
+			.then(function(response){ 
+				return insPago(pago)
 			})
 			res.status(200).send("termine las promesas")
 };
@@ -141,22 +182,38 @@ exports.update = (req, res) => {
 		});
 	}	
 	// busco el plan al cual voy a anularle un pago
-	var buscoPLan= function (elPago,idPlan){
+	var buscoPLan= function (elPago,idPlan,bandera){
 		return new Promise(function(resolve,reject){
 			Plan.findById(idPlan).then(function(response){
 				//console.log(response.dataValues);
+				//console.log(idPlan);
+				//console.log(bandera);
 				//console.log(elPago);
+				//console.log(response.dataValues);
 				var elPlan= response.dataValues;
-				var importeQueAnulo=elPago.importe;
-				var importeFinal=elPlan.importepago-importeQueAnulo;
-				var cuotaFinal=(elPlan.cuotasvan - 1);
+				var importeFinal= 0;
+				var cuotaFinal=0;
+				if(bandera){
+					console.log("elPlan.importepago "+ elPlan.importepago);
+					console.log("elPlan.cuotasvan "+elPlan.cuotasvan);
+					//var importeFinal= (parseInt( elPlan.importepago) + pago.importe);
+					//var cuotaFinal=(  parseInt( elPlan.cuotasvan)  + 1);
+					 importeFinal= (elPlan.importepago + pago.importe);
+					 cuotaFinal=( elPlan.cuotasvan  + 1);
+					console.log("importe que queda "+ importeFinal);
+					console.log("cuota que queda "+cuotaFinal);
+				}else{
+					console.log("aca estoy en if  ");
+					var importeQueAnulo=elPago.importe;
+					var importeFinal=elPlan.importepago-importeQueAnulo;
+					cuotaFinal=(elPlan.cuotasvan - 1);
 				console.log(elPlan.cuotasvan);
-
+				}
 				//console.log(importeQueAnulo+" << importe que anulo "+importeFinal+" <<importe final");
 				var datoslst=[importeFinal,cuotaFinal];
 				return resolve(datoslst);	
 			}).catch(function(e){
-				reject("Fallo al buscar el Plan")
+				reject("Fallo al buscar el Plan");
 			});
 		});
 	}

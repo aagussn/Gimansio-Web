@@ -5,6 +5,9 @@ module.exports = function(app) {
   
     // Create a new pago
     app.post('/api/pago', pago.create);
+    // Create a new pago y upd plan
+    app.post('/api/insPagoUpdPlan', pago.insPagoUpdPlan);
+    
  
     // Retrieve all pago
     app.get('/api/pago', pago.findAll);
