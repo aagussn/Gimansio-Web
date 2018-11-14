@@ -194,11 +194,11 @@ exports.insPagoUpdPlan = (req, res) => {
 				var importeFinal= 0;
 				var cuotaFinal=0;
 				if(bandera){
-					console.log("elPlan.importepago "+ elPlan.importepago);
-					console.log("elPlan.cuotasvan "+elPlan.cuotasvan);
+					console.log("elPlan.importepago "+ elPago.importe);
+					console.log("elPlan.cuotasvan "+elPlan.cuotasvan + 1 );
 					//var importeFinal= (parseInt( elPlan.importepago) + pago.importe);
 					//var cuotaFinal=(  parseInt( elPlan.cuotasvan)  + 1);
-					 importeFinal= (elPlan.importepago + pago.importe);
+					 importeFinal= (elPlan.importepago + elPago.importe);
 					 cuotaFinal=( elPlan.cuotasvan  + 1);
 					console.log("importe que queda "+ importeFinal);
 					console.log("cuota que queda "+cuotaFinal);
