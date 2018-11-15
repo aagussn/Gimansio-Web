@@ -142,9 +142,11 @@ exports.insPagoUpdPlan = (req, res) => {
 			return updPLan(idPlan,response)
 			})
 			.then(function(response){ 
-				return insPago(pago)
+				return insPago(pago,response)
 			})
-			res.status(200).send("termine las promesas")
+			.then(function(response){
+			res.status(200).send()//send("termine las promesas")
+		});
 };
 
 
@@ -185,32 +187,25 @@ exports.insPagoUpdPlan = (req, res) => {
 	var buscoPLan= function (elPago,idPlan,bandera){
 		return new Promise(function(resolve,reject){
 			Plan.findById(idPlan).then(function(response){
-				//console.log(response.dataValues);
-				//console.log(idPlan);
-				//console.log(bandera);
-				//console.log(elPago);
-				//console.log(response.dataValues);
 				var elPlan= response.dataValues;
 				var importeFinal= 0;
 				var cuotaFinal=0;
+				var noHagoNada=1;
 				if(bandera){
-					console.log("elPlan.importepago "+ elPago.importe);
-					console.log("elPlan.cuotasvan "+elPlan.cuotasvan + 1 );
-					//var importeFinal= (parseInt( elPlan.importepago) + pago.importe);
-					//var cuotaFinal=(  parseInt( elPlan.cuotasvan)  + 1);
-					 importeFinal= (elPlan.importepago + elPago.importe);
-					 cuotaFinal=( elPlan.cuotasvan  + 1);
-					console.log("importe que queda "+ importeFinal);
-					console.log("cuota que queda "+cuotaFinal);
-				}else{
 					console.log("aca estoy en if  ");
+					importeFinal= (elPlan.importepago + elPago.importe);
+					cuotaFinal=( elPlan.cuotasvan  + 1);
+				}else{
+					console.log("aca estoy en else  ");
 					var importeQueAnulo=elPago.importe;
 					var importeFinal=elPlan.importepago-importeQueAnulo;
 					cuotaFinal=(elPlan.cuotasvan - 1);
-				console.log(elPlan.cuotasvan);
+				}
+				if(importeFinal>elPlan.importeplan ||cuotaFinal > elPlan.cuotasson){
+					noHagoNada=0;
 				}
 				//console.log(importeQueAnulo+" << importe que anulo "+importeFinal+" <<importe final");
-				var datoslst=[importeFinal,cuotaFinal];
+				var datoslst=[importeFinal,cuotaFinal,noHagoNada];
 				return resolve(datoslst);	
 			}).catch(function(e){
 				reject("Fallo al buscar el Plan");
@@ -222,13 +217,18 @@ exports.insPagoUpdPlan = (req, res) => {
 		return new Promise(function(resolve,reject){
 			console.log(" aca entro al upd");
 			//console.log(elPLan[0]); 	console.log(elPLan[1]);
-			Plan.update({ importepago: elPLan[0],cuotasvan: elPLan[1]},
-				{where: {id:idPlan}}
-				).then(() => {
-					resolve(true);
-				}).catch(function(e){
-					reject("Fallo al upd  plan")
-				});
+			var noInsertes=false;
+			if(elPLan[2] ==1){
+				noInsertes=true;
+				Plan.update({ importepago: elPLan[0],cuotasvan: elPLan[1]},
+					{where: {id:idPlan}}
+					).then(() => {
+						resolve(true);
+					}).catch(function(e){
+						reject("Fallo al upd  plan")
+					});
+			}	
+			return resolve(noInsertes);
 		});
 	}	
 	// actualizo el pago que anulo
@@ -245,19 +245,24 @@ exports.insPagoUpdPlan = (req, res) => {
 		});
 	}	
 	// inserto anulacion
-	var insPago=function(elPago){	
+	var insPago=function(elPago,resultado){	
 		return new Promise(function(resolve,reject){
+			var respuetsa=false;
+			if(resultado){
 			//console.log(elPago);
-			Pago.sequelize.query('INSERT into pagos (id,importe,mes,anio,tipomovimiento,concepto,pagoanulado,createdAt,updatedAt,mediopagoId,planId) VALUES (DEFAULT,:pImporte,:pMes,:pAnio,:pTipomovimiento,:pConcepto,:pPagoanulado, NOW(), NOW(),:pMediopagoId,:pPlanId)',
-    	{ replacements: {pPlanId: elPago.id,pImporte:elPago.importe,pMes:elPago.mes,pAnio:elPago.anio,pTipomovimiento:2,pConcepto:elPago.concepto,pMediopagoId:elPago.mediopagoId,pPagoanulado:0,pPlanId:elPago.planId }, 
-       	type: Pago.sequelize.QueryTypes.INSERT
-    	}).then(pago => {
-				console.log("pago exitoso ins");
-				console.log(pago);
-				resolve(true);
-			}).catch(function(e){
-				reject("Fallo al ins  Pago")
-			});
+				Pago.sequelize.query('INSERT into pagos (id,importe,mes,anio,tipomovimiento,concepto,pagoanulado,createdAt,updatedAt,mediopagoId,planId) VALUES (DEFAULT,:pImporte,:pMes,:pAnio,:pTipomovimiento,:pConcepto,:pPagoanulado, NOW(), NOW(),:pMediopagoId,:pPlanId)',
+		    	{ replacements: {pPlanId: elPago.id,pImporte:elPago.importe,pMes:elPago.mes,pAnio:elPago.anio,pTipomovimiento:2,pConcepto:elPago.concepto,pMediopagoId:elPago.mediopagoId,pPagoanulado:0,pPlanId:elPago.planId }, 
+		       	type: Pago.sequelize.QueryTypes.INSERT
+		    	}).then(pago => {
+						console.log("pago exitoso ins");
+						console.log(pago);
+						respuetsa=true;
+						resolve(true);
+					}).catch(function(e){
+						reject("Fallo al ins  Pago")
+					});
+			}	
+			return resolve(respuetsa);
 		});
 }
 

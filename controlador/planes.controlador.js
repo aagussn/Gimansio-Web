@@ -7,7 +7,7 @@ exports.create = (req, res) => {
   	//var pEstado=req.body.estado;
   	//var pDocumento=req.body.personaDocumento;
   	//var consulta='INSERT into afiliacions (id,estado,createdAt,updatedAt,personaDocumento) VALUES (DEFAULT,"pEstado", NOW(), NOW(),"pDocumento")';
-	Plan.sequelize.query('INSERT into plans (id,importeplan,importepago,duracion,inicio,fin,cuotasson,cuotasvan,createdAt,updatedAt,tipoplanId,afiliacionId,mediopagoId) VALUES (DEFAULT,:pImporteplan,:pImportepago,:pDuracion,:pInicio,:pFin,:pCuotasson,:pCuotasvan, NOW(), NOW(),:pAfiliacionId,:pTipoplanId,:pMediopagoId)',
+	Plan.sequelize.query('INSERT into plans (id,importeplan,importepago,duracion,inicio,fin,cuotasson,cuotasvan,createdAt,updatedAt,afiliacionId,tipoplanId,mediopagoId) VALUES (DEFAULT,:pImporteplan,:pImportepago,:pDuracion,:pInicio,:pFin,:pCuotasson,:pCuotasvan, NOW(), NOW(),:pAfiliacionId,:pTipoplanId,:pMediopagoId)',
     { replacements: {pAfiliacionId: req.body.afiliacionId,pImporteplan:req.body.importeplan,pDuracion:req.body.duracion,pInicio:req.body.inicio,pFin:req.body.fin,pTipoplanId:req.body.tipoplanId, pCuotasson:req.body.cuotasson, pCuotasvan:req.body.cuotasvan, pImportepago:req.body.importepago,pMediopagoId:req.body.mediopagoId}, 
        	type: Plan.sequelize.QueryTypes.INSERT
     }).then(plan => {
