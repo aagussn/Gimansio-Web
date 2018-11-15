@@ -82,8 +82,9 @@ exports.findById = (req, res) => {
 exports.update = (req, res) => {
 	const idPago = req.body.id;
 	const idPlan=req.body.planId;
-	var bandera=false;
-	if(req.body.bandera){
+	const bandera=false;
+	const flag=req.body.flag;
+	if(flag==1){
 		bandera=true;
 	}
 
@@ -98,13 +99,13 @@ exports.update = (req, res) => {
 				return buscoPLan(response,idPlan,bandera)
 			})
 			.then(function(response){ 
-				return updPLan(idPlan,response)
+				return updPLan(idPlan,response,flag)
 			})
 			.then(function(response){ 
 				return buscoElPago(idPago)
 			})
 			.then(function(response){ 
-				return insPago(response)
+				return insPago(response,true,flag)
 			})
 			res.status(200).send("termine las promesas")
 };
@@ -116,7 +117,6 @@ exports.update = (req, res) => {
 exports.insPagoUpdPlan = (req, res) => {
 	const idPlan=req.body.planId;
 	var pago=new Object();			
-	//pago.id= req.body.id;
 	pago.importe= req.body.importe;
 	pago.mes= req.body.mes;
 	pago.anio= req.body.anio;
@@ -127,22 +127,18 @@ exports.insPagoUpdPlan = (req, res) => {
 	pago.createdAt= req.body.createdAt;
 	pago.updatedAt= req.body.updatedAt;
 	pago.mediopagoId= req.body.mediopagoId;
-	
-	//console.log(req.body.flag);
-	var bandera=false;
-	if(req.body.flag==1){
-		bandera=true;
-		//console.log("bandera es + " + bandera);
-
+	const flag=req.body.flag;
+	var bandera=false; // para cuando elimino un pago
+	if(flag==1){
+		bandera=true; // para cuando agrego un pago
 	}
 	
-
 	buscoPLan(pago,idPlan,bandera)
 		.then(function(response){
 			return updPLan(idPlan,response)
 			})
 			.then(function(response){ 
-				return insPago(pago,response)
+				return insPago(pago,response,flag)
 			})
 			.then(function(response){
 			res.status(200).send()//send("termine las promesas")
@@ -152,6 +148,7 @@ exports.insPagoUpdPlan = (req, res) => {
 
 	//busco el ultimo id de pago y  le id del ultimo pago y sumo 1
 	var buscoUltimoPago=function(){
+		console.log("buscoUltimoPago");
 		return new Promise(function(resolve,reject){
 			var condition =	{
 				limit:1,
@@ -169,15 +166,16 @@ exports.insPagoUpdPlan = (req, res) => {
 	}
 	//busco el pago que anulo
 	var buscoElPago=function(idPago){
+		console.log("buscoElPago");
 		return new Promise(function(resolve,reject){
 			var condition =	{
 				where: {id: idPago}, 
 			};
-			var resultado=null;
 			Pago.findAll(condition)
 			.then(function(response){
+				var respuesta=response[0].dataValues;
 				//console.log(response[0].dataValues);
-				return resolve(response[0].dataValues);	
+				return resolve(respuesta);	
 			}).catch(function(e){
 				reject("Fallo al buscar el Pago")
 			});
@@ -185,6 +183,7 @@ exports.insPagoUpdPlan = (req, res) => {
 	}	
 	// busco el plan al cual voy a anularle un pago
 	var buscoPLan= function (elPago,idPlan,bandera){
+		console.log("buscoPLan");
 		return new Promise(function(resolve,reject){
 			Plan.findById(idPlan).then(function(response){
 				var elPlan= response.dataValues;
@@ -192,11 +191,11 @@ exports.insPagoUpdPlan = (req, res) => {
 				var cuotaFinal=0;
 				var noHagoNada=1;
 				if(bandera){
-					console.log("aca estoy en if  ");
+					console.log("aca estoy en if de buscoPLan ");
 					importeFinal= (elPlan.importepago + elPago.importe);
 					cuotaFinal=( elPlan.cuotasvan  + 1);
 				}else{
-					console.log("aca estoy en else  ");
+					console.log("aca estoy en else de buscoPLan ");
 					var importeQueAnulo=elPago.importe;
 					var importeFinal=elPlan.importepago-importeQueAnulo;
 					cuotaFinal=(elPlan.cuotasvan - 1);
@@ -214,21 +213,23 @@ exports.insPagoUpdPlan = (req, res) => {
 	}
 	// actualizo el  plan al cual voy a anularle un pago
 	var updPLan=function(idPlan,elPLan){	
+		console.log("updPLan");
 		return new Promise(function(resolve,reject){
-			console.log(" aca entro al upd");
 			//console.log(elPLan[0]); 	console.log(elPLan[1]);
-			var noInsertes=false;
+			var insertar=false;
+			
 			if(elPLan[2] ==1){
-				noInsertes=true;
+				insertar=true;
+				console.log(" entro al if de upd plan");
+				console.log(insertar);
 				Plan.update({ importepago: elPLan[0],cuotasvan: elPLan[1]},
 					{where: {id:idPlan}}
 					).then(() => {
-						resolve(true);
 					}).catch(function(e){
 						reject("Fallo al upd  plan")
 					});
 			}	
-			return resolve(noInsertes);
+			return resolve(insertar);
 		});
 	}	
 	// actualizo el pago que anulo
@@ -245,13 +246,19 @@ exports.insPagoUpdPlan = (req, res) => {
 		});
 	}	
 	// inserto anulacion
-	var insPago=function(elPago,resultado){	
+	var insPago=function(pPago,resultado,flag){	
+		console.log("insPago");
 		return new Promise(function(resolve,reject){
 			var respuetsa=false;
-			if(resultado){
-			//console.log(elPago);
+			var insertar=resultado;
+			var tipo=flag;
+			var elPago=pPago;
+			if(insertar){
+				console.log("entre el if de insert pago");
+				console.log(insertar+" "+ tipo);
+
 				Pago.sequelize.query('INSERT into pagos (id,importe,mes,anio,tipomovimiento,concepto,pagoanulado,createdAt,updatedAt,mediopagoId,planId) VALUES (DEFAULT,:pImporte,:pMes,:pAnio,:pTipomovimiento,:pConcepto,:pPagoanulado, NOW(), NOW(),:pMediopagoId,:pPlanId)',
-		    	{ replacements: {pPlanId: elPago.id,pImporte:elPago.importe,pMes:elPago.mes,pAnio:elPago.anio,pTipomovimiento:2,pConcepto:elPago.concepto,pMediopagoId:elPago.mediopagoId,pPagoanulado:0,pPlanId:elPago.planId }, 
+		    	{ replacements: {pImporte:elPago.importe,pMes:elPago.mes,pAnio:elPago.anio,pTipomovimiento:tipo,pConcepto:elPago.concepto,pMediopagoId:elPago.mediopagoId,pPagoanulado:0,pPlanId:elPago.planId }, 
 		       	type: Pago.sequelize.QueryTypes.INSERT
 		    	}).then(pago => {
 						console.log("pago exitoso ins");
@@ -262,6 +269,7 @@ exports.insPagoUpdPlan = (req, res) => {
 						reject("Fallo al ins  Pago")
 					});
 			}	
+
 			return resolve(respuetsa);
 		});
 }
