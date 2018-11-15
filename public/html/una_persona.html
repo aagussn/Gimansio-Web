@@ -3,6 +3,23 @@
     <h1> Seleccione una persona para ver sus datos </h1>
   </md-content>
 
+  <md-content class="md-padding" ng-switch-when="2">
+    <h1 class="md-display-2">Ingreso persona</h1>
+    <md-card>      
+      <md-card-header>
+        <md-card-header-text>
+          <div layout="row">
+            <md-input-container>
+              <label>Documento</label>
+              <input ng-model="documentoIns" ng-change="validate_ci(documentoIns)" value="false">
+            </md-input-container>
+            <md-button class="md-raised md-primary" ng-click="insertPersona(documentoIns)" ng-disabled="validar==false">Insertar</md-button>
+          </div>
+        </md-card-header-text>
+      </md-card-header>
+      </md-card>
+  </md-content>
+
   <md-content ng-switch-when="1">
     <md-tabs md-dynamic-height md-border-bottom>
       
@@ -16,9 +33,8 @@
                 <div layout="row">
                   <md-input-container>
                     <label>Documento</label>
-                    <input ng-model="persona.documento">
+                    <input ng-model="persona.documento" ng-disabled="true">
                   </md-input-container>
-                  <md-button class="md-raised md-primary" ng-click="insertPersona(persona.documento)">Insertar</md-button>
                 </div>
               </md-card-header-text>
             </md-card-header>
@@ -193,9 +209,9 @@
                 </md-card-title-text>
               </md-card-title>
               <md-card-actions layout="row" layout-align="end center">
-                <md-button class="md-warn md-hue-2" ng-click="deletePlan(planActivo.id)">Eliminar plan</md-button>
-                <md-button class="md-primary" ng-click="showPago($event)">Pagar</md-button>
-                <md-button ng-click="newPlan($event)">Crear nuevo plan</md-button>
+                <md-button class="md-warn md-hue-2" ng-click="deletePlan(planActivo.id)" ng-disabled="planActivo == null" >Eliminar plan</md-button>
+                <md-button class="md-primary" ng-click="showPago($event)" ng-disabled="planActivo == null || planActivo.cuotasvan == planActivo.cuotasson">Pagar</md-button>
+                <md-button ng-click="newPlan($event)" ng-disabled="planActivo.cuotasvan != planActivo.cuotasson ">Crear nuevo plan</md-button>
               </md-card-actions>
             </md-card>
 

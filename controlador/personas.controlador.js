@@ -62,7 +62,7 @@ exports.insPersonaAfi = (req, res) => {
 			.then(function(response){
 				return insAfiliacion(response)
 			})
-			res.status(200).send("termine las promesas")
+			res.status(200).send(persona)
 
 };
 
