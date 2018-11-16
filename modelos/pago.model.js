@@ -19,7 +19,9 @@ module.exports = (sequelize, Sequelize) => {
       concepto:{ type: Sequelize.INTEGER,  unique: 'pagounico' },
       pagoanulado: {type: Sequelize.INTEGER, unique: 'pagounico'},
       planId: {type: Sequelize.INTEGER, unique: 'pagounico'},
+      
   });
+
 	 
   Pagos.belongsTo(Mediopago);
 

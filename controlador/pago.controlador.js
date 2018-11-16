@@ -107,7 +107,9 @@ exports.update = (req, res) => {
 			.then(function(response){ 
 				return insPago(response,true,flag)
 			})
-			res.status(200).send("termine las promesas")
+			.then(function(response){ 
+				res.status(200).send(response)
+			})
 };
 
 
@@ -141,7 +143,7 @@ exports.insPagoUpdPlan = (req, res) => {
 				return insPago(pago,response,flag)
 			})
 			.then(function(response){
-			res.status(200).send()//send("termine las promesas")
+			res.status(200).send(response)//send("termine las promesas")
 		});
 };
 
@@ -215,13 +217,10 @@ exports.insPagoUpdPlan = (req, res) => {
 	var updPLan=function(idPlan,elPLan){	
 		console.log("updPLan");
 		return new Promise(function(resolve,reject){
-			//console.log(elPLan[0]); 	console.log(elPLan[1]);
 			var insertar=false;
-			
 			if(elPLan[2] ==1){
 				insertar=true;
 				console.log(" entro al if de upd plan");
-				console.log(insertar);
 				Plan.update({ importepago: elPLan[0],cuotasvan: elPLan[1]},
 					{where: {id:idPlan}}
 					).then(() => {
@@ -249,28 +248,34 @@ exports.insPagoUpdPlan = (req, res) => {
 	var insPago=function(pPago,resultado,flag){	
 		console.log("insPago");
 		return new Promise(function(resolve,reject){
-			var respuetsa=false;
 			var insertar=resultado;
+			var exitoIns=null;
 			var tipo=flag;
 			var elPago=pPago;
 			if(insertar){
 				console.log("entre el if de insert pago");
-				console.log(insertar+" "+ tipo);
-
 				Pago.sequelize.query('INSERT into pagos (id,importe,mes,anio,tipomovimiento,concepto,pagoanulado,createdAt,updatedAt,mediopagoId,planId) VALUES (DEFAULT,:pImporte,:pMes,:pAnio,:pTipomovimiento,:pConcepto,:pPagoanulado, NOW(), NOW(),:pMediopagoId,:pPlanId)',
 		    	{ replacements: {pImporte:elPago.importe,pMes:elPago.mes,pAnio:elPago.anio,pTipomovimiento:tipo,pConcepto:elPago.concepto,pMediopagoId:elPago.mediopagoId,pPagoanulado:0,pPlanId:elPago.planId }, 
-		       	type: Pago.sequelize.QueryTypes.INSERT
-		    	}).then(pago => {
-						console.log("pago exitoso ins");
-						console.log(pago);
-						respuetsa=true;
-						resolve(true);
-					}).catch(function(e){
-						reject("Fallo al ins  Pago")
-					});
+					type: Pago.sequelize.QueryTypes.INSERT
+		    	}).then(function(response){
+					if(response.length>0){
+						exitoIns=true;
+						console.log("pago exitoso ins "+ exitoIns );
+					}else{
+						exitoIns=false;
+						console.log("no se hizo ins pago "+exitoIns );
+					}
+					console.log("antes de return "+ exitoIns );
+					return resolve(insertar);
+				}).catch(function(e){
+					reject("Fallo al ins  Pago")
+				});
+			}else{
+				console.log(" return si hice update de plan ni insert de pago "+ insertar );
+				return resolve(insertar);
 			}	
-
-			return resolve(respuetsa);
+			
+			
 		});
 }
 
