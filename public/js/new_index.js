@@ -1,7 +1,14 @@
-var app = angular.module('Gimnasio-Web', ['ngMaterial', 'ngMessages']);
+var app = angular.module('Gimnasio-Web', ['ngMaterial', 'ngMessages', 'ngCookies']);
 
-app.controller('Main', function ($scope, $http, $mdToast, $q, $window, $rootScope, $mdDialog) {
+app.controller('Main', function ($scope, $http, $mdToast, $q, $window, $rootScope, $mdDialog, $cookies) {
 
+   var chkLogin = $cookies.get('login');
+    //console.log(chkLogin);
+    if (chkLogin==0 || !chkLogin) {
+        console.log('bla');
+        window.location.href = "/login";
+    }
+    
     $scope.busco = false;
     var aux = false;
     var busqueda = '';

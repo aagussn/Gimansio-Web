@@ -1,8 +1,9 @@
 const Sequelize = require('sequelize');
 //const sequelize = new Sequelize('mysql://root:@localhost:3306/gimnasi1'); //conexion Test
-//const sequelize = new Sequelize('mysql://alcuboah_arenasdelpinar:arenas2018@localhost:3306/alcuboah_arenasdelpinar');//produccion
+//const sequelize = new Sequelize('mysql://alcuboah_arenasdelpinar:arenas2018@localhost:3306/alcuboah_arenasdelpinar', {timezone :'America/Montevideo'});//produccion
 //const sequelize = new Sequelize('mysql://root:@localhost:3306/gim2', {timezone :'America/Montevideo'});//{options.timezone : "-03:00"}); //conexion Test
 const sequelize = new Sequelize('mysql://root:@localhost:3306/a', {timezone :'America/Montevideo'}); //conexion Test
+//const sequelize = new Sequelize('mysql://alcuboah_arenasdelpinar:arenas2018@localhost:3306/alcuboah_arenasdelpinar-TEST', {timezone :'America/Montevideo'});//produccion
 
 
 sequelize
