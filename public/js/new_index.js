@@ -104,6 +104,7 @@ app.controller('Main', function ($scope, $http, $mdToast, $q, $window, $rootScop
 
         // Tengo que ir a buscar los datos a la BD
         $scope.persona = angular.copy(persona);
+        $scope.persona.fechaN = moment($scope.persona.fechaN, 'YYYY-MM-DD').toDate();
 
         // Voy a buscar los intereses/categorias cargados en la bd
         var request = $http.get('/api/itemcategoria').then(function (itemsCategoria) {
@@ -284,11 +285,12 @@ app.controller('Main', function ($scope, $http, $mdToast, $q, $window, $rootScop
             email: $scope.persona.email,
             telefono: $scope.persona.telefono,
             emergencia: $scope.persona.emergencia,
-            fechaN: $scope.persona.fechaN,
+            fechaN: moment($scope.persona.fechaN).format('YYYY-MM-DD'),
             idprofesion: $scope.persona.idprofesion,
             direccion: $scope.persona.direccion
         });
 
+        console.log(parameter);
         var request = $http.put('/api/personas/' + documento, parameter).then(function (respuesta) {
             console.log(respuesta);
             getPersonas();
