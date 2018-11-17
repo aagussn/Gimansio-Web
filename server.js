@@ -3,6 +3,8 @@ var db = require('./cfg/db');
 var path = require('path');
 var port = process.env.PORT || 3000; //test
 //var port = process.env.PORT || 49152; //produccion
+//var port = process.env.PORT || 49153; //TEST ONLINE
+
 
 
 require('./rutas/afiliacion.ruta.js')(app);
@@ -29,7 +31,7 @@ require('./rutas/mediopago.ruta.js')(app);
 
 // Ruta principal
     app.get('/', function (req, res) {
-      res.sendFile(path.join(__dirname + '/public/html/index.html'));
+      res.sendFile(path.join(__dirname + '/public/html/new_index.html'));
     });
 
     // En algunos casos poner href="/" no anda y por eso hice esto
