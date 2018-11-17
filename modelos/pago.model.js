@@ -12,13 +12,13 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
       },
       
-      importe: { type: Sequelize.INTEGER,  unique: 'pagounico' },
-      mes: { type: Sequelize.INTEGER,  unique: 'pagounico' },
-      anio:{ type: Sequelize.INTEGER,  unique: 'pagounico' },
-      tipomovimiento:{ type: Sequelize.INTEGER,  unique: 'pagounico' },
-      concepto:{ type: Sequelize.INTEGER,  unique: 'pagounico' },
-      pagoanulado: {type: Sequelize.INTEGER, unique: 'pagounico'},
-      planId: {type: Sequelize.INTEGER, unique: 'pagounico'},
+      importe: { type: Sequelize.INTEGER, },// unique: 'pagounico' },
+      mes: { type: Sequelize.INTEGER,},//  unique: 'pagounico' },
+      anio:{ type: Sequelize.INTEGER,},//  unique: 'pagounico' },
+      tipomovimiento:{ type: Sequelize.INTEGER,},//  unique: 'pagounico' },
+      concepto:{ type: Sequelize.INTEGER,},//  unique: 'pagounico' },
+      pagoanulado: {type: Sequelize.INTEGER, },//unique: 'pagounico'},
+      planId: {type: Sequelize.INTEGER, },//unique: 'pagounico'},
       
   });
 

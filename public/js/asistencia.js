@@ -1,6 +1,7 @@
-var app = angular.module('asistencia', ['ngCookies']);
-app.controller('myController', function($scope, $http, $cookies) {
-    
+var app = angular.module('GimnasioWeb', ['ngMaterial', 'ngMessages', 'ngCookies']);
+
+app.controller('asistencia', function ($scope, $http, $mdToast, $q, $window, $rootScope, $mdDialog, $cookies) {
+
    var chkLogin = $cookies.get('login');
     //console.log(chkLogin);
     if (chkLogin==0 || !chkLogin) {
@@ -147,5 +148,4 @@ app.controller('myController', function($scope, $http, $cookies) {
     // Orden de la tabla
     $scope.sortType     = 'documento'; // set the default sort type
     $scope.sortReverse  = false;  // set the default sort order
-
 });
