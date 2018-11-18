@@ -52,22 +52,22 @@ module.exports = (sequelize, Sequelize) => {
             },
            /* idobjetivos: {
                   type: Sequelize.STRING(20)
-            },*/
+            },
             idhorario: {
                   type: Sequelize.STRING(20)
             },
             idlogro: {
                   type: Sequelize.STRING(20)
             },
-            /*idinteres: {
+            idinteres: {
                   type: Sequelize.STRING(20)
-            },*/
+            },
             identerado: {
                   type: Sequelize.STRING(20)
             },
             idaviso: {
                   type: Sequelize.STRING(20)
-            },
+            },*/
       });
       Persona.hasMany(afi, { onDelete: 'cascade' });
       Persona.hasMany(coment , { onDelete: 'cascade' });

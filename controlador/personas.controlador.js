@@ -21,11 +21,11 @@ exports.create = (req, res) => {
 		direccion: req.body.direccion,
 		contactofamilia: req.body.contactofamilia,
 		nombrecontacto: req.body.nombrecontacto,
-		idprofesion: req.body.idprofesion,
+		/*idprofesion: req.body.idprofesion,
 		idhorario: req.body.idhorario,
 		idlogro: req.body.idlogro,
 		identerado: req.body.identerado,
-		idaviso: req.body.idaviso
+		idaviso: req.body.idaviso*/
 
 	}).then(persona => {
 		// Send created usuario to client
@@ -263,14 +263,6 @@ exports.lstPerAfiPln = (req, res) => {
 	console.log(req.query);
 	var condition = {
 
-		/*funciona
-			include: [
-				{
-        		model: db.afiliacion ,	
-        		},
-    		],
-    		order:[[{model: db.afiliacion},'id', 'DESC']],
-	*/
 		//prueba 
 		include: [{
 
@@ -286,14 +278,7 @@ exports.lstPerAfiPln = (req, res) => {
 
 				}, ],
 			},
-			/*{	
-        		model: db.categoria,
-					include: [
-						{
-        				model: db.itemcategoria,
-        			    },
-        			],   		
-        		},*/
+			
 
 		],
 		order: [
@@ -369,20 +354,12 @@ exports.listPerCategorias = (req, res) => {
 		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
 
-
-
-
 //me traigo con afiliacion vigente y sus asistencias
 exports.lstAfi1Asis = (req, res) => {
 	console.log(req.query);
 	var condition = {
-
-
 		where: {
-
 		},
-
-
 		include: [{
 				model: db.afiliacion,
 				where: {
@@ -415,8 +392,6 @@ exports.lstAfi1Asis = (req, res) => {
 		],
 
 	}
-
-
 	if (req.query.documento) {
 		condition.where.documento = req.query.documento
 	}
@@ -431,13 +406,8 @@ exports.lstAfi1Asis = (req, res) => {
 exports.lstAfiAsis = (req, res) => {
 	console.log(req.query);
 	var condition = {
-
-
 		where: {
-
 		},
-
-
 		include: [{
 				model: db.afiliacion,
 				include: [{
@@ -479,13 +449,8 @@ exports.lstAfiAsis = (req, res) => {
 exports.lstAfiLicencia = (req, res) => {
 	console.log(req.query);
 	var condition = {
-
-
 		where: {
-
 		},
-
-
 		include: [{
 				model: db.afiliacion,
 				include: [{
@@ -522,7 +487,6 @@ exports.listPagosVigentes = (req, res) => {
 	console.log(req.query);
 	var condition = {
 		where: {
-
 		},
 		include: [{
 			model: db.afiliacion,
@@ -577,7 +541,6 @@ exports.listTodosPagos = (req, res) => {
 	console.log(req.query);
 	var condition = {
 		where: {
-
 		},
 		include: [{
 			model: db.afiliacion,
@@ -598,6 +561,10 @@ exports.listTodosPagos = (req, res) => {
 			]
 		}, ],
 		order: [
+			[{
+				model: db.afiliacion
+			}, 'id', 'DESC'],
+
 			[db.afiliacion, {
 				model: db.planes
 			}, 'id', 'DESC'],
@@ -605,6 +572,9 @@ exports.listTodosPagos = (req, res) => {
 				model: db.pago
 			}, 'id', 'DESC']
 		],
+
+
+
 	}
 	if (req.query.documento) {
 		condition.where.documento = req.query.documento
