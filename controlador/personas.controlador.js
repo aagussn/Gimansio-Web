@@ -548,7 +548,12 @@ exports.listTodosPagos = (req, res) => {
 					model: db.planes,
 					include: [{
 							model: db.pago,
-						},
+								/*where: {
+								tipomovimiento: 1,
+								[Op.and]: {concepto: 1},
+								[Op.and]: { pagoanulado: 0}
+							}*/
+							},
 						{
 							model: db.mediopago,
 						},
