@@ -71,3 +71,4 @@ respaldo/controlador/pago_hist.controlador.js
 respaldo/controlador/pago.controlador.js
 respaldo/controlador/motivolicencia.controlador.js
 respaldo/controlador/mediopago.controlador.js
+cfg/db.js

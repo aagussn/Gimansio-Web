@@ -69,11 +69,9 @@ module.exports = (sequelize, Sequelize) => {
                   type: Sequelize.STRING(20)
             },
       });
-      Persona.hasMany(afi);
-      //Persona.hasMany(asis);
-      //Persona.hasMany(pg);
-      Persona.hasMany(coment);
-      Persona.hasMany(catego);
+      Persona.hasMany(afi, { onDelete: 'cascade' });
+      Persona.hasMany(coment , { onDelete: 'cascade' });
+      Persona.hasMany(catego , { onDelete: 'cascade' });
 
 
 

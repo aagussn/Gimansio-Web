@@ -19,9 +19,9 @@ module.exports = (sequelize, Sequelize) => {
            
 	});
 
-	Afiliacion.hasMany(plans);
-  Afiliacion.hasMany(asis);
-  Afiliacion.hasMany(licencia);
+	Afiliacion.hasMany(plans, { onDelete: 'cascade' });
+  Afiliacion.hasMany(asis, { onDelete: 'cascade' });
+  Afiliacion.hasMany(licencia, { onDelete: 'cascade' });
 
 
 	return Afiliacion;
