@@ -271,11 +271,51 @@ exports.lstPerAfiPln = (req, res) => {
 					model: db.planes,
 					where: {
 						fin: {
-							//[Op.gte]:sequelize.fn('DATE', sequelize.col('created_at')),
 							[Op.gte]: sequelize.literal('CURRENT_DATE')
 						}
 					}
 
+				}, ],
+			},
+			
+
+		],
+		order: [
+			[{
+				model: db.afiliacion
+			}, 'id', 'DESC'],
+			[db.afiliacion, {
+				model: db.planes
+			}, 'id', 'DESC']
+		],
+	}
+
+	Persona.findAll(condition)
+		.then(persona => {
+			res.send(persona);
+		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+};
+
+//me traigo con afiliacion y plan
+exports.lstAfiPln = (req, res) => {
+	console.log(req.query);
+	var condition = {
+
+		//prueba 
+		include: [{
+
+				model: db.afiliacion,
+				include: [{
+					model: db.planes,
+					include: [
+						{
+						model: db.tipoplanes,
+						},
+						{
+						model: db.mediopago,
+						},
+					
+					],
 				}, ],
 			},
 			
@@ -494,7 +534,6 @@ exports.listPagosVigentes = (req, res) => {
 				estado: 1
 			},
 			include: [{
-					model: db.planes,
 					model: db.planes,
 					where: {
 						fin: {

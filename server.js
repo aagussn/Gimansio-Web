@@ -1,9 +1,9 @@
 var app = require('./cfg/app');
 var db = require('./cfg/db');
 var path = require('path');
-var port = process.env.PORT || 3000; //test
-//var port = process.env.PORT || 49155; //produccion
-//var port = 49153; //TEST ONLINE
+//var port = process.env.PORT || 3000; //test
+var port = process.env.PORT || 49155; //produccion
+//var port = 49152; //TEST ONLINE
 
 
 
@@ -111,6 +111,11 @@ require('./rutas/mediopago.ruta.js')(app);
     app.get('/insertLicencia', function (req, res) {
       res.sendFile(path.join(__dirname + '/public/html/insertLicencia.html'));
     });     
+
+     // ultimo plan de los socios
+     app.get('/ultimoplan', function (req, res) {
+      res.sendFile(path.join(__dirname + '/public/html/ultimosPlanes.html'));
+    }); 
 
 try {
 var server = app.listen(port, function() {

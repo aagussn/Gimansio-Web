@@ -30,6 +30,10 @@ module.exports = function(app) {
     app.get('/api/lstCompleta', personas.lstCompleta);
    
 
+    //me traigo con afiliacion vigente y sus planes
+    app.get('/api/lstAfiPln', personas.lstAfiPln);
+
+
 
     //****************************Comentarios y categorias **********************
 

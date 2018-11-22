@@ -15,82 +15,106 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- Iconos -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" >
-    <title>Asistencias</title>
+    <title>Inasistencias</title>
   </head>
   <body ng-controller="inasistencia" ng-cloak>
+      <br><br>
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <!--<div flex style="float: right; ">-->
+            <md-fab-speed-dial md-open="false" md-direction="right" ng-class="'md-fling'">
+              <md-fab-trigger>
+                <md-button aria-label="menu" class="md-fab md-warn">
+                  <md-tooltip md-direction="top">Menu</md-tooltip>
+                  <md-icon class="material-icons">menu</md-icon>
+                </md-button>
+              </md-fab-trigger>
+              <md-fab-actions>
+    
+                <md-button aria-label="cloud" class="md-fab md-raised md-mini" href="/new_index">
+                  <md-tooltip md-direction="top">Inicio</md-tooltip>
+                  <md-icon class="material-icons" aria-label="cloud" href="/new_index">home</md-icon>
+                </md-button>
+    
+                <md-button aria-label="cloud" class="md-fab md-raised md-mini" href="/ingreso" target="_blank">
+                  <md-tooltip md-direction="top">Ingreso</md-tooltip>
+                  <md-icon class="material-icons" aria-label="cloud">group_add</md-icon>
+                </md-button>
+    
+                <md-button aria-label="Facebook" class="md-fab md-raised md-mini" href="/asistencia">
+                  <md-tooltip md-direction="top">Asistencias</md-tooltip>
+                  <md-icon class="material-icons" aria-label="Facebook">add_circle_outline</md-icon>
+                </md-button>
+    
+                <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini" href="/inasistencia">
+                  <md-tooltip md-direction="top">Inasistencias</md-tooltip>
+                  <md-icon class="material-icons" aria-label="Google Hangout">remove_circle_outline</md-icon>
+                </md-button>
+    
+                <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini" href="/ultimoplan">
+                  <md-tooltip md-direction="top">Ultimos planes</md-tooltip>
+                  <md-icon class="material-icons" aria-label="Google Hangout">view_headline</md-icon>
+                </md-button>
+    
+              </md-fab-actions>
+            </md-fab-speed-dial>
+            <!--</div>-->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <h1>Inasistencias</h1>
+          </div>
+          <br><br><br>
+        </div>
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <input type="text" ng-model="busqueda" placeholder="Buscar">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-12">
+            <div style="overflow-x:auto;">
+                <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col" >Documento</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Situación</th>
+                        <th scope="col">Fecha</th>   
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="item in lstInsasit | filter:busqueda  | orderBy : -fecha | limitTo: 50 "  ng-class="{'table-success': item.tienedauda=='0', 'table-danger': item.tienedauda>'0'}"> 
+                        <td >{{item.documento}} </td>
+                        <td>{{item.nombre}}</td>
+                        <td>{{item.apellido}}</td>
+                        <td>
+                          <label for="tienedauda" ng-show="item.tienedauda=='0'">Al dia</label>
+                          <label for="tienedauda" ng-show="item.tienedauda=='1'">Debe</label>
+                          <label for="tienedauda" ng-show="item.tienedauda=='2'">No tiene plan</label>
+                        </td>
+                        <td>{{item.fecha}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+          </div>
+        </div>
+      </div> 
+     
+
+
+
+
       
 
-    <div flex style="float: right; position: fixed;">
-    <md-fab-speed-dial md-open="false" md-direction="down" ng-class="'md-fling'">
-      <md-fab-trigger>
-        <md-button aria-label="menu" class="md-fab md-warn">
-          <md-tooltip md-direction="top">Menu</md-tooltip>
-          <md-icon class="material-icons">menu</md-icon>
-        </md-button>
-      </md-fab-trigger>
-      <md-fab-actions>
-
-        <md-button aria-label="cloud" class="md-fab md-raised md-mini" href="/new_index">
-          <md-tooltip md-direction="top">Inicio</md-tooltip>
-          <md-icon class="material-icons" aria-label="cloud" href="/new_index">home</md-icon>
-        </md-button>
-
-        <md-button aria-label="cloud" class="md-fab md-raised md-mini" href="/ingreso" target="_blank">
-          <md-tooltip md-direction="top">Ingreso</md-tooltip>
-          <md-icon class="material-icons" aria-label="cloud">group_add</md-icon>
-        </md-button>
-
-        <md-button aria-label="Facebook" class="md-fab md-raised md-mini" href="/asistencia">
-          <md-tooltip md-direction="top">Asistencias</md-tooltip>
-          <md-icon class="material-icons" aria-label="Facebook">add_circle_outline</md-icon>
-        </md-button>
-
-        <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini" href="/inasistencia">
-          <md-tooltip md-direction="top">Inasistencias</md-tooltip>
-          <md-icon class="material-icons" aria-label="Google Hangout">remove_circle_outline</md-icon>
-        </md-button>
-      </md-fab-actions>
-    </md-fab-speed-dial>
-       </div>
-  <div class="container content-wrapper">
-  <div class="container-fluid">  
-    <div class="container form-row" >
-      <input class="col-sm-3" type="text" ng-model="busqueda" placeholder="Buscar">
-     <!-- <input class="col-sm-3" type="text" ng-model="search.nombre" placeholder="Nombre">
-      <input class="col-sm-3" type="text" ng-model="search.apellido" placeholder="Apellido">
-      <input class="col-sm-3" type="text" ng-model="search.fecha" placeholder="Fecha u hora">-->
-    </div>
-    <div class="container form-row d-md-flex">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col" >Documento</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">tiene deuda</th>
-                <th scope="col">fecha</th>   
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat="item in lstInsasit | filter:busqueda  | orderBy : -fecha | limitTo: 50 "  ng-class="{'table-success': item.tienedauda=='0', 'table-danger': item.tienedauda>'0'}"> 
-                <td >{{item.documento}} </td>
-                <td>{{item.nombre}}</td>
-                <td>{{item.apellido}}</td>
-                <td>
-                  <label for="tienedauda" ng-show="item.tienedauda=='0'">Al dia</label>
-                  <label for="tienedauda" ng-show="item.tienedauda=='1'">Debe</label>
-                  <label for="tienedauda" ng-show="item.tienedauda=='2'">No tiene plan</label>
-                </td>
-
-                <td>{{item.fecha}}</td>
-              </tr>
-            </tbody>
-          </table>  
-        </div>
 
 
-  </div>
-</div>  
+
+         
     <!--  jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="/js/jquery-3.3.1.min.js" ></script>
     <script src="/js/popper.min.js" ></script>
