@@ -223,16 +223,21 @@
                 <md-subheader class="md-no-sticky" ng-click="miPago=!miPago " style="background-color: rgba(207, 207, 207, 0.733)">
                   <i class="fas fa-caret-down md-avatar" ng-show="!miPago"></i>
                   <i class="fas fa-caret-up md-avatar" ng-show="miPago"></i> 
-                  Plan {{plan.tipoplan.descripcion}} Periodo: {{plan.inicio}} / {{plan.fin}} Meses: {{plan.duracion}} Importe: {{plan.importepago}}/{{plan.importeplan}} Cuotas: {{plan.cuotasvan}}/{{plan.cuotasson}} Medio de pago: {{plan.mediopago.descripcion}}
+                  <br> Plan {{plan.tipoplan.descripcion}} <br> &nbsp Periodo: {{plan.inicio}}/{{plan.fin}} &nbsp&nbsp Meses:{{plan.duracion}} &nbsp&nbsp Importe:{{plan.importepago}}/{{plan.importeplan}}&nbsp&nbsp Cuotas:{{plan.cuotasvan}}/{{plan.cuotasson}}&nbsp&nbsp Medio de pago:{{plan.mediopago.descripcion}}
                 </md-subheader>
                 <div ng-repeat="pago in plan.pagos | orderBy: '-id'" ng-show="miPago">
+                  <div ng-show="pago.tipomovimiento==1 && pago.pagoanulado==0 ">
                   <md-list-item class="md-3-line md-long-text" >
                     <div class="md-list-item-text" >
-                      <p>Pago {{pago.id}} 
-                      Importe: {{pago.importe}}
-                      Mes: {{pago.mes}} - Anio: {{pago.anio}}
-                      Tipo de movimiento: {{pago.tipomovimiento}} - Concepto: {{pago.concepto}} - Anulado: {{pago.pagoanulado}} </p>
+                                          
+                      <p>Pago {{pago.id}}  <br>&nbsp
+                      Importe: {{pago.importe}}  &nbsp 
+                      Mes: {{pago.mes}} &nbsp - Anio:{{pago.anio}} &nbsp
+                      Tipo de movimiento: {{pago.tipomovimiento}} &nbsp&nbsp   Concepto:{{pago.concepto}}&nbsp&nbsp Anulado:{{pago.pagoanulado}}&nbsp&nbsp&nbsp  Fecha de pago: {{pago.createdAt}} </p>
                       <md-icon style="color: rgba(255, 0, 0, 0.603)" aria-label="Delete Pago" ng-click="deletePago(pago,plan)" class="md-secondary"><md-tooltip md-direction="left">Eliminar</md-tooltip>delete_forever</md-icon>
+
+                      </div>
+                      
                     </div>
                   </md-list-item>                  
                 </div>

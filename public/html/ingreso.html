@@ -12,6 +12,10 @@
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <!-- Animate ccs -->
+	<link rel="stylesheet" href="/css/animate.css">
+	<link rel="stylesheet" href="/css/misCss.css">
+
     <!-- Dependencias de angular y material-->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
@@ -43,14 +47,13 @@
     <form class="form-signin" ng-submit="submit()">
       <div class="container"></div><br>
       <div class="container container-fluid" align="center">
-        <img class="d-md-flex" src="/img/logo.png" alt="" width="200" height="200" ><br>
-        <h3>Bienvenido</h3><br>
-        
+        <img class="animated  zoomIn delay-0.5s"  src="/img/logo.png" alt="" width="200" height="200" ><br>
+        <h3 class="animated  zoomIn delay-1s" >Bienvenido</h3><br><br>
+        <div class="animated  zoomIn delay-2s" >
         <label for="inputUser " class="sr-only ">Documento</label>
-        <input type="text" id="documento"  class="input-xl" placeholder="Documento" ng-model="Documento" required autofocus>
+        <input  type="text" id="documento"  class="input-xl" placeholder="Documento" ng-model="Documento" required autofocus>
 
-
-        <button class="btn btn-md btn-primary" type="submit" id="submit" value="Submit" alert=true">INGRESAR</button><br><br>
+        <button class="btn btn-md btn-primary  animated infinite pulse delay-3s" type="submit" id="submit" value="Submit" alert=true">INGRESAR</button><br><br>
 
 
         <div ng-switch on="bandera">
@@ -136,8 +139,8 @@
             </tbody>
           </table>  
         </div>
-
-
+        
+        </div>    
       </div>   
     </form>
   </body>

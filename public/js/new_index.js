@@ -209,6 +209,20 @@ app.controller('Main', function ($scope, $http, $mdToast, $q, $window, $rootScop
             // Voy a buscar las afiliaciones con sus pagos de la persona
             var request = $http.get('/api/listTodosPagos?documento=' + documento).then(function (perPago) {
                 if (perPago.data[0]) {
+                    //moment().format('MMMM Do YYYY, h:mm:ss a');
+                    //pagos.createdAt=moment(pagos.createdAt, 'MMMM Do YYYY, h:mm:ss a').toDate();
+                    //perPago.data[0].afiliacions.plan[0].pago.createdAt=moment(perPago.data[0].afiliacions.plan[0].pago.createdAt, 'MMMM Do YYYY, h:mm:ss a').toDate();
+                    //console.log("aca llegooooooooooooooooooooooooooooo");
+                    for(var a=0;a<perPago.data.length;a++){
+                        for(var b=0;b<perPago.data[a].afiliacions.length;b++){
+                            for(var c=0;c<perPago.data[a].afiliacions[b].plans.length;c++){
+                                for(var d=0;d<perPago.data[a].afiliacions[b].plans[c].pagos.length;d++){
+                                    perPago.data[a].afiliacions[b].plans[c].pagos[d].createdAt= moment(perPago.data[a].afiliacions[b].plans[c].pagos[d].createdAt).format('lll');
+
+                                }
+                            }
+                        }
+                    }
                     $scope.afiliaciones = perPago.data[0].afiliacions;
                     console.log($scope.afiliaciones);
                     $scope.planActivo = perPago.data[0].afiliacions[0].plans[0];
