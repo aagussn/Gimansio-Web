@@ -267,15 +267,7 @@ exports.lstPerAfiPln = (req, res) => {
 		include: [{
 
 				model: db.afiliacion,
-				include: [{
-					model: db.planes,
-					where: {
-						fin: {
-							[Op.gte]: sequelize.literal('CURRENT_DATE')
-						}
-					}
-
-				}, ],
+				
 			},
 			
 
@@ -283,9 +275,6 @@ exports.lstPerAfiPln = (req, res) => {
 		order: [
 			[{
 				model: db.afiliacion
-			}, 'id', 'DESC'],
-			[db.afiliacion, {
-				model: db.planes
 			}, 'id', 'DESC']
 		],
 	}

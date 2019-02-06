@@ -81,7 +81,7 @@ app.controller('Main', function ($scope, $http, $mdToast, $q, $window, $rootScop
 
         $scope.personas = {};
 
-        var request = $http.get('/api/personas').then(function (personas) {
+        var request = $http.get('/api/lstPerAfiPln').then(function (personas) {
             $scope.personas = personas.data;
             console.log(personas.data);
         });
@@ -768,6 +768,35 @@ app.controller('Main', function ($scope, $http, $mdToast, $q, $window, $rootScop
             getUnaPersona($scope.persona);
         });
     };
+
+    $scope.deleteAfi = function(id) {
+        var parameter = JSON.stringify({
+            estado: 0
+        });
+
+        //console.log(parameter);
+
+        var request = $http.put('/api/afiliacions/' + id, parameter).then(function (respuesta) {
+            console.log(respuesta);
+            getPersonas();
+            getUnaPersona($scope.persona);
+        });
+    };
+
+    $scope.newAfi = function(pdocumento, pestado) {
+        var parameter = JSON.stringify({
+            estado: pestado,
+            personaDocumento: pdocumento
+        });
+
+        //console.log(parameter);
+
+        var request = $http.post('/api/afiliacions', parameter).then(function (respuesta) {
+            console.log(respuesta);
+            getPersonas();
+            getUnaPersona($scope.persona);
+        });
+    };    
 
     // ------------------------------------------------
     // Actualizacion datos en la pantalla    

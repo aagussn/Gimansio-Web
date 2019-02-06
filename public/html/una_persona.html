@@ -209,13 +209,21 @@
                 </md-card-title-text>
               </md-card-title>
               <md-card-actions layout="row" layout-align="end center">
-                <md-button class="md-warn md-hue-2" ng-click="deletePlan(planActivo.id)" ng-disabled="planActivo == null" >Eliminar plan</md-button>
-                <md-button class="md-primary" ng-click="showPago($event)" ng-disabled="planActivo == null || planActivo.cuotasvan == planActivo.cuotasson">Pagar</md-button>
-                <md-button ng-click="newPlan($event)" ng-disabled="planActivo.cuotasvan != planActivo.cuotasson ">Crear nuevo plan</md-button>
+                <md-button class="md-warn md-hue-2" ng-click="deletePlan(planActivo.id)" ng-disabled="planActivo == null || afiliaciones[0].estado == '0'" >Eliminar plan</md-button>
+                <md-button class="md-primary" ng-click="showPago($event)" ng-disabled="planActivo == null || planActivo.cuotasvan == planActivo.cuotasson || afiliaciones[0].estado == '0'">Pagar</md-button>
+                <md-button ng-click="newPlan($event)" ng-disabled="planActivo.cuotasvan != planActivo.cuotasson || afiliaciones[0].estado == '0'">Crear nuevo plan</md-button>
               </md-card-actions>
             </md-card>
+            <md-divider></md-divider>
+          <div >
+            <h2>Afiliacion 
+                <md-button class="md-warn md-hue-2" ng-click="deleteAfi(afiliaciones[0].id)" ng-disabled="afiliaciones[0].estado == '0'" >Dar de baja</md-button>
+                <md-button class="md-primary" ng-click="newAfi(persona.documento, 1)" ng-disabled="afiliaciones[0].estado == '1'">Dar de alta</md-button>
+            </h2>
+          </div>
 
-          
+          <md-divider></md-divider>
+
           <md-list flex>
             <div ng-repeat="afiliacion in afiliaciones | orderBy: '-id'">
               <md-toolbar ng-click="miPlan=!miPlan"> <div class="md-toolbar-tools md-hue-2"><span><i class="fas fa-caret-down" ng-show="!miPlan"></i> <i class="fas fa-caret-up" ng-show="miPlan"></i> Afiliacion: {{afiliacion.id}} </span></div> </md-toolbar>

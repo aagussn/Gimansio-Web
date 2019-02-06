@@ -23,9 +23,12 @@
               <md-list style="height: {{hgt}}px !important;">
                 <md-list-item class="md-3-line" ng-repeat="item in personas | filter:busqueda" data-ng-click="BindSelPersona(item)"
                   layout="row">
-                  <div class="md-list-item-text" layout="column">
+                  <div class="md-list-item-text md-accent" layout="column" >
                     <h3>Nombre: {{item.nombre}} {{item.apellido}}</h3>
                     <h4>CI: {{item.documento}}</h4>
+
+                    <h4 ng-show="item.afiliacions[0].estado=='1'" style="color: green">Activo</h4>
+                    <h4 ng-show="item.afiliacions[0].estado=='0'" style="color: firebrick">Inactivo</h4>
                   </div>
                 </md-list-item>
               </md-list>
