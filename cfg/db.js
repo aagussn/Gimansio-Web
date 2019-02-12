@@ -3,10 +3,9 @@ const Sequelize = require('sequelize');
 //const sequelize = new Sequelize('mysql://alcuboah_arenasdelpinar:arenas2018@localhost:3306/alcuboah_arenasdelpinar', {timezone :'America/Montevideo'});//produccion
 //const sequelize = new Sequelize('mysql://alcuboah_arenasdelpinar:arenas2018@localhost:3306/alcuboah_arenasdelpinar-nueva', {timezone :'America/Montevideo'});//produccion
 
-
-const sequelize = new Sequelize('mysql://root:@localhost:3306/a', {timezone :'America/Montevideo'}); //conexion Test local
+//const sequelize = new Sequelize('mysql://root:@localhost:3306/a', {timezone :'America/Montevideo'}); //conexion Test local
 //const sequelize = new Sequelize('mysql://alcuboah_arenasdelpinar:arenas2018@localhost:3306/alcuboah_arenasdelpinar-TEST', {timezone :'America/Montevideo'});//test-online
-
+const sequelize = new Sequelize('mysql://alcuboah_arenasdelpinar:arenas2018@localhost:3306/alcuboah_Mostrar', {timezone :'America/Montevideo'}); //conexion Test mustra programa
 
 
 
@@ -28,17 +27,13 @@ sequelize
   });
 
   //si la estructura de la base de datos no existe la crea
-
 sequelize.sync();
 
 
 
 // Forzado: true dropea las tablas si existen
-
 //sequelize.sync({force: true}).then(() => {
-
-//  console.log('Drop and Resync with { force: true }');
-
+//	console.log('Drop and Resync with { force: true }');
 //});  
 
  
