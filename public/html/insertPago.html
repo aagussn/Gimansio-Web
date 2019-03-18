@@ -19,7 +19,7 @@
           <md-input-container >
               <label>Medio de pago</label>
               <md-select ng-model="mediopago" required>
-                <md-option ng-repeat="medio in mediospagos" value="{{medio.id}}">{{medio.descripcion}}</md-option>
+                <md-option ng-repeat="medio in mediospagos" value="{{medio.id}}" ng-selected="medio.id == 1">{{medio.descripcion}}</md-option>
               </md-select>
               </md-input-container>
         </div>

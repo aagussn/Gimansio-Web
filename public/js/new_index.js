@@ -308,7 +308,9 @@ app.controller('Main', function ($scope, $http, $mdToast, $q, $window, $rootScop
         var request = $http.put('/api/personas/' + documento, parameter).then(function (respuesta) {
             console.log(respuesta);
             getPersonas();
-            getUnaPersona($scope.persona);
+            var request = $http.get('/api/personas/' + documento).then(function (respuesta) {
+                getUnaPersona(respuesta.data);
+            });
         });
     };
 
