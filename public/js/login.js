@@ -24,7 +24,7 @@ app.controller('LoginControl',  function($scope, $http, $cookies) {
 	        if (data.length >=1 ) {
 	        	var now = new Date();
 	        	var exp = new Date(now);
-	        	exp.setMinutes(now.getMinutes()+60)
+	        	exp.setMinutes(now.getMinutes()+300)
 	        	$cookies.put('login', 1, {'expires': exp});
 	        	window.location.href = "/";
 	        	console.log("Boh");
