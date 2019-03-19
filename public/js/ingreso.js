@@ -66,19 +66,20 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 
 			//consulta.success(function(data) {
 			    if(data.data.length>0){
-			        console.log("tiene afiliacion vigente y existe la persona");
+			        console.log("afiliacion vigente  existe persona"); 
 			        //Me quedo con el ultimo plan
 			        var encontrePlan=false;
 			        for(var a=0;a<data.data.length && !encontrePlan ;a++ ){
 			        	//la persona
 			        	var persona=data.data[a];
-			        	console.log("asigne a la persona");
+			        	console.log("selecciono persona " + persona.documento );
 			        	//lista afiliaciones
 				        if(persona.afiliacions.length>0){
 				        	var lstAfiliaciones=persona.afiliacions;
-				        	console.log("lista afiliaciones" );
+				        	console.log("afiliaciones, largo " +lstAfiliaciones.length );
 				        	for(var b=0;b<lstAfiliaciones.length && !encontrePlan ;b++ ){
 				        		var afiliacion=lstAfiliaciones[b];
+				        	    console.log("afiliaciones numero " +afiliacion.id );
 				        		//creo lo que voy a insertar, resta actualizar solo el tipo de deuda dependiendo de la situacion del afiliado
 								personaAsistencia = {
 												afiliacionId: afiliacion.id,
@@ -89,11 +90,11 @@ app.controller('myController', function($scope,$http,$timeout, $q,$cookies){
 				        		//me quedo con los planes de la afiliacion vigente
 				        		if(afiliacion.plans.length>0){
 					        		var lstPlanes=afiliacion.plans;
-					        		console.log("tengo lista de planes");
+					        		console.log("planes, largo " +lstPlanes.length );
 					        		for(var c=0;c<lstPlanes.length && !encontrePlan ;c++ ){
 					        			var plan=lstPlanes[c];
 					        			$scope.msjplan=plan;
-					       				console.log("tengo el plan");
+					       				console.log("id plan " +plan.id );
 					       				var lstfechaPLan =dividirCadena(plan.fin, "-",0);
 					       				if(lstfechaPLan>=fecha){
 					        				console.log("plan vigente");
