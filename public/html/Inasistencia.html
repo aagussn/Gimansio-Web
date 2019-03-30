@@ -1,60 +1,135 @@
 <!doctype html>
-<html lang="en" ng-app="inasistencia">
+<html lang="en" ng-app="GimnasioWeb">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS  -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/common.css">
 
+    
+    <link rel="stylesheet" href="/css/angular-material.css">
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- Iconos -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" >
-    <title>Inasistencia</title>
-   </head>
-  <body ng-controller="myController">
-  
-  <div ng-include="'/barra'"> </div>    
-  <div class="container"><br><br><br></div>
-  <div class="container content-wrapper">
-  <div class="container-fluid">  
-    <div class="container form-row" >
-      <input class="col-sm-3" type="text" ng-model="search.documento" placeholder="Documento">
-      <input class="col-sm-3" type="text" ng-model="search.nombre" placeholder="Nombre">
-      <input class="col-sm-3" type="text" ng-model="search.apellido" placeholder="Apellido">
-      <input class="col-sm-3" type="text" ng-model="search.fecha" placeholder="Fecha u hora">
-    </div>
-    <div class="container form-row">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col" > <a href="#" ng-click="sortType = 'documento'"> Documento </a></th>
-            <th scope="col"> <a href="#" ng-click="sortType = 'nombre'"> Nombre</a></th>
-            <th scope="col"><a href="#" ng-click="sortType = 'apellido'">Apellido</a></th>
-            <th scope="col"><a href="#" ng-click="sortType = 'fecha'">Fecha</a></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="item in data | filter:search:strict | orderBy:sortType:false | limitTo: 20 ">
-             <th scope="row"><a href="#" ng-click="updPersona(item.documento)">{{item.documento}}</a>.</th>         
-            <td>{{item.nombre}}</td>
-            <td>{{item.apellido}}</td>
-            <td>{{item.fecha}}</td>
-          </tr>
-        </tbody>
-      </table>  
-    </div>
-  </div>
-</div>  
-    <!-- Optional JavaScript -->
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
-  <script src="/js/inasistencias.js"></script>
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="../js/jquery-3.3.1.min.js" ></script>
-    <script src="../js/popper.min.js" ></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="/js/common.js"></script>
+    <title>Inasistencias</title>
+  </head>
+  <body ng-controller="inasistencia" ng-cloak>
+      <br><br>
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <!--<div flex style="float: right; ">-->
+            <md-fab-speed-dial md-open="false" md-direction="right" ng-class="'md-fling'">
+              <md-fab-trigger>
+                <md-button aria-label="menu" class="md-fab md-warn">
+                  <md-tooltip md-direction="top">Menu</md-tooltip>
+                  <md-icon class="material-icons">menu</md-icon>
+                </md-button>
+              </md-fab-trigger>
+              <md-fab-actions>
+    
+                <md-button aria-label="cloud" class="md-fab md-raised md-mini" href="/new_index">
+                  <md-tooltip md-direction="top">Inicio</md-tooltip>
+                  <md-icon class="material-icons" aria-label="cloud" href="/new_index">home</md-icon>
+                </md-button>
+    
+                <md-button aria-label="cloud" class="md-fab md-raised md-mini" href="/ingreso" target="_blank">
+                  <md-tooltip md-direction="top">Ingreso</md-tooltip>
+                  <md-icon class="material-icons" aria-label="cloud">group_add</md-icon>
+                </md-button>
+    
+                <md-button aria-label="Facebook" class="md-fab md-raised md-mini" href="/asistencia">
+                  <md-tooltip md-direction="top">Asistencias</md-tooltip>
+                  <md-icon class="material-icons" aria-label="Facebook">add_circle_outline</md-icon>
+                </md-button>
+    
+                <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini" href="/inasistencia">
+                  <md-tooltip md-direction="top">Inasistencias</md-tooltip>
+                  <md-icon class="material-icons" aria-label="Google Hangout">remove_circle_outline</md-icon>
+                </md-button>
+    
+                <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini" href="/ultimoplan">
+                  <md-tooltip md-direction="top">Ultimos planes</md-tooltip>
+                  <md-icon class="material-icons" aria-label="Google Hangout">view_headline</md-icon>
+                </md-button>
+    
+              </md-fab-actions>
+            </md-fab-speed-dial>
+            <!--</div>-->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <h1>Inasistencias</h1>
+          </div>
+          <br><br><br>
+        </div>
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <input type="text" ng-model="busqueda" placeholder="Buscar">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-12">
+            <div style="overflow-x:auto;">
+                <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col" >Documento</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Situación</th>
+                        <th scope="col">Fecha</th>   
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="item in lstInsasit | filter:busqueda  | orderBy : -fecha | limitTo: 50 "  ng-class="{'table-success': item.tienedauda=='0', 'table-danger': item.tienedauda>'0'}"> 
+                        <td >{{item.documento}} </td>
+                        <td>{{item.nombre}}</td>
+                        <td>{{item.apellido}}</td>
+                        <td>
+                          <label for="tienedauda" ng-show="item.tienedauda=='0'">Al dia</label>
+                          <label for="tienedauda" ng-show="item.tienedauda=='1'">Debe</label>
+                          <label for="tienedauda" ng-show="item.tienedauda=='2'">No tiene plan</label>
+                        </td>
+                        <td>{{item.fecha}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+          </div>
+        </div>
+      </div> 
+     
+
+
+
+
+      
+
+
+
+
+         
+    <!--  jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="/js/jquery-3.3.1.min.js" ></script>
+    <script src="/js/popper.min.js" ></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+    <!-- Dependencias de angular y material-->
+    
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-cookies.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script>
+    <script src="/js/inasistencias.js"></script>
   </body>
 </html>

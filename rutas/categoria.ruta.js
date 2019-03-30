@@ -13,8 +13,13 @@ module.exports = function(app) {
     app.get('/api/categoria/:id', categoria.findById);
  
     // Update a categoria with Id
-    app.put('/api/categoria/:id', categoria.update);
+    //app.put('/api/categoria/:id', categoria.update);
  
     // Delete a categoria with Id
-    app.delete('/api/categoria/:id', categoria.delete);
+   // app.delete('/api/categoria/:id', categoria.delete);
+
+
+    // Delete a categoria with CI
+    app.delete('/api/categoria/:documento', categoria.deleteCI);
+    
 }

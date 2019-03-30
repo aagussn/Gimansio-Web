@@ -1,0 +1,283 @@
+<div ng-switch on="unaPersona" ng-cloak>
+  <md-content ng-switch-when="0">
+    <h1> Seleccione una persona para ver sus datos </h1>
+  </md-content>
+
+  <md-content class="md-padding" ng-switch-when="2">
+    <h1 class="md-display-2">Ingreso persona</h1>
+    <md-card>      
+      <md-card-header>
+        <md-card-header-text>
+          <div layout="row">
+            <md-input-container>
+              <label>Documento</label>
+              <input ng-model="documentoIns" ng-change="validate_ci(documentoIns)" value="false">
+            </md-input-container>
+            <md-button class="md-raised md-primary" ng-click="insertPersona(documentoIns)" ng-disabled="validar==false">Insertar</md-button>
+          </div>
+        </md-card-header-text>
+      </md-card-header>
+      </md-card>
+  </md-content>
+
+  <md-content ng-switch-when="1">
+    <md-tabs md-dynamic-height md-border-bottom>
+      
+      <md-tab label="Personales">
+        <md-content class="md-padding">
+          <h1 class="md-display-2">Datos Personales</h1>
+          <md-card>
+            
+            <md-card-header>
+              <md-card-header-text>
+                <div layout="row">
+                  <md-input-container>
+                    <label>Documento</label>
+                    <input ng-model="persona.documento" ng-disabled="true">
+                  </md-input-container>
+                </div>
+              </md-card-header-text>
+            </md-card-header>
+            
+            <md-card-content>
+              <div layout="row">
+                <md-input-container>
+                  <label>Nombre</label class="md-block">
+                  <input ng-model="persona.nombre">
+                </md-input-container>
+                <md-input-container class="md-block">
+                  <label>Apellido</label>
+                  <input ng-model="persona.apellido">
+                </md-input-container>
+                <md-input-container class="md-block">
+                  <label>Sexo</label>
+                  <md-select ng-model="persona.sexo" placeholder="Sexo">
+                    <md-option ng-repeat="sexo in sexos" value="{{sexo.abbrev}}">{{sexo.abbrev}}</md-option>
+                  </md-select>
+                </md-input-container>                                
+              </div>
+              
+              <div layout="row">
+                <md-input-container>
+                  <label>Email</label class="md-block">
+                  <input type="email" ng-model="persona.email">
+                </md-input-container>
+                <md-input-container class="md-block">
+                  <label>Telefono</label>
+                  <input ng-model="persona.telefono">
+                </md-input-container>
+                <md-input-container class="md-block">
+                  <label>Emergencia</label>
+                  <input ng-model="persona.emergencia">
+                </md-input-container>                                
+              </div>
+
+              <div layout="row">
+                <md-input-container>
+                  <label>Nacimiento</label class="md-block">
+                  <md-datepicker ng-model="persona.fechaN"> </md-datepicker>
+                </md-input-container>
+                <md-input-container class="md-block">
+                  <label>Profesion</label>
+                 <md-select ng-model="persona.idprofesion" placeholder="Profesion">
+                    <md-option ng-repeat="profesion in profesiones" value="{{profesion.value}}">{{profesion.abbrev}}</md-option>
+                  </md-select>
+                </md-input-container>
+                <md-input-container class="md-block">
+                  <label>Direccion</label>
+                  <input ng-model="persona.direccion">
+                </md-input-container>                                
+              </div>  
+              <md-button class="md-raised md-primary" ng-click="actPersonales()">Actualizar</md-button>
+            </md-card-content>
+          </md-card>
+        </md-content>
+      </md-tab>
+      
+      <md-tab label="Contacto">
+        <md-content class="md-padding">
+          
+          <div layout="column">
+            <h1 class="md-display-2">Datos Contacto</h1>
+              <div layout="row">
+                <md-input-container>
+                  <label>Nombre</label class="md-block">
+                  <input ng-model="persona.nombrecontacto"> 
+                </md-input-container>
+                <md-input-container class="md-block">
+                  <label>Telefono</label>
+                  <input ng-model="persona.contactofamilia">
+                </md-input-container>
+              </div>
+            <h1 class="md-display-2">Intereses</h1>
+
+            <div layout="row">
+              <!-- Objetivos -->
+              <div layout="column" flex="30" >              
+                <label >Objetivos</label>
+                <md-input-container>
+                  <md-select ng-model="selectedObjetivos" aria-label="1" multiple ng-change="cambioObjetivo(selectedObjetivos)">
+                    <md-option ng-value="objetivo.id" ng-repeat="objetivo in objetivos">{{objetivo.name}}</md-option>
+                  </md-select>
+                </md-input-container>
+              </div>            
+
+              <!-- Hacerlo -->
+              <div layout="column" flex="30" >              
+                <label>Hacerlo</label>
+                <md-input-container>
+                  <md-select ng-model="selectedHacerlo" aria-label="2" multiple ng-change="cambioHacerlo(selectedHacerlo)">
+                    <md-option ng-value="hacerlo.id" ng-repeat="hacerlo in hacerlos">{{hacerlo.name}}</md-option>
+                  </md-select>
+                </md-input-container>
+              </div>            
+              <!-- Lograrlo -->
+              <div layout="column" flex="30" >              
+                <label >Lograrlo</label>
+                <md-input-container>
+                  <md-select ng-model="selectedLograrlo" aria-label="3" multiple ng-change="cambioLograrlo(selectedLograrlo)">
+                    <md-option ng-value="lograrlo.id" ng-repeat="lograrlo in lograrlos">{{lograrlo.name}}</md-option>
+                  </md-select>
+                </md-input-container>
+              </div>            
+            </div>
+            <div layout="row">
+              <!-- Interesa -->
+              <div layout="column" flex="30" >              
+                <label >Interesa</label>                
+                <md-input-container>
+                  <md-select ng-model="selectedInteresa" aria-label="4" multiple ng-change="cambioInteresa(selectedInteresa)">
+                    <md-option ng-value="interesa.id" ng-repeat="interesa in interesas">{{interesa.name}}</md-option>
+                  </md-select>
+                </md-input-container>
+              </div>            
+              <!-- Entere -->
+              <div layout="column" flex="30" >              
+                <label >Entere</label>                
+                <md-input-container>
+                  <md-select ng-model="selectedEntere" aria-label="5" multiple ng-change="cambioEntere(selectedEntere)"> 
+                    <md-option ng-value="entere.id" ng-repeat="entere in enteres">{{entere.name}}</md-option>
+                  </md-select>
+                </md-input-container>
+              </div>            
+              <!-- Avisan -->
+              <div layout="column" flex="30" >              
+                <label >Avisan</label>                
+                <md-input-container>
+                  <md-select ng-model="selectedAvisan" aria-label="6" multiple ng-change="cambioAvisan(selectedAvisan)">
+                    <md-option ng-value="avisan.id" ng-repeat="avisan in avisans">{{avisan.name}}</md-option>
+                  </md-select>
+                </md-input-container>
+              </div>            
+            </div>
+          </div>
+          <md-button class="md-raised md-primary" ng-click="actContacto()">Actualizar</md-button>
+        </md-content>
+      </md-tab>
+      
+      <md-tab label="Comentarios">
+        <md-content class="md-padding">
+          <h1 class="md-display-2">Comentarios</h1>
+          <md-button class="md-primary md-raised" ng-click="showAdvanced($event)">Agregar Comentario</md-button>
+          <md-list flex>
+            <div ng-repeat="comentario in comentarios | orderBy: '-id'">
+                <md-divider ></md-divider>
+                <md-list-item class="md-3-line md-long-text" >
+                  <div class="md-list-item-text">
+                    <h3>{{comentario.titulo}}<h3>
+                    <h4>{{comentario.itemcomentario.descripcion}}</h4>
+                    <p>{{comentario.comentario}}</p>
+                    <md-icon style="color: rgba(255, 0, 0, 0.603)" aria-label="Delete Comentario" ng-click="deleteComentario(comentario.id)" class="md-secondary"><md-tooltip md-direction="left">Eliminar</md-tooltip>delete_forever</md-icon>
+                  </div>
+                </md-list-item>
+              </div>
+          </md-list>
+        </md-content>
+      </md-tab>
+      
+      <md-tab label="Pagos">
+        <md-content class="md-padding">
+          <h1 class="md-display-2">Pagos</h1>
+
+          <md-card>
+              <md-card-title>
+                <md-card-title-text>
+                  <span class="md-headline">Ultimo plan: {{planActivo.tipoplan.descripcion}}</span>
+                  <span class="md-subhead">Duracion: {{planActivo.inicio}} / {{planActivo.fin}}
+                                      <br>Importe: {{planActivo.importepago | currency}} / {{planActivo.importeplan | currency}}
+                                      <br>Cuotas: {{planActivo.cuotasvan}} / {{planActivo.cuotasson}}</span>
+                </md-card-title-text>
+              </md-card-title>
+              <md-card-actions layout="row" layout-align="end center">
+                <md-button class="md-warn md-hue-2" ng-click="deletePlan(planActivo.id)" ng-disabled="planActivo == null || afiliaciones[0].estado == '0'" >Eliminar plan</md-button>
+                <md-button class="md-primary" ng-click="showPago($event)" ng-disabled="planActivo == null || planActivo.cuotasvan == planActivo.cuotasson || afiliaciones[0].estado == '0'">Pagar</md-button>
+                <md-button ng-click="newPlan($event)" ng-disabled="planActivo.cuotasvan != planActivo.cuotasson || afiliaciones[0].estado == '0'">Crear nuevo plan</md-button>
+              </md-card-actions>
+            </md-card>
+            <md-divider></md-divider>
+          <div >
+            <h2>Afiliacion 
+                <md-button class="md-warn md-hue-2" ng-click="deleteAfi(afiliaciones[0].id)" ng-disabled="afiliaciones[0].estado == '0'" >Dar de baja</md-button>
+                <md-button class="md-primary" ng-click="newAfi(persona.documento, 1)" ng-disabled="afiliaciones[0].estado == '1'">Dar de alta</md-button>
+            </h2>
+          </div>
+
+          <md-divider></md-divider>
+
+          <md-list flex>
+            <div ng-repeat="afiliacion in afiliaciones | orderBy: '-id'">
+              <md-toolbar ng-click="miPlan=!miPlan"> <div class="md-toolbar-tools md-hue-2"><span><i class="fas fa-caret-down" ng-show="!miPlan"></i> <i class="fas fa-caret-up" ng-show="miPlan"></i> Afiliacion: {{afiliacion.id}} </span></div> </md-toolbar>
+              <div ng-repeat="plan in afiliacion.plans | orderBy: '-id'" ng-show="miPlan">
+                <md-subheader class="md-no-sticky" ng-click="miPago=!miPago " style="background-color: rgba(207, 207, 207, 0.733)">
+                  <i class="fas fa-caret-down md-avatar" ng-show="!miPago"></i>
+                  <i class="fas fa-caret-up md-avatar" ng-show="miPago"></i> 
+                  <br> Plan {{plan.tipoplan.descripcion}} <br> &nbsp Periodo: {{plan.inicio}}/{{plan.fin}} &nbsp&nbsp Meses:{{plan.duracion}} &nbsp&nbsp Importe:{{plan.importepago}}/{{plan.importeplan}}&nbsp&nbsp Cuotas:{{plan.cuotasvan}}/{{plan.cuotasson}}&nbsp&nbsp Medio de pago:{{plan.mediopago.descripcion}}
+                </md-subheader>
+                <div ng-repeat="pago in plan.pagos | orderBy: '-id'" ng-show="miPago">
+                  <div ng-show="pago.tipomovimiento==1 && pago.pagoanulado==0 ">
+                  <md-list-item class="md-3-line md-long-text" >
+                    <div class="md-list-item-text" >
+                                          
+                      <p>Pago {{pago.id}}  <br>&nbsp
+                      Importe: {{pago.importe}}  &nbsp 
+                      Mes: {{pago.mes}} &nbsp - Anio:{{pago.anio}} &nbsp
+                      Tipo de movimiento: {{pago.tipomovimiento}} &nbsp&nbsp   Concepto:{{pago.concepto}}&nbsp&nbsp Anulado:{{pago.pagoanulado}}&nbsp&nbsp&nbsp  Fecha de pago: {{pago.createdAt}} </p>
+                      <md-icon style="color: rgba(255, 0, 0, 0.603)" aria-label="Delete Pago" ng-click="deletePago(pago,plan)" class="md-secondary"><md-tooltip md-direction="left">Eliminar</md-tooltip>delete_forever</md-icon>
+
+                      </div>
+                      
+                    </div>
+                  </md-list-item>                  
+                </div>
+              </div>
+            </div>
+          </md-list>
+        </md-content>
+      </md-tab>      
+
+      <md-tab label="Licencias">
+        <md-content class="md-padding">
+          <h1 class="md-display-2">Licencias</h1>
+          <md-list flex>
+            <md-button class="md-primary md-raised" ng-click="newLicencia($event)">Insertar Licencia</md-button>
+            <div ng-repeat="afiLicencia in afiLicencias | orderBy: '-id'">
+                <md-toolbar ng-click="miLicPlan=!miLicPlan"> <div class="md-toolbar-tools md-hue-2"><span><i class="fas fa-caret-down" ng-show="!miLicPlan"></i> <i class="fas fa-caret-up" ng-show="miLicPlan"></i> Afiliacion: {{afiLicencia.id}} </span></div> </md-toolbar>
+                <div ng-repeat="licencia in afiLicencia.licencia | orderBy: '-id'" ng-show="miLicPlan">
+                  <md-list-item class="md-3-line md-long-text" >
+                    <div class="md-list-item-text">
+                      <h3>Tipo: {{licencia.motivolicencium.descripcion}} </h3> 
+                      <h4>Duracion: {{licencia.inicio}} / {{licencia.fin}}</h4>
+                      <p>Descripcion: {{licencia.descripcion}}</p>
+                      
+                      <md-icon style="color: rgba(255, 0, 0, 0.603)" aria-label="Delete licencia" ng-click="deleteLicencia(licencia.id)" class="md-secondary"><md-tooltip md-direction="left">Eliminar</md-tooltip>delete_forever</md-icon>
+                    </div>
+                  </md-list-item>
+                </div>
+            </div>
+          </md-list>
+        </md-content>
+      </md-tab>
+
+    </md-tabs>
+  </md-content>
+</div>

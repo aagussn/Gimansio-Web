@@ -1,7 +1,16 @@
 var app = angular.module('Pagos', ['ngCookies']);
-
 app.controller('myController', function($scope, $http, $cookies) {
+    
+    var chkLogin = $cookies.get('login');
+    console.log(chkLogin);
+    if (chkLogin==0 || !chkLogin) {
+        console.log('bla');
+        window.location.href = "/login";
+    }
+
     $scope.documento = $cookies.get('Pagocookie');
+    $scope.banderaPago=1;
+
 
     if (!$scope.documento) {
         window.location.href = "/";
@@ -49,7 +58,7 @@ app.controller('myController', function($scope, $http, $cookies) {
             tipopago: $scope.search.tipopago,
             personaDocumento: $scope.documento,
         });
-        
+        $scope.banderaPago=2;
         var request = $http.post($scope.list, parameter);
 
         request.success(function (data) {

@@ -1,6 +1,13 @@
 var app = angular.module('afiliacion', ['ngCookies']);
 
 app.controller('myController', function($scope, $http, $cookies) {
+    var chkLogin = $cookies.get('login');
+    console.log(chkLogin);
+    if (chkLogin==0 || !chkLogin) {
+        console.log('bla');
+        window.location.href = "/login";
+    }
+
     // Si tiene cargada una persona es porque hace el upd entonces voy a buscar los datos y lo dejo todo para modificar
     var documento = $cookies.get('updPersona');
     if (documento) {

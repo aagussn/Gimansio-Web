@@ -12,6 +12,27 @@
   <!-- Iconos -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" >
     <title>Personas</title>
+
+    <!-- Optional JavaScript -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
+    
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="/js/jquery-3.3.1.min.js" ></script>
+    <script src="/js/popper.min.js" ></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/common.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+     <script src="/js/pagos.js"></script>
+     <script src="/js/carga.js"></script>
+        <style>
+             form{margin:100px; position:relative; width:250px; height:150px}
+            .capaTransparente{position:absolute; height:100%; width:100%; background:#ccc; opacity: 0; filter: alpha(opacity=0); -moz-opacity: 0;}
+         </style>
+
+
+
+
   </head>
   <body ng-controller="myController">
     <div ng-include="'barra'"> </div>    
@@ -32,8 +53,20 @@
               <option value="2">Matrícula</option>
               <option value="3">Otro</option>
             </select>
-            <input class="col-md-4" type="text" pattern="[0-9.]+" ng-model="search.importe" ng-change="clear()" placeholder="Importe" required>        
-            <button class="btn btn-lg btn-primary btn-block col-md-5" type="submit" id="submit" value="Submit" >Insertar pago</button>
+            <input class="col-md-5" type="text" pattern="[0-9.]+" ng-model="search.importe" ng-change="clear()" placeholder="Importe" required>   
+
+           <!--  <button class="btn btn-lg btn-primary btn-block col-md-5" type="submit" id="submit" value="Submit" >Insertar pago</button>  -->   
+            <div ng-switch on="banderaPago">
+             <div ng-switch-when="1">
+              <button class="btn btn-lg btn-primary btn-block col-md-7" type="submit" id="submit" value="Submit">Insertar pago</button>
+             </div>
+              
+             <div ng-switch-when="2">
+              <button class="btn btn-lg btn-primary btn-block col-md-7" type="submit" id="submit" value="Submit" disabled="" >Insertar pago</button>
+             </div>
+             
+            </div>
+
           </form>
         </div>
 
@@ -66,15 +99,6 @@
         </div>
       </div>
     </div>
-    <!-- Optional JavaScript -->
-  	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
-    <script src="/js/pagos.js"></script>
-    
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="/js/jquery-3.3.1.min.js" ></script>
-    <script src="/js/popper.min.js" ></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/common.js"></script>
+   
   </body>
 </html>

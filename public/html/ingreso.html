@@ -1,14 +1,30 @@
 <!doctype html>
-<html lang="en" ng-app="ingreso">
+<html lang="en" ng-app="Ingreso">
+  
   <head>
-    <!-- Required meta tags -->
+   <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Optional JavaScript -->
-    <!--  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>-->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
+
+    <!-- Angular Material CSS -->
+    <link rel="stylesheet" href="/css/angular-material.css">
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Animate ccs -->
+	<link rel="stylesheet" href="/css/animate.css">
+	<link rel="stylesheet" href="/css/misCss.css">
+
+    <!-- Dependencias de angular y material-->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-cookies.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+
+
     <script src="/js/ingreso.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="/js/jquery-3.3.1.min.js"></script>
@@ -16,49 +32,116 @@
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/common.js"></script>
 
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+
     <link rel="stylesheet" href="/css/common.css">
 
   <!-- Iconos -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" >
     <title>ingreso</title>
   </head>
-  <body ng-controller="myController">
+  
+  <body ng-controller="myController" layout = "column" ng-cloak>
     <form class="form-signin" ng-submit="submit()">
-      <div ng-include="'/barra'"> </div>    
-      <div class="container"><br><br><br></div>
-      <div class="container content-wrapper " align="center">
-        <img class="mb-4" src="/img/mancuerna.svg" alt="" width="90" height="90" align="center">
-        <h1 class="h2">Bienvenido a Arenas del Pinar <br><br><br> </h1>
-
+      <div class="container"></div><br>
+      <div class="container container-fluid" align="center">
+        <img class="animated  zoomIn delay-0.5s"  src="/img/logo.png" alt="" width="200" height="200" ><br>
+        <h3 class="animated  zoomIn delay-1s" >Bienvenido</h3><br><br>
+        <div class="animated  zoomIn delay-2s" >
         <label for="inputUser " class="sr-only ">Documento</label>
-        <input type="text" id="inputUser" class="input-lg" placeholder="Documento" ng-model="Documento" required autofocus>
-        <button class="btn btn-md btn-primary " type="submit" id="submit" value="Submit" alert=true">INGRESAR</button><br><br> 
+        <input  type="text" id="documento"  class="input-xl" placeholder="Documento" ng-model="Documento" required autofocus>
 
-      
-          <div ng-switch on="bandera">
-             <div ng-switch-when="1">
-                <div class="alert alert-success alert-dismissible role="alert">Bienvenido {{persona.nombre}}   {{persona.apellido}} última cuota paga {{pago.mes}}/{{pago.anio}} </div>
-             </div>
-              
-             <div ng-switch-when="2">
-                <div class="alert alert-danger alert-dismissible role="alert">Bienvenido {{persona.nombre}}   {{persona.apellido}} última cuota paga {{pago.mes}}/{{pago.anio}} </div>
-             </div>
-             
-             <div ng-switch-when="4">
-               <div class="alert alert-info alert-dismissible role="alert">Bienvenido, el documento ingresado no pertenece a un socio</div>
-             </div>
+        <button class="btn btn-md btn-primary  animated infinite pulse delay-3s" type="submit" id="submit" value="Submit" alert=true">INGRESAR</button><br><br>
 
-              <div ng-switch-when="3">
-                  <div class="alert alert-warning alert-dismissible role="alert">Bienvenido, {{persona.nombre}}   {{persona.apellido}}  de momento no tienen ningún pago</div>
-              </div>
+
+        <div ng-switch on="bandera">
+          <div ng-switch-when="1">
+            <div class="alert alert-success alert-dismissible role="alert">Bienvenido {{msjPer.nombre}} {{msjPer.apellido}}, tu plan esta vigente hasta  {{msjplan.fin}}  </div>
           </div>
+          <div ng-switch-when="2">
+            <div class="alert alert-danger alert-dismissible role="alert">Bienvenido {{msjPer.nombre}} {{msjPer.apellido}}, tu plan está vigente hasta {{msjplan.fin}}, resta abonar ${{faltaPagar}}</div>
+          </div>
+          <div ng-switch-when="3">
+            <div class="alert alert-warning alert-dismissible role="alert">Bienvenido {{msjPer.nombre}} {{msjPer.apellido}}, no tiene ningun plan creado </div>
+          </div>
+          <div ng-switch-when="4">
+            <div class="alert alert-info alert-dismissible role="alert">Bienvenido {{msjPer.nombre}}   {{msjPer.apellido}}, el documento ingresado no pertenece a un socio</div>
+          </div>
+          <div ng-switch-when="5">
+            <div class="alert alert-warning alert-dismissible role="alert">Bienvenido {{msjPer.nombre}}  {{msjPer.apellido}}, recuerde realizar su primer pago del plan</div>
+          </div>
+          <div ng-switch-when="6">
+            <div class="alert alert-warning alert-dismissible role="alert">Bienvenido{{msjPer.nombre}}   {{msjPer.apellido}}, su plan esta vencido comuniquese con administracion para renovarlo</div>
+          </div>
+          <div ng-switch-when="7">
+            <div class="alert alert-warning alert-dismissible role="alert">Bienvenido {{msjPer.nombre}}  {{msjPer.apellido}}, ocurrio una incosistencia</div>
+          </div>
+        </div>
         
-      </div>
-    </form>
+       
+        <md-switch ng-model = "mostrar1" aria-label = "verIngresos">
+            <div ng-if=mostrar1>
+              <h6>Ingresos de la mañana</h6>
+            </div> 
+            <div ng-if=!mostrar1>
+              <h6>Ingresos de la tarde</h6>
+            </div> 
+         </md-switch><br>
+         <div class="container form-row d-md-flex" ng-if=mostrar1 >
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col" >Documento</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Situación</th>
+                <th scope="col">Fecha</th>   
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in ingreoManianals | filter:search | orderBy : fecha | limitTo: 50 "  ng-class="{'table-success': item.tienedauda=='0', 'table-danger': item.tienedauda>'0'}"> 
+                <td >{{item.documento}} </td>
+                <td>{{item.nombre}}</td>
+                <td>
+                  <label for="tienedauda" ng-show="item.tienedauda=='0'">Al dia</label>
+                  <label for="tienedauda" ng-show="item.tienedauda=='1'">Debe</label>
+                  <label for="tienedauda" ng-show="item.tienedauda=='2'">No tiene plan</label>
+                </td>
 
-   
+                <td>{{item.fecha}}</td>
+              </tr>
+            </tbody>
+          </table>  
+        </div>
+
+          <div class="container form-row md-4" ng-if=!mostrar1>
+          <table class="table">
+            <thead>
+              <tr>
+                 <th scope="col" >Documento</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Situación</th>
+                <th scope="col">Fecha</th>           
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in ingreoTardels | filter:search | orderBy : fecha | limitTo: 50 " ng-class="{'table-success': item.tienedauda=='0', 'table-danger': item.tienedauda>'0'}"> 
+                <td >{{item.documento}} </td>
+                <td>{{item.nombre}}</td>
+                <td>
+                  <label for="tienedauda" ng-show="item.tienedauda=='0'">Al dia</label>
+                  <label for="tienedauda" ng-show="item.tienedauda=='1'">Debe</label>
+                  <label for="tienedauda" ng-show="item.tienedauda=='2'">No tiene plan</label>
+                </td>                
+                <td >{{item.fecha}}</td>
+              </tr>
+            </tbody>
+          </table>  
+        </div>
+        
+        </div>    
+      </div>   
+    </form>
   </body>
 </html>

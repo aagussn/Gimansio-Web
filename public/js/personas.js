@@ -1,10 +1,17 @@
 var app = angular.module('personas', ['ngCookies'])
 
 app.controller('myController', function($scope, $http, $cookies, $q) {
+    
+    var chkLogin = $cookies.get('login');
+    console.log("Log:" + chkLogin);
+    if (chkLogin==0 || !chkLogin) {
+        console.log('bla');
+        window.location.href = "/login";
+    }
 
     $scope.data = [];
     
-    var request = $http.get('/api/lista');    
+    var request = $http.get('/api/personas');    
     
     request.success(function(data) {    
         console.log(data);
@@ -32,7 +39,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
     $scope.updPersona = function (cookie) {
         var now = new Date();
         var exp = new Date(now);
-        exp.setMinutes(now.getMinutes()+1)
+        exp.setMinutes(now.getMinutes()+20)
         $cookies.put('updPersona', cookie, {'expires': exp});
         window.location.href = "/afiliacion";
     }
@@ -40,7 +47,7 @@ app.controller('myController', function($scope, $http, $cookies, $q) {
     $scope.setCookie = function (cookie) {
         var now = new Date();
         var exp = new Date(now);
-        exp.setMinutes(now.getMinutes()+1)
+        exp.setMinutes(now.getMinutes()+20)
         $cookies.put('Pagocookie', cookie, {'expires': exp});
         window.location.href = "/pagos";
     }

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en" ng-app="GimnasioWeb">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS  -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/common.css">
+
+
+  <link rel="stylesheet" href="/css/angular-material.css">
+  <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700'>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Iconos -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+  <title>Ultimos Planes</title>
+</head>
+
+<body ng-controller="ultimosplanes" ng-cloak>
+  <br><br>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <!--<div flex style="float: right; ">-->
+        <md-fab-speed-dial md-open="false" md-direction="right" ng-class="'md-fling'">
+          <md-fab-trigger>
+            <md-button aria-label="menu" class="md-fab md-warn">
+              <md-tooltip md-direction="top">Menu</md-tooltip>
+              <md-icon class="material-icons">menu</md-icon>
+            </md-button>
+          </md-fab-trigger>
+          <md-fab-actions>
+
+            <md-button aria-label="cloud" class="md-fab md-raised md-mini" href="/new_index">
+              <md-tooltip md-direction="top">Inicio</md-tooltip>
+              <md-icon class="material-icons" aria-label="cloud" href="/new_index">home</md-icon>
+            </md-button>
+
+            <md-button aria-label="cloud" class="md-fab md-raised md-mini" href="/ingreso" target="_blank">
+              <md-tooltip md-direction="top">Ingreso</md-tooltip>
+              <md-icon class="material-icons" aria-label="cloud">group_add</md-icon>
+            </md-button>
+
+            <md-button aria-label="Facebook" class="md-fab md-raised md-mini" href="/asistencia">
+              <md-tooltip md-direction="top">Asistencias</md-tooltip>
+              <md-icon class="material-icons" aria-label="Facebook">add_circle_outline</md-icon>
+            </md-button>
+
+            <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini" href="/inasistencia">
+              <md-tooltip md-direction="top">Inasistencias</md-tooltip>
+              <md-icon class="material-icons" aria-label="Google Hangout">remove_circle_outline</md-icon>
+            </md-button>
+
+            <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini" href="/ultimoplan">
+              <md-tooltip md-direction="top">Ultimos planes</md-tooltip>
+              <md-icon class="material-icons" aria-label="Google Hangout">view_headline</md-icon>
+            </md-button>
+
+          </md-fab-actions>
+        </md-fab-speed-dial>
+        <!--</div>-->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <h1>Ultimos Pagos</h1>
+      </div>
+      <br><br><br>
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-8">
+        <input type="text" ng-model="busqueda" placeholder="Buscar">
+        <button class="btn btn-md btn-primary" type="button" value="Descargar" onclick="exportTableToExcel()">Descargar</button><br><br>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-12">
+        <div style="overflow-x:auto;">
+          <table class="table" id="tblData">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Documento</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">vencimiento</th>
+                <th scope="col">Plan</th>
+                <th scope="col">Cuotas</th>
+                <th scope="col">Importe</th>
+                <th scope="col">Medio de pago</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in lstInsasit | filter:busqueda  | orderBy : -fecha | limitTo: 50 " ng-class="{'table-success': item.tienedauda=='0', 'table-danger': item.tienedauda>'0'}">
+                <td>{{item.documento}} </td>
+                <td>{{item.nombre}}</td>
+                <td>{{item.apellido}}</td>
+                <td>{{item.finPlan}}</td>
+                <td>{{item.tipoPlan}}</td>
+                <td>{{item.cuotas}}</td>
+                <td>{{item.importe}}</td>
+                <td>{{item.medioPago}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    function exportTableToExcel() {
+      var downloadLink;
+      var dataType = 'application/vnd.ms-excel';
+      var tableSelect = document.getElementById("tblData");
+      var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+
+      // Specify file name
+      var filename = 'planes.xls';
+
+      // Create download link element
+      downloadLink = document.createElement("a");
+
+      document.body.appendChild(downloadLink);
+
+      if (navigator.msSaveOrOpenBlob) {
+        var blob = new Blob(['ufeff', tableHTML], {
+          type: dataType
+        });
+        navigator.msSaveOrOpenBlob(blob, filename);
+      } else {
+        // Create a link to the file
+        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+        // Setting the file name
+        downloadLink.download = filename;
+
+        //triggering the function
+        downloadLink.click();
+      }
+    }
+  </script>
+  <!--  jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="/js/jquery-3.3.1.min.js"></script>
+  <script src="/js/popper.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+
+  <!-- Dependencias de angular y material-->
+
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-cookies.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-cookies.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script>
+  <script src="/js/ultimosPlanes.js"></script>
+
+</body>
+
+</html>

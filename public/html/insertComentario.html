@@ -1,0 +1,39 @@
+<md-dialog aria-label="Insertar Comentario">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Insertar Comentario</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()" aria-label="1">
+          <i class="fas fa-times" ></i>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content flex=90>
+      <div class="md-dialog-content">
+        <div layout="row">
+          <md-input-container ><label>Titulo</label><input ng-model="titulo" required></md-input-container>
+          <md-input-container >
+            <label>Comentario Id </label>
+            <md-select ng-model="itemcomentarioId" required>
+              <md-option ng-repeat="tipo in tipos" value="{{tipo.id}}">{{tipo.descripcion}}</md-option>
+            </md-select>
+            </md-input-container>
+        </div>
+        <div class="row" class="md-block">
+          <md-input-container ><label>Comentario</label><textarea ng-model="comentario" md-maxlength="150" md-select-on-focus required></textarea></md-input-container>
+        </div>
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <md-button ng-click="cancel()" class="md-warn">
+       Cancelar
+      </md-button>
+      <md-button ng-click="answer({titulo, comentario, itemcomentarioId})">
+        Aceptar
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

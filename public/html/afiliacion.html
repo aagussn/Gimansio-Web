@@ -19,175 +19,315 @@
 	<div class="container content-wrapper">
 		<!-- Form -->
 		<form ng-submit="submit()">
-			<!-- Renglon -->
-			<div class="form-row">
-				<!-- Nombre -->
-				<div class="form-group col-md-5">
-				  <label for="inputNombre">Nombre</label>
-				  <input type="text" class="form-control" id="inputNombre" placeholder="Nombre" ng-model="nombre" required>
-				</div>
-				<!-- Apellido -->
-				<div class="form-group col-md-5">
-				  <label for="inputApellido">Apellido</label>
-				  <input type="text" class="form-control" id="inputApellido" placeholder="Apellido" ng-model="apellido" required>
-				</div>
-				<!-- Sexo -->
-				<div class="form-group col-md-2">
-					<label for="inputSexo">Sexo</label>
-					<select id="inputSexo" class="form-control" ng-model="sexo">						
-						<option value="Masculino">Masculino</option>
-						<option value="Femenino">Femenino</option>
-					</select>
-				</div>
-			</div>
-			<!-- Renglon -->
-			<div class="form-row">
-				<!-- Email -->
-				<div class="form-group col-md-4">
-					<label for="inputAddress">Email</label>
-					<input type="email" class="form-control" id="inputEmail" placeholder="Email" ng-model="email">
-				</div>
-				<!-- Telefono -->
-				<div class="form-group col-md-4">
-					<label for="inputTelefono">Teléfono</label>
-					<input type="tel" class="form-control" id="inputTelefono" placeholder="Teléfono" ng-model="telefono">
-				</div>
-				<!-- Emergencia -->
-				<div class="form-group col-md-4">
-					<label for="inputEmergencia">Emergencia</label>
-					<input type="tel" class="form-control" id="inputEmergencia" placeholder="Emergencia" ng-model="emergencia">
-				</div>
-			</div>
-			<!-- Renglon -->
-			<div class="form-row">
-				<!-- Fecha de Nacimiento -->
-				<div class="form-group col-md-4">
-					<label for="inputFNac">Fecha de Nacimiento</label>
-					<input type="date" class="form-control" id="inputFNac" ng-model="fechan" required>
-				</div>
-				<!-- Cedula -->
-				<div class="form-group col-md-4">
-					<label for="inputCedula">Cédula</label>
-					<input type="number" class="form-control" id="inputCedula" ng-model="documento" required>
-				</div>
-				<!-- Profesion -->
-				<div class="form-group col-md-4">
-					<label for="inputProf">Profesión</label>
-					<select id="inputProf" class="form-control" required ng-model="idprofesion">
-						<option value="estudiante">Estudiante</option>
-						<option value="empleado">Empleado</option>
-						<option value="desocupado">Desocupado</option>
-					</select>
-				</div>
-			</div>
-			<!-- Renglon -->
-			<div class="form-row">
-				<!-- Direccion -->
-				<div class="form-group col-md-12">
-					<label for="inputDir">Dirección</label>
-					<input type="text" class="form-control" id="inputDir" placeholder="Dirección" ng-model="direccion">	
-				</div>
-			</div>
-			<!-- Renglon -->
-			<div class="form-row">
-				<!-- Contacto -->
-				<div class="form-group col-md-12">
-					<h4>Contacto</h4>
-				</div>
-				<!-- Nombre -->
-				<div class="form-group col-md-6">
-					<label for="inputNomC">Nombre</label>
-					<input type="text" class="form-control" id="inputNomC" placeholder="Nombre Contacto" ng-model="nomcontacto">	
-				</div>
-				<!-- Telefono -->
-				<div class="form-group col-md-6">
-					<label for="inputTelC">Teléfono</label>
-					<input type="tel" class="form-control" id="inputTelC" placeholder="Teléfono Contacto" ng-model="telcontacto">	
-				</div>
-			</div>
-			<div class="form-row col-md-12">
-				<div class="form-row col-md-4">
-					<div class="form-group">
-					  	<label for="objetivos">Objetivo</label>
-						<select id="objetivos" class="form-control" required ng-model="idobjetivos">							
-							<option value="1">Chau a esos kilos de mas</option>
-							<option value="2">Pasarla bien y mejor</option>
-							<option value="3">Llegar al final del partido</option>
-							<option value="4">Chau estres</option>
-							<option value="5">Que mi doctor sonría</option>
-							<option value="6">Otro</option>
-						</select>
+			<div id="accordion">
+				<div class="card container">
+					<div class="card-header" id="hdatosPersonales">
+						<h3 class="mb-0">
+							<a role="button" data-toggle="collapse" data-parent="#accordion" href="#datosPersonales" >
+								Datos Personales
+		        			</a>
+		      			</h3>
+		      		</div>
+
+		      		<div id="datosPersonales" class="collapse show" aria-labelledby="datosPersonales" data-parent="#accordion">
+		      			<div class="card-body">
+						<!-- Renglon -->
+							<div class="form-row">
+								<!-- Nombre -->
+								<div class="form-group col-md-5">
+								  <label for="inputNombre">Nombre</label>
+								  <input type="text" class="form-control" id="inputNombre" placeholder="Nombre" ng-model="nombre" required>
+								</div>
+								<!-- Apellido -->
+								<div class="form-group col-md-5">
+								  <label for="inputApellido">Apellido</label>
+								  <input type="text" class="form-control" id="inputApellido" placeholder="Apellido" ng-model="apellido" required>
+								</div>
+								<!-- Sexo -->
+								<div class="form-group col-md-2">
+									<label for="inputSexo">Sexo</label>
+									<select id="inputSexo" class="form-control" ng-model="sexo">						
+										<option value="Masculino">Masculino</option>
+										<option value="Femenino">Femenino</option>
+									</select>
+								</div>
+							</div>
+							<!-- Renglon -->
+							<div class="form-row">
+								<!-- Email -->
+								<div class="form-group col-md-4">
+									<label for="inputAddress">Email</label>
+									<input type="email" class="form-control" id="inputEmail" placeholder="Email" ng-model="email">
+								</div>
+								<!-- Telefono -->
+								<div class="form-group col-md-4">
+									<label for="inputTelefono">Teléfono</label>
+									<input type="tel" class="form-control" id="inputTelefono" placeholder="Teléfono" ng-model="telefono">
+								</div>
+								<!-- Emergencia -->
+								<div class="form-group col-md-4">
+									<label for="inputEmergencia">Emergencia</label>
+									<input type="tel" class="form-control" id="inputEmergencia" placeholder="Emergencia" ng-model="emergencia">
+								</div>
+							</div>
+							<!-- Renglon -->
+							<div class="form-row">
+								<!-- Fecha de Nacimiento -->
+								<div class="form-group col-md-4">
+									<label for="inputFNac">Fecha de Nacimiento</label>
+									<input type="date" class="form-control" id="inputFNac" ng-model="fechan" required>
+								</div>
+								<!-- Cedula -->
+								<div class="form-group col-md-4">
+									<label for="inputCedula">Cédula</label>
+									<input type="number" class="form-control" id="inputCedula" ng-model="documento" required>
+								</div>
+								<!-- Profesion -->
+								<div class="form-group col-md-4">
+									<label for="inputProf">Profesión</label>
+									<select id="inputProf" class="form-control" required ng-model="idprofesion">
+										<option value="estudiante">Estudiante</option>
+										<option value="empleado">Empleado</option>
+										<option value="desocupado">Desocupado</option>
+									</select>
+								</div>
+							</div>
+							<!-- Renglon -->
+							<div class="form-row">
+								<!-- Direccion -->
+								<div class="form-group col-md-12">
+									<label for="inputDir">Dirección</label>
+									<input type="text" class="form-control" id="inputDir" placeholder="Dirección" ng-model="direccion">	
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 
-				<div class="form-row col-md-4">
-					<div class="form-group">				
-					  	<label for="horario">Voy a hacerlo</label>
-						<select id="horario" class="form-control" required ng-model="idhorario">							
-							<option value="1">Por la mañana</option>
-							<option value="2">A la tarde</option>
-							<option value="3">A la noche</option>
-							<option value="4">Cuando me escape</option>
-						</select>
-					</div>
-				</div>
+			<div class="card container">
+					<div class="card-header" id="hContacto">
+						<h3 class="mb-0">
+							<a role="button" data-toggle="collapse" data-parent="#accordion" href="#Contacto" >
+								Contacto
+		        			</a>
+		      			</h3>
+		      		</div>
 
-				<div class="form-row col-md-4">
-					<div class="form-group ">
-						<label for="logro">Voy a lograrlo en</label>
-						<select id="logro" class="form-control" required ng-model="idlogro">							
-							<option value="1">3 meses</option>
-							<option value="2">6 meses</option>
-							<option value="3">9 meses</option>
-							<option value="4">12 meses</option>
-						</select>
+		      		<div id="Contacto" class="collapse" aria-labelledby="Contacto" data-parent="#accordion">
+		      			<div class="card-body">			
+						<!-- Renglon -->
+						<div class="form-row">
+							<!-- Nombre -->
+							<div class="form-group col-md-6">
+								<label for="inputNomC">Nombre</label>
+								<input type="text" class="form-control" id="inputNomC" placeholder="Nombre Contacto" ng-model="nomcontacto">	
+							</div>
+							<!-- Telefono -->
+							<div class="form-group col-md-6">
+								<label for="inputTelC">Teléfono</label>
+								<input type="tel" class="form-control" id="inputTelC" placeholder="Teléfono Contacto" ng-model="telcontacto">	
+							</div>
+						</div>
+						<div class="form-row col-md-12">
+							<div class="form-row col-md-4">
+								<div class="form-group">
+								  	<label for="objetivos">Objetivo</label>
+									<select id="objetivos" class="form-control" required ng-model="idobjetivos">							
+										<option value="1">Chau a esos kilos de mas</option>
+										<option value="2">Pasarla bien y mejor</option>
+										<option value="3">Llegar al final del partido</option>
+										<option value="4">Chau estres</option>
+										<option value="5">Que mi doctor sonría</option>
+										<option value="6">Otro</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-row col-md-4">
+								<div class="form-group">				
+								  	<label for="horario">Voy a hacerlo</label>
+									<select id="horario" class="form-control" required ng-model="idhorario">							
+										<option value="1">Por la mañana</option>
+										<option value="2">A la tarde</option>
+										<option value="3">A la noche</option>
+										<option value="4">Cuando me escape</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-row col-md-4">
+								<div class="form-group ">
+									<label for="logro">Voy a lograrlo en</label>
+									<select id="logro" class="form-control" required ng-model="idlogro">							
+										<option value="1">3 meses</option>
+										<option value="2">6 meses</option>
+										<option value="3">9 meses</option>
+										<option value="4">12 meses</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-row col-md-12">
+							<div class="form-row col-md-4">
+								<div class="form-group">
+									<label for="interes">Me interesa</label>
+									<select id="interes" class="form-control" required ng-model="idinteres">							
+										<option value="1">Entrenamiento funcional</option>
+										<option value="2">Cycling / Ciclismo </option>
+										<option value="3">Grupo de corredores</option>
+										<option value="4">Otro</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-row col-md-4">
+								<div class="form-group">
+									<label for="enterado">Me enteré por</label>
+									<select id="enterado" class="form-control" required ng-model="identerado">							
+										<option value="1">Un amigo</option>
+										<option value="2">Radio / TV</option>
+										<option value="3">Facebook / Instagram </option>
+										<option value="4">Evento / Clase abierta</option>
+										<option value="5">Folleto / Afiche</option>
+										<option value="6">Otro</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-row col-md-4">
+								<div class="form-group">
+								  	<label for="aviso">Me avisan por</label>
+									<select id="aviso" class="form-control" required ng-model="idaviso">							
+										<option value="1">SMS</option>
+										<option value="2">Movil</option>
+										<option value="3">E-Mail </option>
+										<option value="4">Facebook</option>
+										<option value="5">Whatsapp</option>
+									</select>
+								</div>
+							</div>
+						</div>			
 					</div>
 				</div>
 			</div>
-
-			<div class="form-row col-md-12">
-				<div class="form-row col-md-4">
-					<div class="form-group">
-						<label for="interes">Me interesa</label>
-						<select id="interes" class="form-control" required ng-model="idinteres">							
-							<option value="1">Entrenamiento funcional</option>
-							<option value="2">Cycling / Ciclismo </option>
-							<option value="3">Grupo de corredores</option>
-							<option value="4">Otro</option>
-						</select>
-					</div>
-				</div>
-
-				<div class="form-row col-md-4">
-					<div class="form-group">
-						<label for="enterado">Me enteré por</label>
-						<select id="enterado" class="form-control" required ng-model="identerado">							
-							<option value="1">Un amigo</option>
-							<option value="2">Radio / TV</option>
-							<option value="3">Facebook / Instagram </option>
-							<option value="4">Evento / Clase abierta</option>
-							<option value="5">Folleto / Afiche</option>
-							<option value="6">Otro</option>
-						</select>
-					</div>
-				</div>
-
-				<div class="form-row col-md-4">
-					<div class="form-group">
-					  	<label for="aviso">Me avisan por</label>
-						<select id="aviso" class="form-control" required ng-model="idaviso">							
-							<option value="1">SMS</option>
-							<option value="2">Movil</option>
-							<option value="3">E-Mail </option>
-							<option value="4">Facebook</option>
-							<option value="5">Whatsapp</option>
-						</select>
-					</div>
+			<div class="card ">
+				<div class="card-header">
+					<!-- Send -->
+					<h3 class="mb-0">
+						<button type="submit" class="btn btn-primary col-md-2">Enviar</button>			
+					</h3>
 				</div>
 			</div>
-			<!-- Send -->
-			<button type="submit" class="btn btn-primary">Enviar</button>			
 		</form>
+
+			<div class="card container">
+				<div class="card-header" id="hComentarios">
+					<h3 class="mb-0">
+						<a role="button" data-toggle="collapse" data-parent="#accordion" href="#Comentarios" >
+							Comentarios
+		        		</a>
+		      		</h3>
+		      	</div>
+
+		      	<div id="Comentarios" class="collapse" aria-labelledby="Comentarios" data-parent="#accordion">
+		      		<div class="card-body">	
+<div class="form-row col-md-4">
+								<div class="form-group">
+									<label for="tipoComentario">Tipo de comentario</label>
+									<select id="tipoComentario" class="form-control" required ng-model="identerado">						<option value="1">Un amigo</option>
+										<option value="2">Radio / TV</option>
+										<option value="3">Facebook / Instagram </option>
+										<option value="4">Evento / Clase abierta</option>
+										<option value="5">Folleto / Afiche</option>
+										<option value="6">Otro</option>
+									</select>
+								</div>
+								<div class="input-group ">
+  									<div class="input-group-prepend ">
+    									<span class="input-group-text">Comantario</span>
+  									</div>
+  									<textarea class="form-control col-md-6" aria-label="With textarea"></textarea>
+								</div>
+
+								<button type="submit" class="btn btn-primary col-md-5">Agregar</button>			
+	
+						</div><br><br>
+						
+						<h4 class="mb-0">
+							<a role="button" data-toggle="collapse" data-parent="#accordion" href="#Comentarios" >
+							Mis Comentarios
+		        			</a>
+		      			</h4><br>
+
+
+		      			<!--*************** aca ven los comentarios segun la categoria seleccionada ***************-->
+		      			<!--ver la manera de hacerlo variable la cantidad de comentarios-->
+						<div class="accordion" id="accordionExample">
+						  <div class="card">
+						    <div class="card-header" id="headingOne">
+						      <h5 class="mb-0">
+						        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+						          Collapsible Group Item #1
+						        </button>
+						      </h5>
+						    </div>
+
+						    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+						      <div class="card-body">
+						        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+						      </div>
+						    </div>
+						  </div>
+						  <div class="card">
+						    <div class="card-header" id="headingTwo">
+						      <h5 class="mb-0">
+						        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+						          Collapsible Group Item #2
+						        </button>
+						      </h5>
+						    </div>
+						    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+						      <div class="card-body">
+						        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+						      </div>
+						    </div>
+						  </div>
+						  <div class="card">
+						    <div class="card-header" id="headingThree">
+						      <h5 class="mb-0">
+						        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+						          Collapsible Group Item #3
+						        </button>
+						      </h5>
+						    </div>
+						    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+						      <div class="card-body">
+						        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+						      </div>
+						    </div>
+						  </div>
+						</div>
+		      			
+					</div>
+				</div>
+			</div>
+
+			<div class="card container">
+				<div class="card-header" id="hPagos">
+					<h3 class="mb-0">
+						<a role="button" data-toggle="collapse" data-parent="#accordion" href="#Pagos" >
+							Pagos
+		        		</a>
+		      		</h3>
+		      	</div>
+
+		      	<div id="Pagos" class="collapse" aria-labelledby="Pagos" data-parent="#accordion">
+		      		<div class="card-body">		
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
     <!-- Optional JavaScript -->
   	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>

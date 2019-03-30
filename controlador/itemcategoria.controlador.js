@@ -3,21 +3,44 @@ const Itemcategoria = db.itemcategoria;
  
 // Post a Usuario
 exports.create = (req, res) => {	
-	// Save to MySQL database
-	Itemcategoria.create({  
-	  	  idcategoria: req.body.idcategoria,
-	}).then(itemcategoria => {		
-		// Send created usuario to client
-		res.send(itemcategoria);
-	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+  	console.log('json: ', req.body);
+	
+	Itemcategoria.sequelize.query('INSERT into itemcategoria (id,tipo,descripcion,createdAt,updatedAt,categoriumId) VALUES (DEFAULT,:ptipo,:pdescripcion, NOW(), NOW(),:pcategoriumId)',
+    { replacements: {ptipo: req.body.tipo, pdescripcion:req.body.descripcion, pcategoriumId: req.body.categoriumId}, 
+       	type: Itemcategoria.sequelize.QueryTypes.INSERT
+    }).then(itemcategoria => {
+				// Send all usuarios to Client
+				console.log(itemcategoria);
+		  		res.send(itemcategoria);
+		}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
 };
  
 // FETCH all Usuarios
 exports.findAll = (req, res) => {
-	Itemcategoria.findAll().then(itemcategoria => {
-	  // Send all usuarios to Client
-	  res.send(itemcategoria);
-	}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));
+		var condition =
+			{
+				where:
+					{
+
+					}
+			}
+			if (req.query.tipo) {
+				condition.where.tipo = req.query.tipo
+			}
+			if (req.query.descripcion) {
+				condition.where.descripcion = req.query.descripcion
+			}
+			if (req.query.categoriumId) {
+				condition.where.categoriumId = req.query.categoriumId
+			}
+
+			
+
+		
+			Itemcategoria.findAll(condition)
+				.then(itemcategoria => {
+		  		res.send(itemcategoria);
+			}).then(handleEntityNotFound(res)).then(responseWithResult(res)).catch(handleError(res));	
 };
  
 // Find a Usuario by Id
@@ -30,7 +53,7 @@ exports.findById = (req, res) => {
 // Update a Usuario
 exports.update = (req, res) => {
 	const id = req.params.id;
-	Itemcategoria.update( { idcategoria: req.body.idcategoria }, 
+	Itemcategoria.update( { descripcion: req.body.descripcion }, 
 					 { where: {id: req.params.id} }
 				   ).then(() => {
 					 res.status(200).send("updated successfully a usuario with id = " + id);
